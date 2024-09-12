@@ -12,6 +12,8 @@ const friendsRewards = [
   { title: 'Invite 3 friends', referralsRequired: 2, bonusAward: 50000 },
   { title: 'Invite 5 friends', referralsRequired: 5, bonusAward: 150000 },
   { title: 'Invite 10 friends', referralsRequired: 10, bonusAward: 250000 },
+  { title: 'Invite 20 friends', referralsRequired: 20, bonusAward: 250000 },
+  { title: 'Invite 40 friends', referralsRequired: 40, bonusAward: 250000 },
 ];
 
 const ReferralRewards = () => {

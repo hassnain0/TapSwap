@@ -51,25 +51,7 @@ const veicles = [
     )
 
   },
-  {
-    name: "Dolar",
-    value: "5 000",
-    image: Dolar,
-    heart: true,
-    title: <strong className="text-white text-[17px]">CASH WINDFALL ALERT!</strong>,
-    description: (
-      <>
-        <p className="text-white/60 text-base">Enter our exciting lottery for a chance to win $5,000 CASH!</p>
-        <p className="text-white/60 text-base">- Prize: $5,000</p>
-        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
-        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
-        <p className="text-white/60 text-base">Imagine the possibilities with an extra $5,000 in your pocket!</p>
-        <p className="text-white/60 text-base">Pay off bills, treat yourself, or invest in your future - the choice is yours!</p>
-        <p className="text-white/60 text-base">Get your ticket now and make your dreams a reality!</p>
-        <p className="text-white/60 text-base">Good luck!</p>
-      </>
-    )
-  },
+
   {
     name: "Ducati Panigale V4 S",
     value: "2 0000",
@@ -124,7 +106,7 @@ const Stats = () => {
   }
 
   return (
-    <div className="h-screen bg-[#191B33] flex flex-col">
+    <div className="h-screen bg-[#191B33] overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
         <header className="flex items-center justify-between w-full">
           <strong className="text-[#38B8EA] text-xl">Tickets: 0</strong>
@@ -137,7 +119,7 @@ const Stats = () => {
         </header>
 
         {/* Scrollable content */}
-        <main className="mt-12 overflow-y-auto flex-1 max-h-[calc(100vh-100px)]">
+        <main className="mt-12  flex-1 max-h-[calc(100vh-100px)]">
           <div>
             <div className="relative">
               <div className="p-4 flex justify-center items-center">
@@ -158,6 +140,12 @@ const Stats = () => {
                   {veicles[current].heart ? <HeartHandshake /> : <Heart />}
                 </button>
               </div>
+            </div>
+            <div className="flex items-center gap-2 relative mt-6 mb-4">
+              <ActiveButton image={car} current={current} position={0} setCurrent={() => setCurrent(0)} />
+              <ActiveButton image={phone} current={current} position={1} setCurrent={() => setCurrent(1)} />
+              <ActiveButton image={bicycle} current={current} position={2} setCurrent={() => setCurrent(2)} />
+              <ActiveButton image={notebook} current={current} position={3} setCurrent={() => setCurrent(3)} />
             </div>
           </div>
 
