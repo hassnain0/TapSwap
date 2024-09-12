@@ -1,97 +1,178 @@
-import React from "react";
-import Animate from "../Components/Animate";
-import { Outlet } from "react-router-dom";
-import coinsmall from "../images/coinsmall.webp";
-import { useUser } from "../context/userContext";
+import { Heart, HeartHandshake } from "lucide-react"
+import { useState } from "react"
+import Cart from "../assets/lottery-cards/car.svg"
+import Moto from "../assets/lottery-cards/biclycle.svg"
+import Phone from "../assets/lottery-cards/phone.svg"
+import Dolar from "../assets/lottery-cards/dolar.svg"
+import Notebook from "../assets/lottery-cards/notebook.svg"
+import car from "../assets/lottery-buttons/car.svg"
+import bicycle from "../assets/lottery-buttons/bicycle.svg"
+import dolar from "../assets/lottery-buttons/dolar.svg"
+import notebook from "../assets/lottery-buttons/notebook.svg"
+import phone from "../assets/lottery-buttons/phone.svg"
+import { Link } from "react-router-dom"
+import ActiveButton from '../Components/activeButton'
+const veicles = [
+  {
+    name: "Rolls Royace",
+    value: "250",
+    image: Cart,
+    heart: true,
+    title: <strong className="text-white text-[17px]">WIN A ROLLS-ROYCE PHANTOM!</strong>,
+    description: (
+      <>
+        <p className="text-white/60 text-base">Enter our ultra-exclusive lottery for a chance to own the pinnacle of luxury - a brand-new Rolls-Royce Phantom!</p>
+        <p className="text-white/60 text-base">- Prize: Rolls-Royce Phantom</p>
+        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
+        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
+        <p className="text-white/60 text-base">Experience unparalleled opulence and refinement with this majestic vehicle. Don't miss your chance to ride like royalty!</p>
+        <p className="text-white/60 text-base">Get your ticket now and take a chance to make your wildest dreams come true!</p>
+        <p className="text-white/60 text-base">Good luck!</p>
+      </>
+    )
+
+  },
+  {
+    name: "Iphone 15 pro max",
+    value: "40 000",
+    image: Phone,
+    heart: false,
+    title: <strong className="text-white text-[17px]">WIN THE LATEST iPHONE 15 PRO MAX!</strong>,
+    description: (
+      <>
+        <p className="text-white/60 text-base">Enter our exciting lottery for a chance to get your hands on the brand-new iPhone 15 Pro Max!</p>
+        <p className="text-white/60 text-base">- Prize: iPhone 15 Pro Max (256GB/512GB/1TB)</p>
+        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
+        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
+        <p className="text-white/60 text-base">Experience the cutting-edge technology, stunning display, and advanced cameras of Apple's flagship device!</p>
+        <p className="text-white/60 text-base">Don't miss out! Get your ticket now and take a chance to upgrade your mobile experience!</p>
+        <p className="text-white/60 text-base">Good luck!</p>
+      </>
+    )
+
+  },
+  {
+    name: "Dolar",
+    value: "5 000",
+    image: Dolar,
+    heart: true,
+    title: <strong className="text-white text-[17px]">CASH WINDFALL ALERT!</strong>,
+    description: (
+      <>
+        <p className="text-white/60 text-base">Enter our exciting lottery for a chance to win $5,000 CASH!</p>
+        <p className="text-white/60 text-base">- Prize: $5,000</p>
+        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
+        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
+        <p className="text-white/60 text-base">Imagine the possibilities with an extra $5,000 in your pocket!</p>
+        <p className="text-white/60 text-base">Pay off bills, treat yourself, or invest in your future - the choice is yours!</p>
+        <p className="text-white/60 text-base">Get your ticket now and make your dreams a reality!</p>
+        <p className="text-white/60 text-base">Good luck!</p>
+      </>
+    )
+  },
+  {
+    name: "Ducati Panigale V4 S",
+    value: "2 0000",
+    image: Moto,
+    heart: true,
+    title: <strong className="text-white text-[17px]">REV UP YOUR DREAMS!</strong>,
+    description: (
+      <>
+        <p className="text-white/60 text-base">Enter our high-octane lottery for a chance to win the ultimate ride - a Ducati Panigale V4 S (2023)!</p>
+        <p className="text-white/60 text-base">- Prize: Ducati Panigale V4 S (2023) - 1103cc, 214 HP, 7-speed gearbox</p>
+        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
+        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
+        <p className="text-white/60 text-base">Feel the rush of adrenaline as you take this beast on the road! With its sleek design and exceptional performance, this bike is a true champion's ride.</p>
+        <p className="text-white/60 text-base">Get your ticket now and shift your luck into high gear!</p>
+        <p className="text-white/60 text-base">Good luck!</p>
+      </>
+    )
+  },
+  {
+    name: "Macbook air m2",
+    value: "1 0000",
+    image: Notebook,
+    heart: true,
+    title: <strong className="text-white text-[17px]">WIN THE ULTIMATE LAPTOP EXPERIENCE!</strong>,
+    description: (
+      <>
+        <p className="text-white/60 text-base">Enter our exciting lottery for a chance to win $5,000 CASH!</p>
+        <p className="text-white/60 text-base">- Prize: $5,000</p>
+        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
+        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
+        <p className="text-white/60 text-base">Imagine the possibilities with an extra $5,000 in your pocket!</p>
+        <p className="text-white/60 text-base">Pay off bills, treat yourself, or invest in your future - the choice is yours!</p>
+        <p className="text-white/60 text-base">Get your ticket now and make your dreams a reality!</p>
+        <p className="text-white/60 text-base">Good luck!</p>
+      </>
+    )
+  },
+]
 
 const Stats = () => {
-  // eslint-disable-next-line
-const { totalCount, dividedCount, users, dividedUsers } = useUser();
+  const [current, setCurrent] = useState(0);
 
-
-  const formatNumber = (num) => {
-    if (num < 100000) {
-      return new Intl.NumberFormat().format(num).replace(/,/g, " ");
-    } else if (num < 1000000) {
-      return new Intl.NumberFormat().format(num).replace(/,/g, " ") + " K";
-    } else {
-      return (num / 1000000).toFixed(3).replace(".", ".") + " M";
-    }
-  };
-
-  const formattedUsers = new Intl.NumberFormat()
-    .format(users)
-    .replace(/,/g, " ");
-
-  const formattedDividedUsers = new Intl.NumberFormat()
-    .format(dividedUsers)
-    .replace(/,/g, " ");
+  function favorite() {
+    veicles.map((veic, index) => {
+      return index === current
+        ? {
+          ...veic,
+          heart: !veic.heart,
+        }
+        : veic;
+    });
+  }
 
   return (
-    <>
+    <div className="h-screen bg-[#191B33] flex flex-col">
+      <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
+        <header className="flex items-center justify-between w-full">
+          <strong className="text-[#38B8EA] text-xl">Tickets: 0</strong>
+          <Link
+            to="/bag"
+            className="h-10 flex justify-center bg-[#34C8E8] items-center rounded-lg text-white bg-button px-4"
+          >
+            Buy
+          </Link>
+        </header>
 
-        <Animate>
-          <div className="w-full justify-center flex-col space-y-3 px-5">
-            <div className="fixed top-0 left-0 right-0 pt-8 px-5">
-              <div className="w-full items-center justify-center pb-3 flex pt-2">
-                <h2 className="text-[#9d99a9] text-[20px] font-medium">
-                  Total Share balance
-                </h2>
+        {/* Scrollable content */}
+        <main className="mt-12 overflow-y-auto flex-1 max-h-[calc(100vh-100px)]">
+          <div>
+            <div className="relative">
+              <div className="p-4 flex justify-center items-center">
+                <img
+                  src={veicles[current].image}
+                  alt=""
+                  className="h-[150px] object-contain"
+                />
               </div>
-              <div className="flex space-x-1 ml-[-8px] justify-center items-center">
-                <div className="w-[50px] h-[50px]">
-                  <img src={coinsmall} className="w-full" alt="coin" />
+
+              <div className="absolute top-0 left-0 w-full flex items-center justify-between">
+                <div className="text-white">
+                  <p>{veicles[current].name}</p>
+                  <p>{veicles[current].value}</p>
                 </div>
-                <h1 className="text-[#fff] text-[42px] font-extrabold">
-                  {formatNumber(totalCount)}
-                </h1>
-              </div>
 
-              <div className="bg-[#362c4d] w-full px-5 h-[1px] !mt-5 !mb-5"></div>
-
-              <div className="w-full items-center flex flex-col space-y-2">
-                <h3 className="text-[16px] text-[#9d99a9] items-center font-semibold pb-4 flex flex-col">
-                  <span> Total Touches:</span>
-                  <span className="text-[#fff] font-semibold text-[24px]">
-                    {formatNumber(dividedCount)}
-                  </span>
-                </h3>
-
-                {/*  */}
-
-                <h3 className="text-[16px] text-[#9d99a9] items-center font-semibold pb-4 flex flex-col">
-                  <span> Total Players:</span>
-                  <span className="text-[#fff] font-semibold text-[24px]">
-                    {formattedUsers}
-                  </span>
-                </h3>
-
-                {/*  */}
-
-                <h3 className="text-[16px] text-[#9d99a9] items-center font-semibold pb-4 flex flex-col">
-                  <span> Daily Users:</span>
-                  <span className="text-[#fff] font-semibold text-[24px]">
-                    {formattedDividedUsers}
-                  </span>
-                </h3>
-
-                {/*  */}
-
-                <h3 className="text-[16px] text-[#9d99a9] items-center font-semibold pb-4 flex flex-col">
-                  <span> Online Players:</span>
-                  <span className="text-[#fff] font-semibold text-[24px]">
-                    {formattedDividedUsers}
-                  </span>
-                </h3>
-
-                {/*  */}
+                <button onClick={favorite} className="text-white">
+                  {veicles[current].heart ? <HeartHandshake /> : <Heart />}
+                </button>
               </div>
             </div>
           </div>
-          <Outlet />
-        </Animate>
- 
-    </>
+
+          <div className="mt-8">
+            <span className="text-[#3CA4EB] bg-[#323B4F] flex justify-center items-center rounded-md w-32 h-12">
+              Description
+            </span>
+            <div className="mt-6 flex flex-col gap-2">
+              {veicles[current].title}
+              {veicles[current].description}
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
   );
 };
 
