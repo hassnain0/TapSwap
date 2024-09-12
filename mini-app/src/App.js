@@ -28,55 +28,47 @@ const Home = () => {
   }, []);
 
 
-    useEffect(() => {
-        tele.ready();
-        tele.expand();
-        
-        window.Telegram.WebApp.setHeaderColor('#191b33'); // Set header color to red
+  useEffect(() => {
+    tele.ready();
+    tele.expand();
 
-              // Haptic feedback
-      if (tele.HapticFeedback) {
-        tele.HapticFeedback.impactOccurred("medium");
-      }
+    window.Telegram.WebApp.setHeaderColor('#191b33'); // Set header color to red
+
+    // Haptic feedback
+    if (tele.HapticFeedback) {
+      tele.HapticFeedback.impactOccurred("medium");
+    }
 
 
-    }, []);
+  }, []);
 
-    
+
 
   return (
-<>
+    <>
 
-<div className="flex justify-center w-full">
+      <div className="flex justify-center w-full">
         <div className="flex justify-center w-full">
           <div className="flex flex-col w-full pt-8 space-y-3">
 
 
-            
 
-  
-      
-          <UserProvider>
-            <AnimatePresence mode="wait">
-            <Outlet />
-            </AnimatePresence>
+
+
+
+            <UserProvider>
+              <AnimatePresence mode="wait">
+                <Outlet />
+              </AnimatePresence>
             </UserProvider>
-       
-     
-          
-          
-
-
-
             <div id="footermain" className={`flex flex-col bg-[#1a1f2e] space-y-6 fixed bottom-0 py-6 left-0 right-0 justify-center items-center px-5`}>
 
-
-           <Footer/>
-           </div>
-           </div>
-           </div>
-           </div>
-           </>
+              <Footer />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -424,7 +424,6 @@ const Plutos = () => {
                   )}
                   {tapGuru && (
                     <Container>
-
                       <img
                         onPointerDown={handleClickGuru}
                         ref={imageRef}
@@ -460,12 +459,6 @@ const Plutos = () => {
               </div>
             </div>
             <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
-
-
-
-
-
-
           </div>
         </Animate>
       )}

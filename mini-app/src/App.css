@@ -104,141 +104,63 @@ body{
 
 
 }
-
-.spinner {
-  width: 160px;
-  height: 160px;
-  position: fixed;
-  border-radius: 1000px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh; /* Full viewport height */
+} 
+.loading {
+ --speed-of-animation: 1.2s;
+ --gap: 6px;
+ --first-color: #E39725;
+ --second-color: #E39725;
+ --third-color: #E39725;
+ --fourth-color: #E39725;
+ --fifth-color: #E39725;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ width: 100px;
+ gap: 6px;
+ height: 100px;
 }
 
-
-.spin1{
-
-  width: 140px;
-  border: 10px solid #383568;
-  height: 140px;
-  position: relative;
-  border-radius: 1000px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: spin 1.8s linear infinite;
+.loading span {
+ width: 50px;
+ height: 50px;
+ background: var(--first-color);
+ animation: scale var(--speed-of-animation) ease-in-out infinite;
 }
 
-.spin2{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-left-color: #8580cf;
-
+.loading span:nth-child(2) {
+ background: var(--second-color);
+ animation-delay: -0.8s;
 }
 
-.spin3{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-right-color: orange;
-  rotate: 70deg;
-  z-index: 10;
-
+.loading span:nth-child(3) {
+ background: var(--third-color);
+ animation-delay: -0.7s;
 }
 
-.spin4{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-right-color: orange;
-  rotate: 70deg;
-  z-index: 10;
-
+.loading span:nth-child(4) {
+ background: var(--fourth-color);
+ animation-delay: -0.6s;
 }
 
-.spin5{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-top-color: #383568;
-  rotate: 218deg;
-  z-index: 20;
-
+.loading span:nth-child(5) {
+ background: var(--fifth-color);
+ animation-delay: -0.5s;
 }
 
-.spin6{
+@keyframes scale {
+ 0%, 40%, 100% {
+  transform: scaleY(0.05);
+ }
 
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-top-color: #8580cf;
-  rotate: 275deg;
-  z-index: 20;
-
-}
-
-.spin7{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-top-color: #bcb4a7;
-  rotate: 32deg;
-  z-index: 30;
-}
-
-.spin8{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-top-color: #373568;
-  rotate: -28deg;
-  z-index: 30;
-
-}
-
-.spin9{
-
-  border: 10px solid #383568;
-  position: absolute;
-  width: 140px;
-  height: 140px;
-  border-color: transparent;
-  border-radius: 50%;
-  border-top-color: #373568;
-  rotate: 41deg;
-  z-index: 25;
-
+ 20% {
+  transform: scaleY(1);
+ }
 }
 
 .taskbg{

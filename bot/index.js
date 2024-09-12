@@ -5,8 +5,8 @@ const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://8892-2001-ee0-426b-5040-9189-7e54-3fa-e93c.ngrok-free.app/";
-const community_link = "https://t.me/web3hub_mkt";
+const web_link = "https://tap-swap-gqz2rt9xu-hassnain0s-projects.vercel.app";
+const community_link = "https://t.me/rockipointannouncement";
 
 
 bot.start((ctx) => {
