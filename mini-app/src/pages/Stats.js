@@ -106,7 +106,7 @@ const Stats = () => {
   }
 
   return (
-    <div className="h-screen bg-[#191B33] overflow-y-auto flex flex-col">
+    <div className="h-screen bg-[#1A1F2E] overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
         <header className="flex items-center justify-between w-full">
           <strong className="text-[#38B8EA] text-xl">Tickets: 0</strong>

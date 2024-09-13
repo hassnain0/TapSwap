@@ -1,8 +1,6 @@
 import { ChevronLeft } from "lucide-react"
-
 import polygonImage from "../assets/dollar.svg"
 import { Link } from "react-router-dom"
-
 export function ShoppingBag() {
     return (
         <div className="h-screen bg-[#242C3B] flex flex-col">
