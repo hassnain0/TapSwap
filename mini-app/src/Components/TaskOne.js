@@ -68,7 +68,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
 
 
   const handleTaskLinkClick = () => {
-    window.open("https://t.me/web3hubtest");
+    window.open("https://t.me/rockipoint");
 
     setTimeout(() => {
       setShowTaskButton(false);

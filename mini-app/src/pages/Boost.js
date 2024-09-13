@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Animate from "../Components/Animate";
 import { Outlet, useNavigate } from "react-router-dom";
-import coinsmall from "../images/coinsmall.webp";
 import battery3 from "../images/battery.webp";
 import multi from "../images/multi.webp";
 import flash from "../images/flash.webp";
@@ -431,7 +430,7 @@ const Boost = () => {
             </div>
             <div className="flex space-x-1 ml-[-8px] justify-center items-center">
               <div className="w-[50px] h-[50px]">
-                <img src={coinsmall} className="w-full" alt="coin" />
+                <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
               </div>
               <h1 className="text-[#fff] text-[42px] font-extrabold">
                 {formatNumber(balance + refBonus)}
@@ -525,7 +524,7 @@ const Boost = () => {
                     </span>
                     <div className="flex items-center space-x-1">
                       <span className="w-[20px] h-[20px]">
-                        <img src={coinsmall} className="w-full" alt="coin" />
+                        <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                       </span>
                       <span className="font-medium flex items-center">
                         <span className="text-[15px]">
@@ -577,7 +576,7 @@ const Boost = () => {
                     </span>
                     <div className="flex items-center space-x-1">
                       <span className="w-[20px] h-[20px]">
-                        <img src={coinsmall} className="w-full" alt="coin" />
+                        <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                       </span>
                       <span className="font-medium flex items-center">
                         <span className="text-[15px]">
@@ -629,7 +628,7 @@ const Boost = () => {
                     </span>
                     <div className="flex items-center space-x-1">
                       <span className="w-[20px] h-[20px]">
-                        <img src={coinsmall} className="w-full" alt="coin" />
+                        <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                       </span>
                       <span className="font-medium flex items-center">
                         <span className="text-[15px]">
@@ -675,7 +674,7 @@ const Boost = () => {
                     <span className="font-semibold text-[17px]">Tap Bot</span>
                     <div className="flex items-center space-x-1">
                       <span className="w-[20px] h-[20px]">
-                        <img src={coinsmall} className="w-full" alt="coin" />
+                        <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                       </span>
                       <span className="font-medium flex items-center">
                         <span className="text-[15px]">1 000 000</span>
@@ -728,7 +727,7 @@ const Boost = () => {
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
                     <img
-                      src={coinsmall}
+                      src={require('../images/coinsmall.png')}
                       className="w-[25px]"
                       alt="Coin Icon"
                     />
@@ -779,7 +778,7 @@ const Boost = () => {
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
                     <img
-                      src={coinsmall}
+                      src={require('../images/coinsmall.png')}
                       className="w-[25px]"
                       alt="Coin Icon"
                     />
@@ -830,7 +829,7 @@ const Boost = () => {
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
                     <img
-                      src={coinsmall}
+                      src={require('../images/coinsmall.png')}
                       className="w-[25px]"
                       alt="Coin Icon"
                     />
@@ -881,7 +880,7 @@ const Boost = () => {
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
                     <img
-                      src={coinsmall}
+                      src={require('../images/coinsmall.png')}
                       className="w-[25px]"
                       alt="Coin Icon"
                     />
@@ -931,7 +930,7 @@ const Boost = () => {
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
                     <img
-                      src={coinsmall}
+                      src={require('../images/coinsmall.png')}
                       className="w-[25px]"
                       alt="Coin Icon"
                     />
@@ -986,7 +985,7 @@ const Boost = () => {
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
                     <img
-                      src={coinsmall}
+                      src={require('../images/coinsmall.png')}
                       className="w-[25px]"
                       alt="Coin Icon"
                     />
