@@ -2,8 +2,8 @@ import React from "react";
 import ref from "../images/ref.webp";
 import boost from "../images/boost.webp";
 import tasks from "../images/tasks.webp";
-import stats from "../images/stats.webp";
 import coinsmall from "../images/coinsmall.webp";
+import lot from '../images/lot.svg'
 import { NavLink } from "react-router-dom";
 
 const Footer = () => {
@@ -92,8 +92,8 @@ ${
     `;
         }}
       >
-        <img src={stats} className="w-[24px]" alt="stats" />
-        <span className="font-medium">Stats</span>
+        <img src={lot} className="w-[24px]" alt="stats" />
+        <span className="font-medium">Lott</span>
       </NavLink>
     </div>
   );
