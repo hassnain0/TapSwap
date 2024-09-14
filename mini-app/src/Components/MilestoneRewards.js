@@ -4,13 +4,47 @@ import { db } from '../firebase';
 import { useUser } from '../context/userContext';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import congratspic from "../images/celebrate.gif";
-import coinsmall from "../images/coinsmall.webp";
+
 
 const milestones = [
-  { name: 'Bronze', icon: 'https://ucarecdn.com/074dadcb-6be1-47e7-92da-28d2bd3a9448/bronze.webp', tapBalanceRequired: 1000, reward: 50000 },
-  { name: 'Silver', icon: 'https://ucarecdn.com/6725a762-528a-4967-bde1-f4da9f4833ee/sliver.webp', tapBalanceRequired: 50000, reward: 100000 },
-  { name: 'Gold', icon: 'https://ucarecdn.com/06204717-97e6-4e54-86b7-6b17a6b59788/gold.webp', tapBalanceRequired: 500000, reward: 250000 },
+  {
+    name: 'Bronze',
+    icon: 'https://ucarecdn.com/074dadcb-6be1-47e7-92da-28d2bd3a9448/bronze.webp',
+    tapBalanceRequired: 1000,
+    reward: 50000
+  },
+  {
+    name: 'Silver',
+    icon: 'https://ucarecdn.com/6725a762-528a-4967-bde1-f4da9f4833ee/sliver.webp',
+    tapBalanceRequired: 50000,
+    reward: 100000
+  },
+  {
+    name: 'Gold',
+    icon: 'https://ucarecdn.com/06204717-97e6-4e54-86b7-6b17a6b59788/gold.webp',
+    tapBalanceRequired: 500000,
+    reward: 250000
+  },
+  {
+    name: 'Platinum',
+    icon: '/platinum.webp',
+    tapBalanceRequired: 1000000,
+    reward: 500000 // Estimated based on previous tiers
+  },
+  {
+    name: 'Diamond',
+    icon: '/diamond.webp',
+    tapBalanceRequired: 2500000,
+    reward: 1000000 // Estimated based on previous tiers
+  },
+  {
+    name: 'Master',
+    icon: '/master.webp',
+    tapBalanceRequired: 5000000,
+    reward: 2000000 // Estimated based on previous tiers
+  }
 ];
+
 
 const MilestoneRewards = () => {
   const { tapBalance, balance, setBalance, id, claimedMilestones, setClaimedMilestones } = useUser();

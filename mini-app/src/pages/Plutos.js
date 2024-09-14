@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Adjust the path as needed
 import styled, { keyframes } from "styled-components";
@@ -8,7 +8,6 @@ import Spinner from '../Components/Spinner';
 import { useUser } from '../context/userContext';
 import Levels from '../Components/Levels';
 import flash from "../images/flash.webp";
-
 
 const slideUp = keyframes`
   0% {
@@ -41,13 +40,9 @@ const Container = styled.div`
 `;
 
 const Plutos = () => {
-
-  console.log("process.env.REACT_APP_API_KEY", process.env.REACT_APP_API_KEY)
-
   const imageRef = useRef(null);
   const [clicks, setClicks] = useState([]);
   const { balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading } = useUser();
-
   // eslint-disable-next-line
   const [points, setPoints] = useState(0);
   // eslint-disable-next-line
@@ -180,6 +175,7 @@ const Plutos = () => {
       }
     }, 1000); // Set the inactivity period to 3 seconds (adjust as needed)
   };
+
   const handleClickGuru = (e) => {
     triggerHapticFeedback();
 
@@ -188,7 +184,7 @@ const Plutos = () => {
       setTimeout(() => {
         setGlowBooster(false); // Remove glow effect after 1 second
       }, 300);
-      return; // Exit if no energy left or if clicks are disabled or if an update is in progress
+      return;
     }
 
     const { offsetX, offsetY, target } = e.nativeEvent;
@@ -217,64 +213,67 @@ const Plutos = () => {
     // Add the new animation class
     imageRef.current.classList.add(animationClass);
 
-    // Remove the animation class after animation ends to allow re-animation on the same side
+    // Remove the animation class after animation ends
     setTimeout(() => {
       imageRef.current.classList.remove(animationClass);
-    }, 500); // duration should match the animation duration in CSS
+    }, 500);
 
     // Increment the count
     const rect = e.target.getBoundingClientRect();
     const newClick = {
-      id: Date.now(), // Unique identifier
+      id: Date.now(),
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     };
 
     setClicks((prevClicks) => [...prevClicks, newClick]);
 
-    // Update state immediately for UI
-    setEnergy((prevEnergy) => {
-      const newEnergy = Math.max(prevEnergy - 0, 0); // Ensure energy does not drop below zero
-      accumulatedEnergyRef.current = newEnergy;
-      return newEnergy;
-    });
+    let multiplier = 20; // Multiplier for the hold
+    let holdTime = 0; // Track how long the coin is held
+    const interval = setInterval(() => {
+      if (holdTime < 20) {
+        holdTime++;
+        const perTapEarnings = tapValue.value * multiplier; // Calculate earnings per second
 
-    setPoints((prevPoints) => prevPoints + tapValue.value * 5);
+        // Update state with earnings
+        setPoints((prevPoints) => prevPoints + perTapEarnings);
+        setBalance((prevBalance) => prevBalance + perTapEarnings);
+        setTapBalance((prevTapBalance) => prevTapBalance + perTapEarnings);
 
-    setBalance((prevBalance) => {
-      const newBalance = prevBalance + tapValue.value * 5;
-      accumulatedBalanceRef.current = newBalance;
-      return newBalance;
-    });
+        // Optionally show the earnings visually
+        setClicks((prevClicks) => [...prevClicks, { ...newClick, id: Date.now() }]);
+      } else {
+        clearInterval(interval); // Stop adding after 20 seconds
+      }
+    }, 1000); // Add earnings every 1 second
 
-    setTapBalance((prevTapBalance) => {
-      const newTapBalance = prevTapBalance + tapValue.value * 5;
-      accumulatedTapBalanceRef.current = newTapBalance;
-      return newTapBalance;
-    });
+    // Stop the interval when the user releases the pointer
+    const handlePointerUp = () => {
+      clearInterval(interval);
+      window.removeEventListener('pointerup', handlePointerUp);
+    };
+
+    window.addEventListener('pointerup', handlePointerUp);
 
     // Remove the click after the animation duration
     setTimeout(() => {
-      setClicks((prevClicks) =>
-        prevClicks.filter((click) => click.id !== newClick.id)
-      );
-    }, 1000); // Match this duration with the animation duration
+      setClicks((prevClicks) => prevClicks.filter((click) => click.id !== newClick.id));
+    }, 1000);
 
-
-    // Reset the debounce timer
+    // Reset debounce timer and refill timer as before
     clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(updateFirestore, 1000); // Adjust the delay as needed
+    debounceTimerRef.current = setTimeout(updateFirestore, 1000);
 
-    // Reset the refill timer
-    clearInterval(refillIntervalRef.current); // Stop refilling while the user is active
-    setIsRefilling(false); // Set refilling state to false
+    clearInterval(refillIntervalRef.current);
+    setIsRefilling(false);
     clearTimeout(refillTimeoutRef.current);
     refillTimeoutRef.current = setTimeout(() => {
       if (energy < battery.energy) {
         refillEnergy();
       }
-    }, 1000); // Set the inactivity period to 3 seconds (adjust as needed)
+    }, 1000);
   };
+
 
   const updateFirestore = async () => {
     const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
@@ -310,34 +309,6 @@ const Plutos = () => {
 
 
   const energyPercentage = (energy / battery.energy) * 100;
-
-
-  // const handleClaim = async () => {
-  //   const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
-  //   if (telegramUser) {
-  //     const { id: userId } = telegramUser;
-  //     const userRef = doc(db, 'telegramUsers', userId.toString());
-  //     try {
-  //       await updateDoc(userRef, {
-  //         balance: balance + points,
-  //         energy: energy,
-  //         tapBalance: tapBalance + points
-
-  //       });
-  //       setBalance((prevBalance) => prevBalance + points);
-  //       setTapBalance((prevTapBalance) => prevTapBalance + points);
-  //       localStorage.setItem('energy', energy);
-
-  //       if (energy <= 0) {
-  //         setIsTimerVisible(true);
-  //       }
-  //       console.log('Points claimed successfully');
-  //     } catch (error) {
-  //       console.error('Error updating balance and energy:', error);
-  //     }
-  //   }
-  //   openClaimer();
-  // };
 
 
 
@@ -391,8 +362,6 @@ const Plutos = () => {
                 <div class="after"></div>
               </div>
               <div className="w-[350px] h-[350px] relative flex items-center justify-center">
-                <img src='/lihgt.webp'
-                  alt='err' className={`absolute w-[330px] rotate-45 ${tapGuru ? 'block' : 'hidden'}`} />
 
                 <div className="image-container">
                   {mainTap && (

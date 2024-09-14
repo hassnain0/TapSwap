@@ -17,13 +17,13 @@ export const UserProvider = ({ children }) => {
   // const [totalBalance, setTotalBalance] = useState(0);
   const [tapBalance, setTapBalance] = useState(0);
   const [level, setLevel] = useState({ id: 1, name: "Bronze", imgUrl: '/bronze.webp' }); // Initial level as an object with id and name
-  const [tapValue, setTapValue] = useState({level: 1, value: 1});
-  const [timeRefill, setTimeRefill] = useState({level: 1, duration: 10, step: 600});
+  const [tapValue, setTapValue] = useState({ level: 1, value: 1 });
+  const [timeRefill, setTimeRefill] = useState({ level: 1, duration: 10, step: 600 });
   const [id, setId] = useState("");
   const [loading, setLoading] = useState(true);
   const [energy, setEnergy] = useState(500);
   const [openInfoTwo, setOpenInfoTwo] = useState(false);
-  const [battery, setBattery] = useState({level: 1, energy: 500});
+  const [battery, setBattery] = useState({ level: 1, energy: 500 });
   const [initialized, setInitialized] = useState(false);
   const [refBonus, SetRefBonus] = useState(0);
   const [manualTasks, setManualTasks] = useState([]);
@@ -62,10 +62,10 @@ export const UserProvider = ({ children }) => {
   const refillSteps = timeRefill.step; // Number of increments
   const incrementValue = refiller / refillSteps; // Amount to increment each step
   const defaultEnergy = refiller; // Default energy value
-  
+
   const refillEnergy = () => {
     if (isRefilling) return;
-  
+
     setIsRefilling(true);
     refillIntervalRef.current = setInterval(() => {
       setEnergy((prevEnergy) => {
@@ -81,29 +81,29 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem('lastRefillTime', Date.now()); // Save the current time
           console.log('Energy saved to local storage:', newEnergy); // Log the energy value saved to local storage
         }
-  
+
         return newEnergy;
       });
     }, refillDuration / refillSteps); // Increase energy at each step
   };
-  
+
   useEffect(() => {
     if (energy < refiller && !isRefilling) {
       refillEnergy();
       // console.log('REFILLER IS', refiller)
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [energy, isRefilling]);
-  
+
   useEffect(() => {
     return () => {
       clearInterval(refillIntervalRef.current);
     };
   }, []);
-  
 
-  
-  
+
+
+
 
 
   useEffect(() => {
@@ -183,11 +183,11 @@ export const UserProvider = ({ children }) => {
           timeSta: null,
           timeStaTank: null,
           timeSpin: new Date(),
-          tapValue: {level: 1, value: 1},
-          timeRefill: {level: 1, duration: 10, step: 600},
+          tapValue: { level: 1, value: 1 },
+          timeRefill: { level: 1, duration: 10, step: 600 },
           level: { id: 1, name: "Bronze", imgUrl: '/bronze.webp' }, // Set the initial level with id and name
           energy: 500,
-          battery: {level: 1, energy: 500},
+          battery: { level: 1, energy: 500 },
           refereeId: referrerId || null,
           referrals: []
         };
@@ -218,7 +218,7 @@ export const UserProvider = ({ children }) => {
             console.log('Referrer updated in Firestore');
           }
         }
-        
+
         setInitialized(true);
         setLoading(false);
         fetchData(userId.toString()); // Fetch data for the new user
@@ -332,35 +332,35 @@ export const UserProvider = ({ children }) => {
       console.log(`User level updated to ${newLevel.name}`);
     }
   };
-  
+
 
 
 
 
   useEffect(() => {
     sendUserData();
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (id) {
       const storedEnergy = localStorage.getItem('energy');
       const lastRefillTime = localStorage.getItem('lastRefillTime');
-    
+
       if (storedEnergy && lastRefillTime) {
         const energyValue = Number(storedEnergy);
         const lastTime = Number(lastRefillTime);
-    
+
         if (!isNaN(energyValue) && energyValue >= 0 && !isNaN(lastTime) && lastTime > 0) {
           const elapsedTime = Date.now() - lastTime;
           const elapsedSteps = Math.floor(elapsedTime / (refillDuration / refillSteps));
           const restoredEnergy = Math.min(energyValue + elapsedSteps * incrementValue, refiller);
-    
+
           if (!isNaN(restoredEnergy) && restoredEnergy >= 0) {
             setEnergy(restoredEnergy);
             localStorage.setItem('energy', restoredEnergy); // Update the stored energy
             localStorage.setItem('lastRefillTime', Date.now()); // Update the last refill time
-    
+
             if (restoredEnergy < refiller) {
               setIsRefilling(false);
               refillEnergy();
@@ -386,17 +386,17 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem('energy', defaultEnergy);
         localStorage.setItem('lastRefillTime', Date.now());
       }
-  
+
       fetchData(id);
       console.log('MY REFIILER IS:', refiller)
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [id]);
 
   const checkAndUpdateFreeGuru = async () => {
     const userRef = doc(db, 'telegramUsers', id.toString());
     const userDoc = await getDoc(userRef);
-  
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const lastDate = userData.timeSta.toDate(); // Convert Firestore timestamp to JS Date
@@ -407,7 +407,7 @@ export const UserProvider = ({ children }) => {
       // console.log('timesta is:', lastDate)
       // console.log('current time is:', currentDate)
       // console.log('time difference is:', timeDifference)
-  
+
       if (formattedDates !== formattedCurrentDates && userData.freeGuru <= 0) {
         await updateDoc(userRef, {
           freeGuru: 3,
@@ -422,7 +422,7 @@ export const UserProvider = ({ children }) => {
   const checkAndUpdateFullTank = async () => {
     const userRef = doc(db, 'telegramUsers', id.toString());
     const userDoc = await getDoc(userRef);
-  
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const lastDateTank = userData.timeStaTank.toDate(); // Convert Firestore timestamp to JS Date
@@ -436,7 +436,7 @@ export const UserProvider = ({ children }) => {
       console.log('current time is:', currentDate)
       console.log('formatted current time is:', formattedCurrentDate)
       // console.log('time difference is:', timeDifference)
-  
+
       if (formattedDate !== formattedCurrentDate && userData.fullTank <= 0) {
         await updateDoc(userRef, {
           fullTank: 3,
@@ -539,14 +539,14 @@ export const UserProvider = ({ children }) => {
     return count / 4;
   };
 
-  
+
   // Call this function when appropriate, such as on component mount or before handleClick
   useEffect(() => {
     if (id) {
-    checkAndUpdateFreeGuru();
-    checkAndUpdateFullTank();
+      checkAndUpdateFreeGuru();
+      checkAndUpdateFullTank();
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [id]);
 
 
@@ -555,9 +555,9 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (id) {
       updateUserLevel(id, tapBalance);
-    
+
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [tapBalance, id]);
 
   useEffect(() => {
@@ -580,7 +580,7 @@ export const UserProvider = ({ children }) => {
       setTaskCompleted,
       taskCompleted2,
       setTaskCompleted2,
-      setFullTank, 
+      setFullTank,
       timeStaTank,
       setTimeStaTank,
       timeSta,
@@ -649,8 +649,8 @@ export const UserProvider = ({ children }) => {
       username,
       setUsername,
       openInfoTwo,
-      setOpenInfoTwo 
-      }}>
+      setOpenInfoTwo
+    }}>
       {children}
     </UserContext.Provider>
   );

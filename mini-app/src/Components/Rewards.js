@@ -6,7 +6,6 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import congratspic from "../images/celebrate.gif";
 import Animate from '../Components/Animate';
 import ref from "../images/ref.webp";
-import coinsmall from "../images/coinsmall.webp";
 
 const friendsRewards = [
   { title: 'Invite 3 friends', referralsRequired: 3, bonusAward: 50000 },

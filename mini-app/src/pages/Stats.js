@@ -3,15 +3,8 @@ import { useState } from "react"
 import Cart from "../assets/lottery-cards/car.svg"
 import Moto from "../assets/lottery-cards/biclycle.svg"
 import Phone from "../assets/lottery-cards/phone.svg"
-import Dolar from "../assets/lottery-cards/dolar.svg"
 import Notebook from "../assets/lottery-cards/notebook.svg"
-import car from "../assets/lottery-buttons/car.svg"
-import bicycle from "../assets/lottery-buttons/bicycle.svg"
-import dolar from "../assets/lottery-buttons/dolar.svg"
-import notebook from "../assets/lottery-buttons/notebook.svg"
-import phone from "../assets/lottery-buttons/phone.svg"
 import { Link } from "react-router-dom"
-import ActiveButton from '../Components/activeButton'
 const veicles = [
   {
     name: "Rolls Royace",
@@ -92,7 +85,7 @@ const veicles = [
 ]
 
 const Stats = () => {
-  const [current, setCurrent] = useState(0);
+  const [current] = useState(0);
 
   function favorite() {
     veicles.map((veic, index) => {

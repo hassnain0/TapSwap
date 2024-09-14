@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useUser } from '../context/userContext';
-
 const userLevels = [
   { name: 'Bronze', icon: '/bronze.webp', tapBalanceRequired: 1000 },
   { name: 'Silver', icon: '/sliver.webp', tapBalanceRequired: 50000 },
@@ -10,8 +9,6 @@ const userLevels = [
   { name: 'Diamond', icon: '/diamond.webp', tapBalanceRequired: 2500000 },
   { name: 'Master', icon: '/master.webp', tapBalanceRequired: 5000000 },
 ];
-
-
 const Levels = ({ showLevels, setShowLevels }) => {
   const { tapBalance } = useUser();
   const initialLevelIndex = userLevels.findIndex(level => tapBalance < level.tapBalanceRequired);
@@ -150,5 +147,4 @@ const Levels = ({ showLevels, setShowLevels }) => {
     </>
   );
 }
-
 export default Levels;

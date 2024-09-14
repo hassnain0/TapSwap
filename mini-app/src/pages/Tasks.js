@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
 import taskbook from "../images/taskbook.webp";
-import loadingGif from "../images/loading.gif";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
@@ -321,7 +320,7 @@ const Tasks = () => {
                   className={`${activeIndex === 1 ? "bg-cards" : ""
                     }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
-                  Special
+                  Social
                 </div>
 
                 <div
