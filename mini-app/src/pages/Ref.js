@@ -13,7 +13,7 @@ const Ref = () => {
   const [copied, setCopied] = useState(false);
 
   const copyToClipboard = () => {
-    const reflink = `https://t.me/rockipoint?start=r${id}`;
+    const reflink = `https://t.me/Rockipointbot?start=r${id}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(reflink)
@@ -79,7 +79,7 @@ const Ref = () => {
                   </span>
                 </span>
                 <div className="text-[#9a96a6] text-[13px]">
-                  https://t.me/rockipoint?start=r{id}
+                https://t.me/Rockipointbot?start=r{id}
                 </div>
               </div>
               <div className="bg-borders w-full px-5 h-[1px] !mt-4"></div>
@@ -124,7 +124,7 @@ const Ref = () => {
 
                                 <span className="w-[20px]">
                                   <img
-                                    src={coinsmall}
+                                    src={require('../images/coinsmall.png')}
                                     className="w-full"
                                     alt="coin"
                                   />

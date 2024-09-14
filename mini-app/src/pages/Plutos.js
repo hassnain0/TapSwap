@@ -8,8 +8,6 @@ import Spinner from '../Components/Spinner';
 import { useUser } from '../context/userContext';
 import Levels from '../Components/Levels';
 import flash from "../images/flash.webp";
-import coinsmall from "../images/coinsmall.webp";
-
 
 
 const slideUp = keyframes`

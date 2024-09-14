@@ -68,7 +68,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
 
 
   const handleTaskLinkClick = () => {
-    window.open("https://t.me/rockipoint");
+    window.open("https://t.me/rockipointannouncement");
 
     setTimeout(() => {
       setShowTaskButton(false);
@@ -231,7 +231,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
               <div className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center">
                 <div className="flex items-center flex-1 space-x-2">
                   <div className="">
-                    <img src={coinsmall} className="w-[50px]" alt="Coin Icon" />
+                    <img src={require('../images/coinsmall.png')} className="w-[50px]" alt="Coin Icon" />
                   </div>
                   <div className="flex flex-col space-y-1">
                     <span className="font-semibold">Reward</span>
@@ -348,7 +348,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
                   <div className="flex items-center flex-1 space-x-2">
                     <div className="">
                       <img
-                        src={coinsmall}
+                        src={require('../images/coinsmall.png')}
                         className="w-[25px]"
                         alt="Coin Icon"
                       />

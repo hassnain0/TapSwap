@@ -181,7 +181,7 @@ const Tasks = () => {
           }
           return task;
         })
-      ); 
+      );
       setTasks(tasksInit);
     };
     fetchTasks();
@@ -318,27 +318,24 @@ const Tasks = () => {
               <div className="w-full border-[1px] border-borders rounded-[10px] p-1 flex items-center">
                 <div
                   onClick={() => handleMenu(1)}
-                  className={`${
-                    activeIndex === 1 ? "bg-cards" : ""
-                  }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                  className={`${activeIndex === 1 ? "bg-cards" : ""
+                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Special
                 </div>
 
                 <div
                   onClick={() => handleMenu(2)}
-                  className={`${
-                    activeIndex === 2 ? "bg-cards" : ""
-                  }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                  className={`${activeIndex === 2 ? "bg-cards" : ""
+                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Leagues
                 </div>
 
                 <div
                   onClick={() => handleMenu(3)}
-                  className={`${
-                    activeIndex === 3 ? "bg-cards" : ""
-                  }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                  className={`${activeIndex === 3 ? "bg-cards" : ""
+                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Ref Tasks
                 </div>
@@ -347,9 +344,8 @@ const Tasks = () => {
 
             <div className="!mt-[204px] w-full h-[60vh] flex flex-col overflow-y-auto pb-[160px]">
               <div
-                className={`${
-                  activeIndex === 1 ? "flex" : "hidden"
-                } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 1 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
               >
                 <div
                   onClick={taskTelegram}
@@ -428,9 +424,8 @@ const Tasks = () => {
               {/*  */}
 
               <div
-                className={`${
-                  activeIndex === 2 ? "flex" : "hidden"
-                } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 2 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
               >
                 <MilestoneRewards />
               </div>
@@ -438,9 +433,8 @@ const Tasks = () => {
               {/*  */}
 
               <div
-                className={`${
-                  activeIndex === 3 ? "flex" : "hidden"
-                } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 3 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
               >
                 <ReferralRewards />
               </div>
@@ -465,11 +459,10 @@ const Tasks = () => {
             </div>
 
             <div
-              className={`${
-                congrats === true
+              className={`${congrats === true
                   ? "visible bottom-6"
                   : "invisible bottom-[-10px]"
-              } z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}
+                } z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}
             >
               <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
                 <IoCheckmarkCircle size={24} className="" />
