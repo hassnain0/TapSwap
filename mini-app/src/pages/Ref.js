@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
 import { IoCheckmarkCircle } from "react-icons/io5";
-
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { db } from "../firebase";
 import {
@@ -14,26 +13,25 @@ import {
   setDoc,
 } from "firebase/firestore";
 import Spinner from "../Components/Spinner";
-import ClaimLeveler from "../Components/ClaimLeveler";
-import Levels from "../Components/Levels";
+
 // import TaskTwo from '../Components/TaskTwo';
 import congratspic from "../images/celebrate.gif";
 import { useUser } from "../context/userContext";
-import MilestoneRewards from "../Components/MilestoneRewards";
-import TaskTelegram from "../Components/Task/TaskTelegram";
-import TaskTw from "../Components/Task/TaskTw";
 
 const Ref = () => {
   const {
     id,
     balance,
     setBalance,
-    refBonus,
-    referrals,
     level,
+    referrals,
+    refBonus,
     setTaskCompleted,
-    taskCompleted2,
     setTaskCompleted2,
+    user,
+    username,
+    userNo,
+    allUsersData,
   } = useUser();
   // eslint-disable-next-line
   const [loading, setLoading] = useState(false);
@@ -41,7 +39,10 @@ const Ref = () => {
   const [showTaskTw, setShowTaskTw] = useState(false);
   // eslint-disable-next-line
   const [claimLevel, setClaimLevel] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
+
+  const [leaderboardData, setLeaderboardData] = useState([]);
   // eslint-disable-next-line
   const [message, setMessage] = useState("");
   const taskID = "task_tele_1"; // Assign a unique ID to this task
@@ -54,6 +55,7 @@ const Ref = () => {
 
   const [activeIndex, setActiveIndex] = useState(1);
 
+  const [totalUsers, setTotalUsers] = useState(0);
   const handleMenu = (index) => {
     setActiveIndex(index);
   };
@@ -163,6 +165,38 @@ const Ref = () => {
   ];
 
   useEffect(() => {
+    const formatBalance = (balance) => {
+      if (balance >= 1_000_000) {
+        return `${(balance / 1_000_000).toFixed(1)}M`;
+      } else if (balance >= 1_000) {
+        return `${(balance / 1_000).toFixed(1)}K`;
+      } else {
+        return balance.toString();
+      }
+    };
+
+   const getLeaderboardData = (users) => {
+  // Sort users by balance in descending order
+  const sortedUsers = users.sort((a, b) => b.balance - a.balance);
+
+  // Take only the first 300 users
+  const topUsers = sortedUsers.slice(0, 300);
+
+  // Map over the top users to format their data
+  return topUsers.map((user) => ({
+    initials: user.username.substring(0, 2).toUpperCase(),
+    name: user.username,
+    rocks: formatBalance(user.balance),
+  }));
+};
+setTotalUsers(formatBalance(allUsersData.length));
+  setLeaderboardData(getLeaderboardData(allUsersData));
+
+  }, [allUsersData]);
+
+
+
+  useEffect(() => {
     const fetchTasks = async () => {
       const tasksInit = await Promise.all(
         listTasks.map(async (task) => {
@@ -256,6 +290,9 @@ const Ref = () => {
         if (doc.data().userId === id) {
           userDocId = doc.id;
         }
+        if (doc.data().username && doc.data().totalBalance) {
+          username = doc.data().username;
+        }
       });
 
       if (userDocId) {
@@ -267,6 +304,48 @@ const Ref = () => {
       }
     } catch (e) {
       console.error("Error updating user count in Firestore: ", e);
+    }
+  };
+
+
+  //Get Random colors function
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+
+
+  const copyToClipboard = () => {
+    const reflink = `https://t.me/Rockipointbot?start=r${id}`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(reflink)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 10000); // Reset the copied state after 2 seconds
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    } else {
+      // Fallback method
+      const textArea = document.createElement("textarea");
+      textArea.value = reflink;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+      } catch (err) {
+        console.error("Failed to copy", err);
+      }
+      document.body.removeChild(textArea);
     }
   };
 
@@ -315,7 +394,7 @@ const Ref = () => {
                 <div
                   onClick={() => handleMenu(1)}
                   className={`${activeIndex === 1 ? "bg-cards" : ""
-                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                    }  rounded-[6px] py-[12px] px-3 w-[50%] flex justify-center text-center items-center`}
                 >
                   Referrals
                 </div>
@@ -323,7 +402,7 @@ const Ref = () => {
                 <div
                   onClick={() => handleMenu(2)}
                   className={`${activeIndex === 2 ? "bg-cards" : ""
-                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                    }  rounded-[6px] py-[12px] px-3 w-[50%] flex justify-center text-center items-center`}
                 >
                   LeaderBoard
                 </div>
@@ -332,75 +411,90 @@ const Ref = () => {
             </div>
 
             <div className="!mt-[204px] w-full h-[60vh] flex flex-col overflow-y-auto pb-[160px]">
+              {activeIndex == 1 && (
+                <div className="w-full bg-cards rounded-[12px] px-3 py-3 flex flex-col">
+                  <span className="flex items-center justify-between w-full pb-2">
+                    <h2 className="text-[18px] font-semibold">My invite link:</h2>
+                    <span
+                      onClick={copyToClipboard}
+                      className="bg-gradient-to-b from-[#094e9d] to-[#0b62c4] font-medium py-[6px] px-4 rounded-[12px] flex items-center justify-center text-[16px]"
+                    >
+                      {copied ? <span>Copied!</span> : <span>Copy</span>}
+                    </span>
+                  </span>
+                  <div className="text-[#9a96a6] text-[13px]">
+                    https://t.me/Rockipointbot?start=r{id}
+                  </div>
+                </div>
+              )}
               <div
-                className={`${activeIndex === 1 ? "flex" : "hidden"
-                  } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 1 ? "flex" : "hidden"} alltaskscontainer flex-col w-full space-y-2`}
               >
 
-<div className="flex flex-col w-full">
-                <h3 className="text-[22px] font-semibold pb-[16px]">
-                  My Referrals:
-                </h3>
+                <div className="flex flex-col w-full mt-9">
+                  <h3 className="text-[22px] font-semibold pb-[16px]">
+                    My Referrals:
+                  </h3>
 
-                <div className="flex flex-col w-full space-y-3">
-                  {loading ? (
-                    <p className="w-full text-center">checking...</p>
-                  ) : referrals.length === 0 ? (
-                    <p className="text-center w-full now pt-8 px-5 text-[14px] leading-[24px]">
-                      You don't have referrals
-                    </p>
-                  ) : (
-                    <div className="w-full h-[60vh] flex flex-col overflow-y-auto pb-[80px]">
-                      {referrals.map((user, index) => (
-                        <>
-                          <div
-                            key={index}
-                            className="bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center mt-1"
-                          >
-                            <div className="flex flex-col flex-1 space-y-1">
-                              <div className="text-[#fff] pl-1 text-[16px] font-semibold">
-                                {user.username}
-                              </div>
-
-                              <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
-                                <div className="">
-                                  <img
-                                    src={user.level.imgUrl}
-                                    alt="bronze"
-                                    className="w-[18px]"
-                                  />
+                  <div className="flex flex-col w-full space-y-3">
+                    {loading ? (
+                      <p className="w-full text-center">checking...</p>
+                    ) : referrals.length === 0 ? (
+                      <p className="text-center w-full now pt-8 px-5 text-[14px] leading-[24px]">
+                        You don't have referrals
+                      </p>
+                    ) : (
+                      <div className="w-full h-[60vh] flex flex-col overflow-y-auto pb-[80px]">
+                        {referrals.map((user, index) => (
+                          <>
+                            <div
+                              key={index}
+                              className="bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center mt-1"
+                            >
+                              <div className="flex flex-col flex-1 space-y-1">
+                                <div className="text-[#fff] pl-1 text-[16px] font-semibold">
+                                  {user.username}
                                 </div>
-                                <span className="font-medium text-[#9a96a6]">
-                                  {user.level.name}
-                                </span>
-                                <span className="bg-[#bdbdbd] w-[1px] h-[13px] mx-2"></span>
 
-                                <span className="w-[20px]">
-                                  <img
-                                    src={require('../images/coinsmall.png')}
-                                    className="w-full"
-                                    alt="coin"
-                                  />
-                                </span>
-                                <span className="font-normal text-[#ffffff] text-[15px]">
-                                  {formatNumber(user.balance)}
-                                </span>
+                                <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
+                                  <div className="">
+                                    <img
+                                      src={user.level.imgUrl}
+                                      alt="bronze"
+                                      className="w-[18px]"
+                                    />
+                                  </div>
+                                  <span className="font-medium text-[#9a96a6]">
+                                    {user.level.name}
+                                  </span>
+                                  <span className="bg-[#bdbdbd] w-[1px] h-[13px] mx-2"></span>
+
+                                  <span className="w-[20px]">
+                                    <img
+                                      src={require('../images/coinsmall.png')}
+                                      className="w-full"
+                                      alt="coin"
+                                    />
+                                  </span>
+                                  <span className="font-normal text-[#ffffff] text-[15px]">
+                                    {formatNumber(user.balance)}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="text-[#ffce68] font-semibold text-[14px]">
+                                +{formatNumber((user.balance / 100) * 10)}
+                              </div>
+                              <div className="flex w-full mt-2 p-[4px] items-center bg-energybar rounded-[10px] border-[1px] border-borders">
+                                <div className="h-[10px] rounded-[8px] bg-btn w-[.5%]"></div>
                               </div>
                             </div>
-
-                            <div className="text-[#ffce68] font-semibold text-[14px]">
-                              +{formatNumber((user.balance / 100) * 10)}
-                            </div>
-                            <div className="flex w-full mt-2 p-[4px] items-center bg-energybar rounded-[10px] border-[1px] border-borders">
-                              <div className="h-[10px] rounded-[8px] bg-btn w-[.5%]"></div>
-                            </div>
-                          </div>
-                        </>
-                      ))}
-                    </div>
-                  )}
+                          </>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
 
 
                 {/*  */}
@@ -412,35 +506,75 @@ const Ref = () => {
                 className={`${activeIndex === 2 ? "flex" : "hidden"
                   } alltaskscontainer flex-col w-full space-y-2`}
               >
-                <MilestoneRewards />
+                <div
+                  className={`${activeIndex === 2 ? "flex" : "hidden"
+                    } alltaskscontainer flex-col w-full space-y-2`}
+                >
+                  <div className="w-full flex justify-between items-center bg-[#17436E] p-3 rounded-lg">
+                    <div className="flex items-center space-x-4">
+                      {/* Random Avatar */}
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-white"
+                        style={{ backgroundColor: getRandomColor() }}
+                      >
+                        XG
+                      </div>
+                      <div>
+                        <p className="text-white font-semibold">{username}</p>
+                        <p className="text-white-bold text-sm"> {balance} Rocks</p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-bold">No. {userNo}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col w-full mt-9">
+                    <p className="text-white font-bold mt-4">{totalUsers} Holders</p>
+                  </div>
+
+                  {/* Leaderboard items */}
+                  <div className="space-y-2">
+                    {leaderboardData.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center p-3 bg-[#1F2942] rounded-lg"
+                      >
+                        <div className="flex items-center space-x-4">
+                          {/* Random Color Avatar */}
+                          <div
+                            className="w-8 h-8 rounded-full flex items-center justify-center text-white"
+                            style={{ backgroundColor: getRandomColor() }}
+                          >
+                            {item.initials}
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold">{item.name}</p>
+                            <p className="text-white text-sm">{item.rocks} Rocks</p>
+                          </div>
+                        </div>
+                        <div>
+                          {/* Trophy icon */}
+                          <img
+                            src={require('../images/Vector.png')}
+                            style={{ width: '15px', height: '15px' }}
+                            alt="vector"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
               </div>
 
               {/*  */}
 
             </div>
-
-            <TaskTelegram
-              showModal={showTaskTelegram}
-              setShowModal={setShowTaskTelegram}
-            />
-            <TaskTw showModal={showTaskTw} setShowModal={setShowTaskTw} />
-
-            <ClaimLeveler
-              claimLevel={claimLevel}
-              setClaimLevel={setClaimLevel}
-            />
-            <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
-            {/*  */}
-            <div className="w-full absolute top-[-35px] left-0 right-0 flex justify-center z-20 pointer-events-none select-none">
-              {congrats ? (
-                <img src={congratspic} alt="congrats" className="w-[80%]" />
-              ) : null}
-            </div>
-
             <div
               className={`${congrats === true
-                  ? "visible bottom-6"
-                  : "invisible bottom-[-10px]"
+                ? "visible bottom-6"
+                : "invisible bottom-[-10px]"
                 } z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}
             >
               <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">

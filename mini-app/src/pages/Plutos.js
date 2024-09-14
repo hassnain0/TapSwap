@@ -63,6 +63,10 @@ const Plutos = () => {
   const accumulatedTapBalanceRef = useRef(tapBalance);
   const refillTimeoutRef = useRef(null); // Add this line
 
+  const [isHolding, setIsHolding] = useState(false);
+  const [holdTimeout, setHoldTimeout] = useState(null);
+  const [isHoldingLongEnough, setIsHoldingLongEnough] = useState(false);
+  const baseTapValue = tapValue.value;
 
   function triggerHapticFeedback() {
     const isAndroid = /Android/i.test(navigator.userAgent);
@@ -78,103 +82,76 @@ const Plutos = () => {
     }
   }
 
+  const handleHoldStart = (e) => {
+    setIsHolding(true);
 
+    // Set a timeout to detect if the user holds for 20 seconds
+    const timeout = setTimeout(() => {
+      setIsHoldingLongEnough(true); // Flag to increase points after 20 seconds
+    }, 20000); // 20 seconds
+
+    setHoldTimeout(timeout);
+  };
+
+  const handleHoldEnd = () => {
+    setIsHolding(false);
+
+    // Clear the timeout if the user releases before 20 seconds
+    clearTimeout(holdTimeout);
+    setHoldTimeout(null);
+
+    // Reset the holding state after releasing
+    setIsHoldingLongEnough(false);
+  };
 
 
   const handleClick = (e) => {
     triggerHapticFeedback();
 
     if (energy <= 0 || isDisabled || isUpdatingRef.current) {
-      setGlowBooster(true); // Trigger glow effect if energy and points are 0
-      setTimeout(() => {
-        setGlowBooster(false); // Remove glow effect after 1 second
-      }, 300);
-      return; // Exit if no energy left or if clicks are disabled or if an update is in progress
+      setGlowBooster(true);
+      setTimeout(() => setGlowBooster(false), 300);
+      return;
     }
 
-    const { offsetX, offsetY, target } = e.nativeEvent;
-    const { clientWidth, clientHeight } = target;
+    // Calculate the correct tap value
+    const currentTapValue = isHoldingLongEnough ? baseTapValue * 20 : baseTapValue;
 
-    const horizontalMidpoint = clientWidth / 2;
-    const verticalMidpoint = clientHeight / 2;
-
-    const animationClass =
-      offsetX < horizontalMidpoint
-        ? 'wobble-left'
-        : offsetX > horizontalMidpoint
-          ? 'wobble-right'
-          : offsetY < verticalMidpoint
-            ? 'wobble-top'
-            : 'wobble-bottom';
-
-    // Remove previous animations
-    imageRef.current.classList.remove(
-      'wobble-top',
-      'wobble-bottom',
-      'wobble-left',
-      'wobble-right'
-    );
-
-    // Add the new animation class
-    imageRef.current.classList.add(animationClass);
-
-    // Remove the animation class after animation ends to allow re-animation on the same side
-    setTimeout(() => {
-      imageRef.current.classList.remove(animationClass);
-    }, 500); // duration should match the animation duration in CSS
-
-    // Increment the count
+    // Increment the count and handle animation
     const rect = e.target.getBoundingClientRect();
     const newClick = {
-      id: Date.now(), // Unique identifier
+      id: Date.now(),
       x: e.clientX - rect.left,
       y: e.clientY - rect.top,
     };
 
     setClicks((prevClicks) => [...prevClicks, newClick]);
 
-    // Update state immediately for UI
-    setEnergy((prevEnergy) => {
-      const newEnergy = Math.max(prevEnergy - tapValue.value, 0); // Ensure energy does not drop below zero
-      accumulatedEnergyRef.current = newEnergy;
-      return newEnergy;
-    });
+    // Update energy, points, and balances using the adjusted tap value
+    setEnergy((prevEnergy) => Math.max(prevEnergy - currentTapValue, 0));
+    setPoints((prevPoints) => prevPoints + currentTapValue);
+    setBalance((prevBalance) => prevBalance + currentTapValue);
+    setTapBalance((prevTapBalance) => prevTapBalance + currentTapValue);
 
-    setPoints((prevPoints) => prevPoints + tapValue.value);
-
-    setBalance((prevBalance) => {
-      const newBalance = prevBalance + tapValue.value;
-      accumulatedBalanceRef.current = newBalance;
-      return newBalance;
-    });
-
-    setTapBalance((prevTapBalance) => {
-      const newTapBalance = prevTapBalance + tapValue.value;
-      accumulatedTapBalanceRef.current = newTapBalance;
-      return newTapBalance;
-    });
-
-    // Remove the click after the animation duration
     setTimeout(() => {
       setClicks((prevClicks) =>
         prevClicks.filter((click) => click.id !== newClick.id)
       );
-    }, 1000); // Match this duration with the animation duration
+    }, 1000);
 
-    // Reset the debounce timer
     clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(updateFirestore, 1000); // Adjust the delay as needed
+    debounceTimerRef.current = setTimeout(updateFirestore, 1000);
 
-    // Reset the refill timer
-    clearInterval(refillIntervalRef.current); // Stop refilling while the user is active
-    setIsRefilling(false); // Set refilling state to false
+    clearInterval(refillIntervalRef.current);
+    setIsRefilling(false);
     clearTimeout(refillTimeoutRef.current);
     refillTimeoutRef.current = setTimeout(() => {
       if (energy < battery.energy) {
         refillEnergy();
       }
-    }, 1000); // Set the inactivity period to 3 seconds (adjust as needed)
+    }, 1000);
   };
+
 
   const handleClickGuru = (e) => {
     triggerHapticFeedback();
@@ -356,7 +333,7 @@ const Plutos = () => {
             </div>
             <div className="relative flex items-center justify-center w-full pb-24 pt-7">
 
-              <div className="bg-[#efc26999] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] top-10 -left-40 rounded-full"></div>
+              <div className="bg-[#35389e] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] top-10 -left-40 rounded-full"></div>
               <div class={`${tapGuru ? 'block' : 'hidden'} pyro`}>
                 <div class="before"></div>
                 <div class="after"></div>
@@ -367,7 +344,9 @@ const Plutos = () => {
                   {mainTap && (
                     <Container>
                       <img
-                        onPointerDown={handleClick}
+                        onPointerDown={handleHoldStart}
+                        onPointerUp={handleHoldEnd}
+                        onClick={handleClick} // Detect normal clicks too
                         ref={imageRef}
                         src={require('../images/bcen.png')}
                         alt="Wobble"

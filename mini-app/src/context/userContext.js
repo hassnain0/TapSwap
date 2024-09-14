@@ -46,6 +46,7 @@ export const UserProvider = ({ children }) => {
   const [timeStaTank, setTimeStaTank] = useState(null);
   const [timeSpin, setTimeSpin] = useState(new Date());
   const [username, setUsername] = useState("");
+  const [userNo, setUserNo] = useState(0);
   // eslint-disable-next-line
   const [idme, setIdme] = useState("");
   const [totalCount, setTotalCount] = useState(0);
@@ -54,6 +55,7 @@ export const UserProvider = ({ children }) => {
   const [dividedUsers, setDividedUsers] = useState(0);
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [taskCompleted2, setTaskCompleted2] = useState(false);
+  const [allUsersData, setAllUsersData] = useState([]);
 
   const refillIntervalRef = useRef(null);
   const accumulatedEnergyRef = useRef(energy);
@@ -153,6 +155,7 @@ export const UserProvider = ({ children }) => {
           setTimeSta(userData.timeSta);
           setTimeStaTank(userData.timeStaTank);
           setTimeSpin(userData.timeSpin);
+          setUserNo(userData.userNo)
           setClaimedMilestones(userData.claimedMilestones || []);
           setClaimedReferralRewards(userData.claimedReferralRewards || []);
           // setEnergy(userData.energy);
@@ -165,6 +168,7 @@ export const UserProvider = ({ children }) => {
           await updateReferrals(userRef);
           setInitialized(true);
           setLoading(false);
+          setUserNo(userData.userNo)
           fetchData(userData.userId); // Fetch data for the existing user
           console.log("Battery is:", userData.battery.energy)
           return;
@@ -173,6 +177,7 @@ export const UserProvider = ({ children }) => {
         const userData = {
           userId: userId.toString(),
           username: finalUsername,
+          userNo,
           firstName,
           lastName,
           totalBalance: 0,
@@ -193,7 +198,6 @@ export const UserProvider = ({ children }) => {
         };
 
         await setDoc(userRef, userData);
-        console.log('User saved in Firestore');
         setEnergy(500);
         setBattery(userData.battery);
         setRefiller(userData.battery.energy);
@@ -338,6 +342,7 @@ export const UserProvider = ({ children }) => {
 
 
   useEffect(() => {
+
     sendUserData();
     // eslint-disable-next-line
   }, []);
@@ -486,6 +491,7 @@ export const UserProvider = ({ children }) => {
     });
 
     fetchAllUsers(); // Fetch all users when the component mounts
+    fetchAllData();
   }, []);
 
   const fetchTotalCountFromFirestore = async () => {
@@ -493,7 +499,12 @@ export const UserProvider = ({ children }) => {
       const userRef = collection(db, "telegramUsers");
       const querySnapshot = await getDocs(userRef);
       let totalCount = 0;
+      let largestUserNo = 0;
       querySnapshot.forEach((doc) => {
+        if (doc.data().userNo > largestUserNo) {
+          largestUserNo = doc.data().userNo;
+        }
+        setUserNo(largestUserNo + 1);
         totalCount += doc.data().balance;
       });
       return totalCount;
@@ -527,6 +538,35 @@ export const UserProvider = ({ children }) => {
 
       setUsers(allUsers.length);
       setDividedUsers(allUsers.length / 2);
+      setLoading(false); // Set loading to false once data is fetched
+      // Update the count of unique users
+    } catch (error) {
+      console.error("Error fetching users: ", error);
+      setLoading(false); // Set loading to false if there's an error
+    }
+  };
+
+  const fetchAllData = async () => {
+    
+    try {
+      const userRef = collection(db, "telegramUsers");
+      const querySnapshot = await getDocs(userRef);
+      const allUsers = [];
+      const uniqueUsernames = new Set();
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const username = data.username;
+        const balance = data.balance;
+
+        // Check if the username is unique, if yes, add it to the allUsers array and set
+        // a flag indicating that it has been added
+        if (!uniqueUsernames.has(username)) {
+          allUsers.push({ username,balance });
+          uniqueUsernames.add(username);
+        }
+      });
+
+      setAllUsersData(allUsers);
       setLoading(false); // Set loading to false once data is fetched
       // Update the count of unique users
     } catch (error) {
@@ -578,12 +618,14 @@ export const UserProvider = ({ children }) => {
       fullTank,
       taskCompleted,
       setTaskCompleted,
+      allUsersData,
       taskCompleted2,
       setTaskCompleted2,
       setFullTank,
       timeStaTank,
       setTimeStaTank,
       timeSta,
+      userNo,
       timeSpin,
       setTimeSpin,
       setFreeGuru,

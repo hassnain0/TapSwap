@@ -1,8 +1,6 @@
 import React from "react";
-import ref from "../images/ref.webp";
 import boost from "../images/boost.webp";
 import tasks from "../images/tasks.webp";
-import coinsmall from "../images/coinsmall.webp";
 import lot from '../images/lot.svg'
 import { NavLink } from "react-router-dom";
 
@@ -21,8 +19,8 @@ ${isActive
     `;
         }}
       >
-        <img src={ref} className="w-[32px] -mb-1" alt="ref" />
-        <span className="font-medium">Frens</span>
+        <img src={require('../images/stats.png')} className="w-[32px] -mb-1" alt="ref" />
+        <span className="font-medium">Inside</span>
       </NavLink>
       <NavLink
         to="/tasks"

@@ -425,7 +425,7 @@ const Boost = () => {
           <div className="flex flex-col w-full">
             <div className="w-full items-center justify-center pb-2 flex">
               <h2 className="text-[#9d99a9] text-[20px] font-medium">
-                Your Share balance
+                Your Total Balance
               </h2>
             </div>
             <div className="flex space-x-1 ml-[-8px] justify-center items-center">
@@ -463,7 +463,7 @@ const Boost = () => {
 
                   <div className="flex flex-1 flex-col text-left">
                     <span className="font-semibold tapguru">
-                      Tapping Guru
+                      Turbo V6
                     </span>
                     {freeGuru > 0 ? (
                       <span className="font-medium tapguru2">{freeGuru}/3</span>
@@ -668,10 +668,10 @@ const Boost = () => {
               >
                 <div className="flex flex-1 items-center space-x-2">
                   <div className="">
-                    <img src={botr} alt="bot" className="w-[35px]" />
+                    <img src={require('../images/bot.png')} alt="bot" className="w-[35px]" />
                   </div>
                   <div className="flex flex-col space-y-1 text-left">
-                    <span className="font-semibold text-[17px]">Tap Bot</span>
+                    <span className="font-semibold text-[17px]">Turbo Engine</span>
                     <div className="flex items-center space-x-1">
                       <span className="w-[20px] h-[20px]">
                         <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
@@ -871,7 +871,7 @@ const Boost = () => {
                   <img alt="claim" src={boost} className="w-[80px]" />
                 </div>
                 <h3 className="font-semibold text-[32px] py-4">
-                  Tapping Guru
+                  Turbo V6
                 </h3>
                 <p className="pb-6 text-[#9a96a6] text-[16px] text-center">
                   Multiply your tap income by x5 for 20 seconds. Do not use energy while active.
@@ -972,13 +972,13 @@ const Boost = () => {
 
               <div className="w-full flex justify-center flex-col items-center">
                 <div className="w-[120px] h-[120px] rounded-[25px] bg-[#252e57] flex items-center justify-center">
-                  <img alt="claim" src={botr} className="w-[80px]" />
+                  <img alt="claim" src={require('../images/bot.png')} className="w-[80px]" />
                 </div>
                 <h3 className="font-semibold text-[32px] py-4">
-                  Tap Bot
+                  Turbo Engine
                 </h3>
                 <p className="pb-6 text-[#9a96a6] text-[16px] text-center">
-                  Tap Bot will tap when your energy is full <br />
+                  Turbo Engine will tap when your energy is full <br />
                   Max bot work duration is 12 hours
                 </p>
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
-import taskbook from "../images/taskbook.webp";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
@@ -352,11 +351,46 @@ const Tasks = () => {
                 >
                   <div className="flex items-center flex-1 space-x-2">
                     <div className="">
-                      <img src={taskbook} alt="tasks" className="w-[50px]" />
+                      <img src={require('../images/taskbook.png')} alt="tasks" className="w-[50px]" />
                     </div>
                     <div className="flex flex-col space-y-1">
                       <span className="font-semibold">
-                        Join my Telegram Channel
+                        Join Our Telegram Channel
+                      </span>
+                      <div className="flex items-center space-x-1">
+                        <span className="w-[20px] h-[20px]">
+                          <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
+                        </span>
+                        <span className="font-medium">50 000</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*  */}
+
+                  <div className="">
+                    {taskCompleted ? (
+                      <>
+                        <IoCheckmarkSharp className="w-[20px] h-[20px] text-[#5bd173] mt-[2px]" />
+                      </>
+                    ) : (
+                      <>
+                        <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#e0e0e0] mt-[2px]" />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div
+                  onClick={taskTelegram}
+                  className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
+                >
+                  <div className="flex items-center flex-1 space-x-2">
+                    <div className="">
+                      <img src={require('../images/taskbook.png')} alt="tasks" className="w-[50px]" />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <span className="font-semibold">
+                        Join Our Whatsapp Channel
                       </span>
                       <div className="flex items-center space-x-1">
                         <span className="w-[20px] h-[20px]">
@@ -388,7 +422,7 @@ const Tasks = () => {
                 >
                   <div className="flex items-center flex-1 space-x-2">
                     <div className="">
-                      <img src={taskbook} alt="tasks" className="w-[50px]" />
+                      <img src={require('../images/taskbook.png')} alt="tasks" className="w-[50px]" />
                     </div>
                     <div className="flex flex-col space-y-1">
                       <span className="font-semibold">Follow us on x.com</span>
@@ -400,6 +434,7 @@ const Tasks = () => {
                       </div>
                     </div>
                   </div>
+                  
 
                   {/*  */}
 
@@ -414,7 +449,9 @@ const Tasks = () => {
                       </>
                     )}
                   </div>
+
                 </div>
+
 
 
                 {/*  */}
