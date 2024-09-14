@@ -8,8 +8,6 @@ import Spinner from '../Components/Spinner';
 import { useUser } from '../context/userContext';
 import Levels from '../Components/Levels';
 import flash from "../images/flash.webp";
-import coinsmall from "../images/coinsmall.webp";
-
 
 
 const slideUp = keyframes`
@@ -353,15 +351,6 @@ const Plutos = () => {
     }
   };
 
-  // // Remove the click after the animation duration
-  // setTimeout(() => {
-  //   setTapGuru(false);
-  //   setMainTap(true);
-  // }, 22000); // Match this duration with the animation duration
-
-
-
-
   return (
     <>
       {loading ? (
@@ -372,7 +361,7 @@ const Plutos = () => {
           <div className="flex flex-col justify-center w-full overflow-hidden">
             <div className="flex space-x-[2px] justify-center items-center">
               <div className="w-[50px] h-[50px]">
-                <img src={coinsmall} className="w-full" alt="coin" />
+                <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
               </div>
               <h1 className="text-[#fff] text-[42px] font-extrabold">
                 {formatNumber(balance + refBonus)} <br />
@@ -411,7 +400,7 @@ const Plutos = () => {
                       <img
                         onPointerDown={handleClick}
                         ref={imageRef}
-                        src='/bcen.png'
+                        src={require('../images/bcen.png')}
                         alt="Wobble"
                         className="wobble-image !w-[250px] select-none"
                       />
@@ -427,7 +416,7 @@ const Plutos = () => {
                       <img
                         onPointerDown={handleClickGuru}
                         ref={imageRef}
-                        src='/bcen.png'
+                        src={require('../images/bcen.png')}
                         alt="Wobble"
                         className="wobble-image !w-[250px] select-none"
                       />

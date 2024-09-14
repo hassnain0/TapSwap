@@ -106,13 +106,14 @@ const Stats = () => {
   }
 
   return (
-    <div className="h-screen bg-[#1A1F2E] overflow-y-auto flex flex-col">
+    <div className="h-screen  overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
         <header className="flex items-center justify-between w-full">
-          <strong className="text-[#38B8EA] text-xl">Tickets: 0</strong>
+          <strong className="text-xl text-[#066AAA]">Tickets: 0</strong>
+
           <Link
             to="/bag"
-            className="h-10 flex justify-center bg-[#34C8E8] items-center rounded-lg text-white bg-button px-4"
+            className="h-10 flex justify-center bg-[#0569AA] items-center rounded-lg text-white bg-button px-4"
           >
             Buy
           </Link>
@@ -141,12 +142,12 @@ const Stats = () => {
                 </button>
               </div>
             </div>
-            <div className="flex items-center gap-2 relative mt-6 mb-4">
+            {/* <div className="flex items-center gap-2 relative mt-6 mb-4">
               <ActiveButton image={car} current={current} position={0} setCurrent={() => setCurrent(0)} />
               <ActiveButton image={phone} current={current} position={1} setCurrent={() => setCurrent(1)} />
               <ActiveButton image={bicycle} current={current} position={2} setCurrent={() => setCurrent(2)} />
               <ActiveButton image={notebook} current={current} position={3} setCurrent={() => setCurrent(3)} />
-            </div>
+            </div> */}
           </div>
 
           <div className="mt-8">

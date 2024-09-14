@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
-import coinsmall from "../images/coinsmall.webp";
 import taskbook from "../images/taskbook.webp";
 import loadingGif from "../images/loading.gif";
 import { IoCheckmarkSharp } from "react-icons/io5";
@@ -128,7 +127,7 @@ const Tasks = () => {
     {
       taskId: "task3",
       title: "subcriber Telegram c 1",
-      url: "https://t.me/web3hubtest",
+      url: "https://t.me/rockipoint",
       completed: false,
       point: 10000,
       status: "start",
@@ -136,7 +135,7 @@ const Tasks = () => {
     {
       taskId: "task4",
       title: "subcriber Telegram c 2",
-      url: "https://t.me/web3hubtest",
+      url: "https://t.me/rockipoint",
       completed: false,
       point: 20000,
       status: "start",
@@ -152,7 +151,7 @@ const Tasks = () => {
     {
       taskId: "task6",
       title: "subcriber Telegram c 4",
-      url: "https://t.me/web3hubtest",
+      url: "https://t.me/rockipoint",
       completed: false,
       point: 50000,
       status: "start",
@@ -160,7 +159,7 @@ const Tasks = () => {
     {
       taskId: "task8",
       title: "subcriber Telegram c 5",
-      url: "https://t.me/web3hubtest",
+      url: "https://t.me/rockipoint",
       completed: false,
       point: 50000,
       status: "start",
@@ -182,7 +181,7 @@ const Tasks = () => {
           }
           return task;
         })
-      ); 
+      );
       setTasks(tasksInit);
     };
     fetchTasks();
@@ -292,7 +291,7 @@ const Tasks = () => {
                 </div>
                 {/* <Congratulations showCongrats={showCongrats} setShowCongrats={setShowCongrats} /> */}
                 <div className="w-[50px] h-[50px]">
-                  <img src={coinsmall} className="w-full" alt="coin" />
+                  <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                 </div>
                 <h1 className="text-[#fff] text-[42px] font-extrabold">
                   {formatNumber(balance + refBonus)}
@@ -319,27 +318,24 @@ const Tasks = () => {
               <div className="w-full border-[1px] border-borders rounded-[10px] p-1 flex items-center">
                 <div
                   onClick={() => handleMenu(1)}
-                  className={`${
-                    activeIndex === 1 ? "bg-cards" : ""
-                  }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                  className={`${activeIndex === 1 ? "bg-cards" : ""
+                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Special
                 </div>
 
                 <div
                   onClick={() => handleMenu(2)}
-                  className={`${
-                    activeIndex === 2 ? "bg-cards" : ""
-                  }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                  className={`${activeIndex === 2 ? "bg-cards" : ""
+                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Leagues
                 </div>
 
                 <div
                   onClick={() => handleMenu(3)}
-                  className={`${
-                    activeIndex === 3 ? "bg-cards" : ""
-                  }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
+                  className={`${activeIndex === 3 ? "bg-cards" : ""
+                    }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Ref Tasks
                 </div>
@@ -348,9 +344,8 @@ const Tasks = () => {
 
             <div className="!mt-[204px] w-full h-[60vh] flex flex-col overflow-y-auto pb-[160px]">
               <div
-                className={`${
-                  activeIndex === 1 ? "flex" : "hidden"
-                } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 1 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
               >
                 <div
                   onClick={taskTelegram}
@@ -366,7 +361,7 @@ const Tasks = () => {
                       </span>
                       <div className="flex items-center space-x-1">
                         <span className="w-[20px] h-[20px]">
-                          <img src={coinsmall} className="w-full" alt="coin" />
+                          <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                         </span>
                         <span className="font-medium">50 000</span>
                       </div>
@@ -400,7 +395,7 @@ const Tasks = () => {
                       <span className="font-semibold">Follow us on x.com</span>
                       <div className="flex items-center space-x-1">
                         <span className="w-[20px] h-[20px]">
-                          <img src={coinsmall} className="w-full" alt="coin" />
+                          <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                         </span>
                         <span className="font-medium">50 000</span>
                       </div>
@@ -422,93 +417,6 @@ const Tasks = () => {
                   </div>
                 </div>
 
-                <div className="py-[5px]">
-                  <h2 className="mb-4 text-xl font-bold">Tasks more</h2>
-                  {tasks.map((item) => (
-                    <div
-                      key={item.taskId}
-                      className="bg-cards rounded-[10px] flex items-center justify-between border-t-[1px] border-white px-[14px] py-[5px] mt-1 "
-                    >
-                      <div className="flex items-center flex-1 space-x-2">
-                        <div className="">
-                          <img
-                            src={taskbook}
-                            alt="tasks"
-                            className="w-[30px]"
-                          />
-                        </div>
-                        <div className="flex flex-col pt-1 space-y-1">
-                          <span className="font-semibold text-[#eeee] text-sm">
-                            {item.title}
-                          </span>
-                          <div className="flex items-center space-x-1">
-                            <span className="w-[16px] h-[16px]">
-                              <img
-                                src={coinsmall}
-                                className="w-full"
-                                alt="coin"
-                              />
-                            </span>
-                            <span className="font-medium text-[#eeee] text-xs">
-                              {formatNumber(item.point)}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="">
-                        {item.status === "start" && (
-                          <>
-                            <span
-                              onClick={() =>
-                                handleTaskLinkClick(item.taskId, item.url)
-                              }
-                              className="bg-btn font-medium py-[6px] px-4 rounded-full text-[#] flex items-center justify-center text-[16px]"
-                            >
-                              start
-                            </span>
-                          </>
-                        )}
-                        {item.status === "check" && (
-                          <>
-                            <span
-                              onClick={() => handleTaskCheck(item.taskId)}
-                              className="bg-lime-600 font-medium py-[5px] px-4 rounded-full flex items-center justify-center text-[16px]"
-                            >
-                              check
-                            </span>
-                          </>
-                        )}
-                        {item.status === "checking" && (
-                          <>
-                            <span className="bg-cards font-medium py-[5px] px-4 rounded-full flex items-center justify-center text-[14px]">
-                              <img src={loadingGif} className="w-6" alt="" />{" "}
-                              checking 15s
-                            </span>
-                          </>
-                        )}
-                        {item.status === "claim" && (
-                          <>
-                            <span
-                              onClick={() =>
-                                handleTaskDoneClaim(item.taskId, item.point)
-                              }
-                              className="bg-btn font-medium py-[5px] px-4 rounded-full flex items-center justify-center text-[16px]"
-                            >
-                              Claim
-                            </span>
-                          </>
-                        )}
-                        {(item.status === "done" || item.completed) && (
-                          <>
-                            <span className="bg-[#eee] text-[#9d99a9] font-medium py-[5px] px-4 rounded-full flex items-center justify-center text-[16px]">
-                              Done
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
 
                 {/*  */}
               </div>
@@ -516,9 +424,8 @@ const Tasks = () => {
               {/*  */}
 
               <div
-                className={`${
-                  activeIndex === 2 ? "flex" : "hidden"
-                } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 2 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
               >
                 <MilestoneRewards />
               </div>
@@ -526,9 +433,8 @@ const Tasks = () => {
               {/*  */}
 
               <div
-                className={`${
-                  activeIndex === 3 ? "flex" : "hidden"
-                } alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 3 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
               >
                 <ReferralRewards />
               </div>
@@ -553,11 +459,10 @@ const Tasks = () => {
             </div>
 
             <div
-              className={`${
-                congrats === true
+              className={`${congrats === true
                   ? "visible bottom-6"
                   : "invisible bottom-[-10px]"
-              } z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}
+                } z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}
             >
               <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
                 <IoCheckmarkCircle size={24} className="" />

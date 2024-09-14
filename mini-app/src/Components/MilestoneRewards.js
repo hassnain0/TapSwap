@@ -75,7 +75,7 @@ const MilestoneRewards = () => {
                   </span>
                   <div className='flex items-center space-x-1'>
                     <span className="w-[20px] h-[20px]">
-                      <img src={coinsmall} className="w-full" alt="coin" />
+                      <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                     </span>
                     <span className='font-medium'>
                       {formatNumberCliam(milestone.reward)}

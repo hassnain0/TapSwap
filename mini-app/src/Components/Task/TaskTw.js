@@ -1,4 +1,3 @@
-import coinsmall from "../../images/coinsmall.webp";
 import claim from "../../images/claim.webp";
 import { useEffect, useState } from "react";
 import { db } from "../../firebase";
@@ -231,7 +230,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
               <div className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center">
                 <div className="flex items-center flex-1 space-x-2">
                   <div className="">
-                    <img src={coinsmall} className="w-[50px]" alt="Coin Icon" />
+                    <img src={require('../../images/coinsmall.png')} className="w-[50px]" alt="Coin Icon" />
                   </div>
                   <div className="flex flex-col space-y-1">
                     <span className="font-semibold">Reward</span>
@@ -348,7 +347,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
                   <div className="flex items-center flex-1 space-x-2">
                     <div className="">
                       <img
-                        src={coinsmall}
+                        src={require('../../images/coinsmall.png')}
                         className="w-[25px]"
                         alt="Coin Icon"
                       />

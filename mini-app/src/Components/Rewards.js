@@ -9,12 +9,24 @@ import ref from "../images/ref.webp";
 import coinsmall from "../images/coinsmall.webp";
 
 const friendsRewards = [
-  { title: 'Invite 3 friends', referralsRequired: 2, bonusAward: 50000 },
+  { title: 'Invite 3 friends', referralsRequired: 3, bonusAward: 50000 },
   { title: 'Invite 5 friends', referralsRequired: 5, bonusAward: 150000 },
   { title: 'Invite 10 friends', referralsRequired: 10, bonusAward: 250000 },
-  { title: 'Invite 20 friends', referralsRequired: 20, bonusAward: 250000 },
-  { title: 'Invite 40 friends', referralsRequired: 40, bonusAward: 250000 },
+  { title: 'Invite 15 friends', referralsRequired: 15, bonusAward: 400000 },
+  { title: 'Invite 20 friends', referralsRequired: 20, bonusAward: 600000 },
+  { title: 'Invite 25 friends', referralsRequired: 25, bonusAward: 800000 },
+  { title: 'Invite 30 friends', referralsRequired: 30, bonusAward: 1000000 },
+  { title: 'Invite 35 friends', referralsRequired: 35, bonusAward: 1250000 },
+  { title: 'Invite 40 friends', referralsRequired: 40, bonusAward: 1500000 },
+  { title: 'Invite 50 friends', referralsRequired: 50, bonusAward: 2000000 },
+  { title: 'Invite 60 friends', referralsRequired: 60, bonusAward: 2500000 },
+  { title: 'Invite 70 friends', referralsRequired: 70, bonusAward: 3000000 },
+  { title: 'Invite 80 friends', referralsRequired: 80, bonusAward: 3500000 },
+  { title: 'Invite 90 friends', referralsRequired: 90, bonusAward: 4000000 },
+  { title: 'Invite 100 friends', referralsRequired: 100, bonusAward: 5000000 },
 ];
+
+
 
 const ReferralRewards = () => {
   const { referrals, balance, setBalance, id, claimedReferralRewards, setClaimedReferralRewards } = useUser();
@@ -106,7 +118,7 @@ const ReferralRewards = () => {
                     </span>
                     <div className='flex items-center space-x-1'>
                       <span className="w-[20px] h-[20px]">
-                        <img src={coinsmall} className="w-full" alt="coin" />
+                        <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
                       </span>
                       <span className='font-medium'>
                         {formatNumberCliam(reward.bonusAward)}
