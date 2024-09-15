@@ -6,6 +6,8 @@ import { IoCheckmarkCircle } from 'react-icons/io5';
 import congratspic from "../images/celebrate.gif";
 import Animate from '../Components/Animate';
 import ref from "../images/ref.webp";
+import { useDispatch, useSelector } from "react-redux";
+import { setTask } from '../features/taskSlice';
 
 const friendsRewards = [
   { title: 'Invite 3 friends', referralsRequired: 3, bonusAward: 50000 },
@@ -27,11 +29,12 @@ const friendsRewards = [
 
 
 
-const ReferralRewards = () => {
+const ReferralRewards = ({ setNotify }) => {
+
   const { referrals, balance, setBalance, id, claimedReferralRewards, setClaimedReferralRewards } = useUser();
   const [congrats, setCongrats] = useState(false);
-
-
+  const task = useSelector((state) => state.tasks.task);
+  const dispatch = useDispatch();
   const handleClaim = async (reward) => {
     if (referrals.length >= reward.referralsRequired && !claimedReferralRewards.includes(reward.title)) {
       const newBalance = balance + reward.bonusAward;
@@ -70,6 +73,13 @@ const ReferralRewards = () => {
   };
 
 
+  const updateTaskNotify = (task) => {
+    if (task == true) {
+      dispatch(setTask(true));
+    } else {
+      dispatch(setTask(false));
+    }
+  }
   useEffect(() => {
 
     // Show the back button when the component mounts
@@ -103,6 +113,8 @@ const ReferralRewards = () => {
           .map((reward) => {
             const progress = (referrals.length / reward.referralsRequired) * 100;
             const isClaimable = referrals.length >= reward.referralsRequired && !claimedReferralRewards.includes(reward.title);
+            updateTaskNotify(isClaimable)
+            setNotify(isClaimable);
             return (
               <div key={reward.title} className='bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center'>
 

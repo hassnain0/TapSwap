@@ -14,10 +14,8 @@ const veicles = [
     title: <strong className="text-white text-[17px]">COMING SOON!</strong>,
     description: (
       <>
-        <p className="text-white/60 text-base"> Win a Rolls-Royce Phantom like never before!</p>
-        <p className="text-white/60 text-base">Get ready to shift your luck into high gear! Our community lottery feature is arriving soon!</p>
-        <p className="text-white/60 text-base">Stay tuned for the launch date and participate for a chance to win ONE OF 30 ROLLS-ROYCE PHANTOMS</p>
-        <p className="text-white/60 text-base">#RollsRoycePhantomLottery #UltraLuxury #ComingSoon</p>
+        <p className="text-white/60 text-base">Get ready to shift your luck into high gear!</p>
+        <p className="text-white/60 text-base"> Our community lottery feature is arriving soon stay tuned for the launch date and participation!</p>
         <p className="text-white/60 text-base">#StayTuned</p>
       </>
     )

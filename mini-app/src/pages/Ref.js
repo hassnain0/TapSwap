@@ -17,6 +17,8 @@ import Spinner from "../Components/Spinner";
 // import TaskTwo from '../Components/TaskTwo';
 import congratspic from "../images/celebrate.gif";
 import { useUser } from "../context/userContext";
+import ClaimLeveler from "../Components/ClaimLeveler";
+import Levels from "../Components/Levels";
 
 const Ref = () => {
   const {
@@ -175,22 +177,23 @@ const Ref = () => {
       }
     };
 
-   const getLeaderboardData = (users) => {
-  // Sort users by balance in descending order
-  const sortedUsers = users.sort((a, b) => b.balance - a.balance);
+    const getLeaderboardData = (users) => {
+      // Sort users by balance in descending order
+      const sortedUsers = users.sort((a, b) => b.balance - a.balance);
 
-  // Take only the first 300 users
-  const topUsers = sortedUsers.slice(0, 300);
+      // Take only the first 300 users
+      const topUsers = sortedUsers.slice(0, 300);
 
-  // Map over the top users to format their data
-  return topUsers.map((user) => ({
-    initials: user.username.substring(0, 2).toUpperCase(),
-    name: user.username,
-    rocks: formatBalance(user.balance),
-  }));
-};
-setTotalUsers(formatBalance(allUsersData.length));
-  setLeaderboardData(getLeaderboardData(allUsersData));
+      // Map over the top users to format their data
+      return topUsers.map((user) => ({
+        initials: user.username.substring(0, 2).toUpperCase(),
+        name: user.username,
+        rocks: formatBalance(user.balance),
+        imageUrl:user.level.imgUrl,
+      }));
+    };
+    setTotalUsers(formatBalance(allUsersData.length));
+    setLeaderboardData(getLeaderboardData(allUsersData));
 
   }, [allUsersData]);
 
@@ -355,6 +358,11 @@ setTotalUsers(formatBalance(allUsersData.length));
         <Spinner />
       ) : (
         <Animate>
+          <ClaimLeveler
+            claimLevel={claimLevel}
+            setClaimLevel={setClaimLevel}
+          />
+          <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
           <div className="flex-col justify-center w-full px-5 space-y-3">
             <div className="fixed top-0 left-0 right-0 px-5 pt-8">
               <div className="relative flex items-center justify-center space-x-2">
@@ -410,8 +418,8 @@ setTotalUsers(formatBalance(allUsersData.length));
               </div>
             </div>
 
-            <div className="!mt-[204px] w-full h-[60vh] flex flex-col overflow-y-auto pb-[160px]">
-              {activeIndex == 1 && (
+            <div className="!mt-[204px] w-full h-[60vh] flex flex-col overflow-y-auto ">
+              {/* {activeIndex == 1 && (
                 <div className="w-full bg-cards rounded-[12px] px-3 py-3 flex flex-col">
                   <span className="flex items-center justify-between w-full pb-2">
                     <h2 className="text-[18px] font-semibold">My invite link:</h2>
@@ -426,14 +434,14 @@ setTotalUsers(formatBalance(allUsersData.length));
                     https://t.me/Rockipointbot?start=r{id}
                   </div>
                 </div>
-              )}
+              )} */}
               <div
                 className={`${activeIndex === 1 ? "flex" : "hidden"} alltaskscontainer flex-col w-full space-y-2`}
               >
 
-                <div className="flex flex-col w-full mt-9">
-                  <h3 className="text-[22px] font-semibold pb-[16px]">
-                    My Referrals:
+                <div className="flex flex-col w-full ">
+                  <h3 className="text-[22px] font-semibold ml-3 pb-[16px]">
+                    {referrals.length} Referrals
                   </h3>
 
                   <div className="flex flex-col w-full space-y-3">
@@ -457,7 +465,10 @@ setTotalUsers(formatBalance(allUsersData.length));
                                 </div>
 
                                 <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
-                                  <div className="">
+                                  <div
+                                    onClick={levelsAction}
+                                    className="w-full flex ml-[6px] space-x-1 items-center justify-center"
+                                  >
                                     <img
                                       src={user.level.imgUrl}
                                       alt="bronze"
@@ -510,28 +521,20 @@ setTotalUsers(formatBalance(allUsersData.length));
                   className={`${activeIndex === 2 ? "flex" : "hidden"
                     } alltaskscontainer flex-col w-full space-y-2`}
                 >
-                  <div className="w-full flex justify-between items-center bg-[#17436E] p-3 rounded-lg">
+                  <div className="w-full flex justify-between items-center   rounded-lg">
                     <div className="flex items-center space-x-4">
                       {/* Random Avatar */}
-                      <div
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-white"
-                        style={{ backgroundColor: getRandomColor() }}
-                      >
-                        XG
-                      </div>
-                      <div>
-                        <p className="text-white font-semibold">{username}</p>
-                        <p className="text-white-bold text-sm"> {balance} Rocks</p>
+
+                      <div className="flex flex-col w-full ">
+                        <p className="text-white font-bold ">{totalUsers} Holders</p>
                       </div>
                     </div>
                     <div>
-                      <p className="font-bold">No. {userNo}</p>
+                      <p className="font-bold ">Leagues {userNo}</p>
                     </div>
                   </div>
 
-                  <div className="flex flex-col w-full mt-9">
-                    <p className="text-white font-bold mt-4">{totalUsers} Holders</p>
-                  </div>
+
 
                   {/* Leaderboard items */}
                   <div className="space-y-2">
@@ -556,8 +559,8 @@ setTotalUsers(formatBalance(allUsersData.length));
                         <div>
                           {/* Trophy icon */}
                           <img
-                            src={require('../images/Vector.png')}
-                            style={{ width: '15px', height: '15px' }}
+                            src={item.imageUrl}
+                            style={{ width: '35px', height: '35px' }}
                             alt="vector"
                           />
                         </div>

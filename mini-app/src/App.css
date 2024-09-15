@@ -111,7 +111,7 @@ body{
   height: 100vh; /* Full viewport height */
 } 
 .loading {
- --speed-of-animation: 1.2s;
+ --speed-of-animation: 0.8s;
  --gap: 6px;
  --first-color: #E39725;
  --second-color: #E39725;
@@ -121,21 +121,22 @@ body{
  display: flex;
  justify-content: center;
  align-items: center;
- width: 100px;
+ width: 50px;
  gap: 6px;
- height: 100px;
+ height:80px;
 }
 
 .loading span {
- width: 50px;
- height: 50px;
+ width: 30px;
+ height: 30px;
+ 
  background: var(--first-color);
  animation: scale var(--speed-of-animation) ease-in-out infinite;
 }
 
 .loading span:nth-child(2) {
  background: var(--second-color);
- animation-delay: -0.8s;
+ animation-delay: 0.1s;
 }
 
 .loading span:nth-child(3) {

@@ -168,7 +168,6 @@ export const UserProvider = ({ children }) => {
           await updateReferrals(userRef);
           setInitialized(true);
           setLoading(false);
-          setUserNo(userData.userNo)
           fetchData(userData.userId); // Fetch data for the existing user
           console.log("Battery is:", userData.battery.energy)
           return;
@@ -504,7 +503,7 @@ export const UserProvider = ({ children }) => {
         if (doc.data().userNo > largestUserNo) {
           largestUserNo = doc.data().userNo;
         }
-        setUserNo(largestUserNo + 1);
+        setUserNo(largestUserNo+1);
         totalCount += doc.data().balance;
       });
       return totalCount;
@@ -557,11 +556,11 @@ export const UserProvider = ({ children }) => {
         const data = doc.data();
         const username = data.username;
         const balance = data.balance;
-
+        const level=data.level;
         // Check if the username is unique, if yes, add it to the allUsers array and set
         // a flag indicating that it has been added
         if (!uniqueUsernames.has(username)) {
-          allUsers.push({ username,balance });
+          allUsers.push({ username,balance,level });
           uniqueUsernames.add(username);
         }
       });

@@ -4,7 +4,8 @@ import { db } from '../firebase';
 import { useUser } from '../context/userContext';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import congratspic from "../images/celebrate.gif";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setTask } from '../features/taskSlice';
 
 const milestones = [
   {
@@ -46,7 +47,9 @@ const milestones = [
 ];
 
 
-const MilestoneRewards = () => {
+const MilestoneRewards = ({setNotify}) => {
+  
+  const dispatch = useDispatch();
   const { tapBalance, balance, setBalance, id, claimedMilestones, setClaimedMilestones } = useUser();
   const [congrats, setCongrats] = useState(false)
 
@@ -86,15 +89,22 @@ const MilestoneRewards = () => {
       return (num / 10000000).toFixed(3).replace(".", ".") + " T";
     }
   };
-
+  const updateTaskNotify= (task)=>{
+    if(task == true){
+      dispatch(setTask(true));
+    }else{
+      dispatch(setTask(false));
+    }
+  }
   return (
     <div className="w-full flex flex-col space-y-4">
 
       {milestones.filter(milestone => !claimedMilestones.includes(milestone.name)).map((milestone) => {
         const progress = (tapBalance / milestone.tapBalanceRequired) * 100;
         const isClaimable = tapBalance >= milestone.tapBalanceRequired && !claimedMilestones.includes(milestone.name);
+        setNotify(isClaimable);
+        updateTaskNotify(isClaimable);
         return (
-
           <>
             <div key={milestone.name} className='bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center'>
 

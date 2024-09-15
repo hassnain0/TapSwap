@@ -84,7 +84,7 @@ const TaskWhatsapp = ({ showModal, setShowModal }) => {
     }
 
     const response = await fetch(
-      `https://api.telegram.org/bot7171454492:AAHNel77INY4B7nv2nip4Qe1P06aznYa2P8/getChatMember?chat_id=-1002156595848&user_id=${id}`
+      `https://api.telegram.org/bot7171454492:AAHNel77INY4B7nv2nip4Qe1P06aznYa2P8/getChatMember?chat_id=--1002330515779&user_id=${id}`
     );
     const data = await response.json();
 
@@ -102,7 +102,7 @@ const TaskWhatsapp = ({ showModal, setShowModal }) => {
     } else {
       setTimeout(() => {
         setMessage(
-          "Please join the Telegram channel first before you can claim this task bonus."
+          "Please join the Whatsapp channel first before you can claim this task bonus."
         );
       }, 1000);
       setCounter(15);
@@ -218,7 +218,7 @@ const TaskWhatsapp = ({ showModal, setShowModal }) => {
                             </button> */}
             </div>
             <div className="flex flex-col w-full">
-              <h1 className="text-[20px] font-semibold">Join Our Telegram Channel</h1>
+              <h1 className="text-[20px] font-semibold">Join Our Whatsapp Channel</h1>
               <p className="text-[#9a96a6] text-[16px] font-medium pt-1 pb-10">
               We regularly share valuable  content on our channel. Join us there and get rewardes
               </p>
@@ -246,7 +246,7 @@ const TaskWhatsapp = ({ showModal, setShowModal }) => {
                 <div className="flex items-center flex-1 space-x-2">
                   <div className="flex flex-col space-y-1">
                     <span className="font-semibold">
-                      Join the Telegram Channel
+                      Join the Whatsapp Channel
                     </span>
 
                     {message && (

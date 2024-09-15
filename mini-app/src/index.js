@@ -11,10 +11,11 @@ import Tasks from "./pages/Tasks";
 import Boost from "./pages/Boost";
 import Stats from "./pages/Stats";
 import Ref from "./pages/Ref";
+import store from "./store";
 // import DeviceCheck from "./Components/DeviceCheck";
 import Plutos from "./pages/Plutos";
 // import TasksList from "./pages/TasksList";
-
+import {Provider } from "react-redux";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -57,7 +58,9 @@ root.render(
 
   // <DeviceCheck>
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 // </DeviceCheck>
 
