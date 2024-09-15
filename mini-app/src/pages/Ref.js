@@ -530,7 +530,7 @@ const Ref = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="font-bold ">Leagues {userNo}</p>
+                      <p className="font-bold ">Leagues</p>
                     </div>
                   </div>
 

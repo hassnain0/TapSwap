@@ -3,7 +3,7 @@ import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
-
+import loadingGif from "../images/loading.gif";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { db } from "../firebase";
 import {
@@ -439,6 +439,8 @@ const Tasks = () => {
                     )}
                   </div>
                 </div>
+        
+
                 {/* tw */}
                 <div
                   onClick={taskTw}
@@ -536,7 +538,7 @@ const Tasks = () => {
                 </span>
               </div>
             </div>
-            {/*  */}
+          
           </div>
           <Outlet />
         </Animate>

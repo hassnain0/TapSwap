@@ -33,7 +33,7 @@ const ReferralRewards = ({ setNotify }) => {
 
   const { referrals, balance, setBalance, id, claimedReferralRewards, setClaimedReferralRewards } = useUser();
   const [congrats, setCongrats] = useState(false);
-  const task = useSelector((state) => state.tasks.task);
+  const taskInitial = useSelector((state) => state.tasks.task);
   const dispatch = useDispatch();
   const handleClaim = async (reward) => {
     if (referrals.length >= reward.referralsRequired && !claimedReferralRewards.includes(reward.title)) {
@@ -76,7 +76,10 @@ const ReferralRewards = ({ setNotify }) => {
   const updateTaskNotify = (task) => {
     if (task == true) {
       dispatch(setTask(true));
-    } else {
+    } else if(taskInitial == true) {
+      dispatch(setTask(true));
+    }
+    else{
       dispatch(setTask(false));
     }
   }

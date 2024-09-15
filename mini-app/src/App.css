@@ -1,4 +1,4 @@
-body{
+body {
   background: linear-gradient(to bottom, #191b33, #1b202d);
   background-color: #191b33;
   color: #fff;
@@ -6,16 +6,16 @@ body{
   touch-action: none; /* Prevent touch actions */
 }
 
-.cards__container{
+.cards__container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.taskhead{
+.taskhead {
   background: linear-gradient(to bottom, #191b33, #1b202d);
 }
-.heading{
+.heading {
   text-align: center;
 }
 
@@ -26,8 +26,8 @@ body{
 
 .wobble-image {
   width: 300px;
-  transition: transform .2s;
-  filter: grayscale(.1);
+  transition: transform 0.2s;
+  filter: grayscale(0.1);
 }
 
 @keyframes wobble-top {
@@ -71,105 +71,101 @@ body{
 }
 
 .wobble-top {
-  animation: wobble-top .2s ease;
+  animation: wobble-top 0.2s ease;
 }
 
 .wobble-bottom {
-  animation: wobble-bottom .2s ease;
+  animation: wobble-bottom 0.2s ease;
 }
 
 .wobble-left {
-  animation: wobble-left .2s ease;
+  animation: wobble-left 0.2s ease;
 }
 
 .wobble-right {
-  animation: wobble-right .2s ease;
+  animation: wobble-right 0.2s ease;
 }
 
-.tapguru{
-    font-size: 16px;
+.tapguru {
+  font-size: 16px;
 }
-.tapguru{
-    font-size: 14px;
+.tapguru {
+  font-size: 14px;
 }
 
 @media only screen and (max-width: 350px) {
-
-  .tapguru{
+  .tapguru {
     font-size: 12px;
   }
-  .tapguru2{
+  .tapguru2 {
     font-size: 10px;
-}
-
-
+  }
 }
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full viewport height */
-} 
+}
 .loading {
- --speed-of-animation: 0.8s;
- --gap: 6px;
- --first-color: #E39725;
- --second-color: #E39725;
- --third-color: #E39725;
- --fourth-color: #E39725;
- --fifth-color: #E39725;
- display: flex;
- justify-content: center;
- align-items: center;
- width: 50px;
- gap: 6px;
- height:80px;
+  --speed-of-animation: 1.0s;
+  --gap: 3px;
+  --first-color: #35389e;
+  --second-color: #35389e;
+  --third-color: #35389e;
+  --fourth-color: #35389e;
+  --fifth-color: #35389e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  gap: var(--gap);
+  height: 80px;
+  margin-bottom: 150px;
 }
 
 .loading span {
- width: 30px;
- height: 30px;
- 
- background: var(--first-color);
- animation: scale var(--speed-of-animation) ease-in-out infinite;
+  width: 30px;
+  height: 30px;
+  background: var(--first-color);
+  animation: scaleUpDown var(--speed-of-animation) ease-in-out infinite;
 }
 
 .loading span:nth-child(2) {
- background: var(--second-color);
- animation-delay: 0.1s;
+  background: var(--second-color);
+  animation-delay: 0.1s;
 }
 
 .loading span:nth-child(3) {
- background: var(--third-color);
- animation-delay: -0.7s;
+  background: var(--third-color);
+  animation-delay: 0.2s;
 }
 
 .loading span:nth-child(4) {
- background: var(--fourth-color);
- animation-delay: -0.6s;
+  background: var(--fourth-color);
+  animation-delay: 0.3s;
 }
 
 .loading span:nth-child(5) {
- background: var(--fifth-color);
- animation-delay: -0.5s;
+  background: var(--fifth-color);
+  animation-delay: 0.4s;
 }
 
-@keyframes scale {
- 0%, 40%, 100% {
-  transform: scaleY(0.05);
- }
-
- 20% {
-  transform: scaleY(1);
- }
+@keyframes scaleUpDown {
+  0%, 100% {
+    transform: scale(1); /* Full size */
+  }
+  50% {
+    transform: scale(0.5); /* Shrink to middle size */
+  }
 }
 
-.taskbg{
+
+
+.taskbg {
   background: linear-gradient(to bottom, #191b33, #1b202d);
   background-color: #191b33;
   color: #fff;
   height: var(--tg-viewport-stable-height);
   touch-action: none; /* Prevent touch actions */
 }
-
-

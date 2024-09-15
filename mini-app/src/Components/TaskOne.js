@@ -1,4 +1,3 @@
-import coinsmall from "../images/coinsmall.webp";
 import claim from "../images/claim.webp";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";

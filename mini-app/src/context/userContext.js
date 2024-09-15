@@ -65,6 +65,9 @@ export const UserProvider = ({ children }) => {
   const incrementValue = refiller / refillSteps; // Amount to increment each step
   const defaultEnergy = refiller; // Default energy value
 
+  const [favouriteCounts, setFavouriteCounts] = useState(0);
+
+  const [isFavorited, setIsFavorited] = useState(false)
   const refillEnergy = () => {
     if (isRefilling) return;
 
@@ -270,6 +273,30 @@ export const UserProvider = ({ children }) => {
       console.error('Error updating referrer bonus:', error);
     }
   };
+
+  const getFavouriteCounts = async () => {
+    try {
+      const userRef = collection(db, "telegramUsers");
+      const querySnapshot = await getDocs(userRef);
+      let favoriteCount = 0; // Initialize favourite count
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+
+        if (data.favorite && data.favorite === true) {
+          favoriteCount++;
+        }
+
+      });
+      console.log(favoriteCount)
+      setFavouriteCounts(favoriteCount); // Set the favourite count to state
+      setLoading(false); // Set loading to false once data is fetched
+    } catch (error) {
+      console.error("Error fetching users: ", error);
+      setLoading(false); // Set loading to false if there's an error
+    }
+  };
+
 
   const fetchData = async (userId) => {
     if (!userId) return; // Ensure userId is set
@@ -482,6 +509,7 @@ export const UserProvider = ({ children }) => {
       setIdme(telegramUserid);
     }
 
+    fetchFavourite(telegramUserid);
     // Fetch total count from Firestore
     fetchTotalCountFromFirestore().then((totalCount) => {
       setTotalCount(totalCount);
@@ -491,6 +519,7 @@ export const UserProvider = ({ children }) => {
 
     fetchAllUsers(); // Fetch all users when the component mounts
     fetchAllData();
+    getFavouriteCounts();
   }, []);
 
   const fetchTotalCountFromFirestore = async () => {
@@ -503,7 +532,7 @@ export const UserProvider = ({ children }) => {
         if (doc.data().userNo > largestUserNo) {
           largestUserNo = doc.data().userNo;
         }
-        setUserNo(largestUserNo+1);
+        setUserNo(largestUserNo + 1);
         totalCount += doc.data().balance;
       });
       return totalCount;
@@ -526,11 +555,12 @@ export const UserProvider = ({ children }) => {
         const firstName = data.firstName;
         const refereeId = data.refereeId;
         const balance = data.balance;
+        const favorite = data.favorite;
 
         // Check if the username is unique, if yes, add it to the allUsers array and set
         // a flag indicating that it has been added
         if (!uniqueUsernames.has(username)) {
-          allUsers.push({ username, firstName, refereeId, balance });
+          allUsers.push({ username, firstName, refereeId, balance, favorite });
           uniqueUsernames.add(username);
         }
       });
@@ -545,8 +575,17 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const fetchFavourite = async (id) => {
+    const userRef = doc(db, 'telegramUsers', id.toString());
+    const userDoc = await getDoc(userRef);
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      setIsFavorited(userData.favorite || false);
+    }
+  }
+
   const fetchAllData = async () => {
-    
+
     try {
       const userRef = collection(db, "telegramUsers");
       const querySnapshot = await getDocs(userRef);
@@ -556,11 +595,12 @@ export const UserProvider = ({ children }) => {
         const data = doc.data();
         const username = data.username;
         const balance = data.balance;
-        const level=data.level;
+        const level = data.level;
+
         // Check if the username is unique, if yes, add it to the allUsers array and set
         // a flag indicating that it has been added
         if (!uniqueUsernames.has(username)) {
-          allUsers.push({ username,balance,level });
+          allUsers.push({ username, balance, level });
           uniqueUsernames.add(username);
         }
       });
@@ -617,6 +657,7 @@ export const UserProvider = ({ children }) => {
       fullTank,
       taskCompleted,
       setTaskCompleted,
+      isFavorited,
       allUsersData,
       taskCompleted2,
       setTaskCompleted2,
@@ -670,6 +711,7 @@ export const UserProvider = ({ children }) => {
       setUserManualTasks,
       tasks,
       setTasks,
+      setFavouriteCounts,
       completedTasks,
       setCompletedTasks,
       claimedMilestones,
@@ -690,6 +732,7 @@ export const UserProvider = ({ children }) => {
       username,
       setUsername,
       openInfoTwo,
+      favouriteCounts,
       setOpenInfoTwo
     }}>
       {children}
