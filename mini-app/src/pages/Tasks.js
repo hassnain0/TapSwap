@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
-import taskbook from "../images/taskbook.webp";
-import loadingGif from "../images/loading.gif";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
 
@@ -26,6 +24,7 @@ import MilestoneRewards from "../Components/MilestoneRewards";
 import ReferralRewards from "../Components/Rewards";
 import TaskTelegram from "../Components/Task/TaskTelegram";
 import TaskTw from "../Components/Task/TaskTw";
+import TaskWhatsapp from "../Components/Task/TaskWhatsapp";
 
 const Tasks = () => {
   const {
@@ -43,6 +42,7 @@ const Tasks = () => {
   const [loading, setLoading] = useState(false);
   const [showTaskTelegram, setShowTaskTelegram] = useState(false);
   const [showTaskTw, setShowTaskTw] = useState(false);
+  const [showWhatsapp, setShowWhatsapp] = useState(false);
   // eslint-disable-next-line
   const [claimLevel, setClaimLevel] = useState(false);
   const [showLevels, setShowLevels] = useState(false);
@@ -58,12 +58,20 @@ const Tasks = () => {
 
   const [activeIndex, setActiveIndex] = useState(1);
 
+  const [notify , setNotify] = useState(false);
+  const [notifyRef , setNotifyRef] = useState(false);
+  
+
   const handleMenu = (index) => {
     setActiveIndex(index);
   };
 
   const taskTelegram = () => {
     setShowTaskTelegram(true);
+    document.getElementById("footermain").style.zIndex = "50";
+  };
+  const taskWhatsapp = () => {
+    setShowWhatsapp(true);
     document.getElementById("footermain").style.zIndex = "50";
   };
 
@@ -274,6 +282,16 @@ const Tasks = () => {
     }
   };
 
+  const redDotStyle = {
+    width: '10px',
+    height: '10px',
+    backgroundColor: 'red',
+    borderRadius: '50%',
+    position: 'absolute',
+    top: '15px',
+    right: '42%',
+  };
+
   return (
     <>
       {loading ? (
@@ -321,23 +339,27 @@ const Tasks = () => {
                   className={`${activeIndex === 1 ? "bg-cards" : ""
                     }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
-                  Special
+                  Social
                 </div>
 
                 <div
                   onClick={() => handleMenu(2)}
+                  style={{ position: 'relative' }}
                   className={`${activeIndex === 2 ? "bg-cards" : ""
                     }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Leagues
+                  {notify && ( <div style={redDotStyle}></div>)}
                 </div>
 
                 <div
                   onClick={() => handleMenu(3)}
+                  style={{ position: 'relative' }}
                   className={`${activeIndex === 3 ? "bg-cards" : ""
                     }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Ref Tasks
+                  {notifyRef && ( <div style={redDotStyle}></div>)}
                 </div>
               </div>
             </div>
@@ -353,11 +375,46 @@ const Tasks = () => {
                 >
                   <div className="flex items-center flex-1 space-x-2">
                     <div className="">
-                      <img src={taskbook} alt="tasks" className="w-[50px]" />
+                      <img src={require('../images/taskbook.png')} alt="tasks" className="w-[50px]" />
                     </div>
                     <div className="flex flex-col space-y-1">
                       <span className="font-semibold">
-                        Join my Telegram Channel
+                        Join Our Telegram Channel
+                      </span>
+                      <div className="flex items-center space-x-1">
+                        <span className="w-[20px] h-[20px]">
+                          <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
+                        </span>
+                        <span className="font-medium">50 000</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/*  */}
+
+                  <div className="">
+                    {taskCompleted ? (
+                      <>
+                        <IoCheckmarkSharp className="w-[20px] h-[20px] text-[#5bd173] mt-[2px]" />
+                      </>
+                    ) : (
+                      <>
+                        <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#e0e0e0] mt-[2px]" />
+                      </>
+                    )}
+                  </div>
+                </div>
+                <div
+                  onClick={taskWhatsapp}
+                  className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
+                >
+                  <div className="flex items-center flex-1 space-x-2">
+                    <div className="">
+                      <img src={require('../images/taskbook.png')} alt="tasks" className="w-[50px]" />
+                    </div>
+                    <div className="flex flex-col space-y-1">
+                      <span className="font-semibold">
+                        Join Our Whatsapp Channel
                       </span>
                       <div className="flex items-center space-x-1">
                         <span className="w-[20px] h-[20px]">
@@ -389,7 +446,7 @@ const Tasks = () => {
                 >
                   <div className="flex items-center flex-1 space-x-2">
                     <div className="">
-                      <img src={taskbook} alt="tasks" className="w-[50px]" />
+                      <img src={require('../images/taskbook.png')} alt="tasks" className="w-[50px]" />
                     </div>
                     <div className="flex flex-col space-y-1">
                       <span className="font-semibold">Follow us on x.com</span>
@@ -401,6 +458,7 @@ const Tasks = () => {
                       </div>
                     </div>
                   </div>
+                  
 
                   {/*  */}
 
@@ -415,7 +473,9 @@ const Tasks = () => {
                       </>
                     )}
                   </div>
+
                 </div>
+
 
 
                 {/*  */}
@@ -427,7 +487,7 @@ const Tasks = () => {
                 className={`${activeIndex === 2 ? "flex" : "hidden"
                   } alltaskscontainer flex-col w-full space-y-2`}
               >
-                <MilestoneRewards />
+                <MilestoneRewards setNotify = {setNotify}/>
               </div>
 
               {/*  */}
@@ -436,13 +496,17 @@ const Tasks = () => {
                 className={`${activeIndex === 3 ? "flex" : "hidden"
                   } alltaskscontainer flex-col w-full space-y-2`}
               >
-                <ReferralRewards />
+                <ReferralRewards setNotify= {setNotifyRef}/>
               </div>
             </div>
 
             <TaskTelegram
               showModal={showTaskTelegram}
               setShowModal={setShowTaskTelegram}
+            />
+            <TaskWhatsapp
+              showModal={showWhatsapp}
+              setShowModal={setShowWhatsapp}
             />
             <TaskTw showModal={showTaskTw} setShowModal={setShowTaskTw} />
 

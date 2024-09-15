@@ -12,8 +12,8 @@ import {
 import { useUser } from "../../context/userContext";
 // import { EnergyContext } from "../context/EnergyContext";
 
-const TaskTw = ({ showModal, setShowModal }) => {
-  const {id, balance, setBalance, taskCompleted2, setTaskCompleted2} = useUser();
+const TaskWhatsapp = ({ showModal, setShowModal }) => {
+  const {id, balance, setBalance, taskCompleted, setTaskCompleted} = useUser();
 
   const [isVerified, setIsVerified] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(false);
@@ -22,7 +22,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
   const [showTaskButton, setShowTaskButton] = useState(true);
   const [counter, setCounter] = useState(null);
   const [intervalId, setIntervalId] = useState(null);
-  const taskID = "task_tw_1"; // Assign a unique ID to this task
+  const taskID = "task_tele_1"; // Assign a unique ID to this task
   const [openComplete, setOpenComplete] = useState(false);
   const [isMissionButtonDisabled, setIsMissionButtonDisabled] = useState(true);
 
@@ -54,7 +54,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
 
     if (id) {
       checkTaskCompletion(id, taskID).then((completed) => {
-        setTaskCompleted2(completed);
+        setTaskCompleted(completed);
         if (completed) {
           setMessage("");
           setIsMissionButtonDisabled(false);
@@ -67,7 +67,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
 
 
   const handleTaskLinkClick = () => {
-    window.open("https://x.com/RockiPoint?t=-yVqD1UvcWkjgN6Zi0Np7A&s=09");
+    window.open("https://whatsapp.com/channel/0029VapOWs5ICVfmMTJaAS21");
 
     setTimeout(() => {
       setShowTaskButton(false);
@@ -84,7 +84,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
     }
 
     const response = await fetch(
-      `https://api.telegram.org/bot6955313997:AAHOhLqPWU7PZCE6cxamzOJlmnqRijac3KQ/getChatMember?chat_id=-1002330515779&user_id=${id}`
+      `https://api.telegram.org/bot7171454492:AAHNel77INY4B7nv2nip4Qe1P06aznYa2P8/getChatMember?chat_id=--1002330515779&user_id=${id}`
     );
     const data = await response.json();
 
@@ -102,7 +102,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
     } else {
       setTimeout(() => {
         setMessage(
-          "Please follow the x channel first before you can claim this task bonus."
+          "Please join the Whatsapp channel first before you can claim this task bonus."
         );
       }, 1000);
       setCounter(15);
@@ -192,7 +192,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
       // Update the user's count in Firestore
       await updateUserCountInFirestore(id, newCount);
 
-      setTaskCompleted2(true);
+      setTaskCompleted(true);
     } else {
       setMessage("Please verify the task first.");
     }
@@ -218,14 +218,13 @@ const TaskTw = ({ showModal, setShowModal }) => {
                             </button> */}
             </div>
             <div className="flex flex-col w-full">
-              <h1 className="text-[20px] font-semibold">Follow us on x.com</h1>
+              <h1 className="text-[20px] font-semibold">Join Our Whatsapp Channel</h1>
               <p className="text-[#9a96a6] text-[16px] font-medium pt-1 pb-10">
-                Join our social page to get regular updates about this airdrop
-                bot and its great potentials x
+              We regularly share valuable  content on our channel. Join us there and get rewardes
               </p>
 
               <p className="w-full text-center text-[14px] font-semibold text-[#49ee49] pb-4">
-                {taskCompleted2 ? "Task is Completed" : ""}
+                {taskCompleted ? "Task is Completed" : ""}
               </p>
               <div className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center">
                 <div className="flex items-center flex-1 space-x-2">
@@ -247,7 +246,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
                 <div className="flex items-center flex-1 space-x-2">
                   <div className="flex flex-col space-y-1">
                     <span className="font-semibold">
-                        Follow us on x.com
+                      Join the Whatsapp Channel
                     </span>
 
                     {message && (
@@ -258,7 +257,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
                   </div>
                 </div>
                 <div className="">
-                  {taskCompleted2 ? (
+                  {taskCompleted ? (
                     <></>
                   ) : (
                     <>
@@ -298,10 +297,10 @@ const TaskTw = ({ showModal, setShowModal }) => {
                     </button>
                   )}
 
-                  {taskCompleted2 && <></>}
+                  {taskCompleted && <></>}
                 </div>
               </div>
-              {taskCompleted2 ? (
+              {taskCompleted ? (
                 <>
                   <button
                     className={`my-6 w-full py-5 px-3 flex items-center rounded-[12px] justify-center text-center text-[20px] font-medium text-[#6a6978] bg-btn2`}
@@ -373,4 +372,4 @@ const TaskTw = ({ showModal, setShowModal }) => {
   );
 };
 
-export default TaskTw;
+export default TaskWhatsapp;

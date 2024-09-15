@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase'; // Adjust the path as needed
 import styled, { keyframes } from "styled-components";
@@ -8,6 +8,7 @@ import Spinner from '../Components/Spinner';
 import { useUser } from '../context/userContext';
 import Levels from '../Components/Levels';
 import flash from "../images/flash.webp";
+import { IoClose } from 'react-icons/io5';
 
 
 const slideUp = keyframes`
@@ -41,15 +42,12 @@ const Container = styled.div`
 `;
 
 const Plutos = () => {
-
-  console.log("process.env.REACT_APP_API_KEY", process.env.REACT_APP_API_KEY)
-
   const imageRef = useRef(null);
   const [clicks, setClicks] = useState([]);
-  const { balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading } = useUser();
-
+  const { balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading,id } = useUser();
   // eslint-disable-next-line
   const [points, setPoints] = useState(0);
+  const [copied, setCopied] = useState(false);
   // eslint-disable-next-line
   const [isDisabled, setIsDisabled] = useState(false);
   // eslint-disable-next-line
@@ -68,6 +66,11 @@ const Plutos = () => {
   const accumulatedTapBalanceRef = useRef(tapBalance);
   const refillTimeoutRef = useRef(null); // Add this line
 
+  const [isHolding, setIsHolding] = useState(false);
+  const [holdTimeout, setHoldTimeout] = useState(null);
+  const [isHoldingLongEnough, setIsHoldingLongEnough] = useState(false);
+  
+  const [showInvitation,setShowInvitation]=useState(false);
 
   function triggerHapticFeedback() {
     const isAndroid = /Android/i.test(navigator.userAgent);
@@ -83,7 +86,27 @@ const Plutos = () => {
     }
   }
 
+  const handleHoldStart = (e) => {
+    setIsHolding(true);
 
+    // Set a timeout to detect if the user holds for 20 seconds
+    const timeout = setTimeout(() => {
+      setIsHoldingLongEnough(true); // Flag to increase points after 20 seconds
+    }, 20000); // 20 seconds
+
+    setHoldTimeout(timeout);
+  };
+
+  const handleHoldEnd = () => {
+    setIsHolding(false);
+
+    // Clear the timeout if the user releases before 20 seconds
+    clearTimeout(holdTimeout);
+    setHoldTimeout(null);
+
+    // Reset the holding state after releasing
+    setIsHoldingLongEnough(false);
+  };
 
 
   const handleClick = (e) => {
@@ -164,9 +187,8 @@ const Plutos = () => {
       setClicks((prevClicks) =>
         prevClicks.filter((click) => click.id !== newClick.id)
       );
-    }, 1000); // Match this duration with the animation duration
+    }, 1000);
 
-    // Reset the debounce timer
     clearTimeout(debounceTimerRef.current);
     debounceTimerRef.current = setTimeout(updateFirestore, 1000); // Adjust the delay as needed
 
@@ -178,8 +200,10 @@ const Plutos = () => {
       if (energy < battery.energy) {
         refillEnergy();
       }
-    }, 1000); // Set the inactivity period to 3 seconds (adjust as needed)
+    }, 1000);
   };
+
+
   const handleClickGuru = (e) => {
     triggerHapticFeedback();
 
@@ -188,7 +212,7 @@ const Plutos = () => {
       setTimeout(() => {
         setGlowBooster(false); // Remove glow effect after 1 second
       }, 300);
-      return; // Exit if no energy left or if clicks are disabled or if an update is in progress
+      return;
     }
 
     const { offsetX, offsetY, target } = e.nativeEvent;
@@ -217,10 +241,10 @@ const Plutos = () => {
     // Add the new animation class
     imageRef.current.classList.add(animationClass);
 
-    // Remove the animation class after animation ends to allow re-animation on the same side
+    // Remove the animation class after animation ends
     setTimeout(() => {
       imageRef.current.classList.remove(animationClass);
-    }, 500); // duration should match the animation duration in CSS
+    }, 500);
 
     // Increment the count
     const rect = e.target.getBoundingClientRect();
@@ -255,26 +279,23 @@ const Plutos = () => {
 
     // Remove the click after the animation duration
     setTimeout(() => {
-      setClicks((prevClicks) =>
-        prevClicks.filter((click) => click.id !== newClick.id)
-      );
-    }, 1000); // Match this duration with the animation duration
-
+      setClicks((prevClicks) => prevClicks.filter((click) => click.id !== newClick.id));
+    }, 1000);
 
     // Reset the debounce timer
     clearTimeout(debounceTimerRef.current);
-    debounceTimerRef.current = setTimeout(updateFirestore, 1000); // Adjust the delay as needed
+    debounceTimerRef.current = setTimeout(updateFirestore, 1000);
 
-    // Reset the refill timer
-    clearInterval(refillIntervalRef.current); // Stop refilling while the user is active
-    setIsRefilling(false); // Set refilling state to false
+    clearInterval(refillIntervalRef.current);
+    setIsRefilling(false);
     clearTimeout(refillTimeoutRef.current);
     refillTimeoutRef.current = setTimeout(() => {
       if (energy < battery.energy) {
         refillEnergy();
       }
-    }, 1000); // Set the inactivity period to 3 seconds (adjust as needed)
+    }, 1000);
   };
+
 
   const updateFirestore = async () => {
     const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
@@ -312,34 +333,6 @@ const Plutos = () => {
   const energyPercentage = (energy / battery.energy) * 100;
 
 
-  // const handleClaim = async () => {
-  //   const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
-  //   if (telegramUser) {
-  //     const { id: userId } = telegramUser;
-  //     const userRef = doc(db, 'telegramUsers', userId.toString());
-  //     try {
-  //       await updateDoc(userRef, {
-  //         balance: balance + points,
-  //         energy: energy,
-  //         tapBalance: tapBalance + points
-
-  //       });
-  //       setBalance((prevBalance) => prevBalance + points);
-  //       setTapBalance((prevTapBalance) => prevTapBalance + points);
-  //       localStorage.setItem('energy', energy);
-
-  //       if (energy <= 0) {
-  //         setIsTimerVisible(true);
-  //       }
-  //       console.log('Points claimed successfully');
-  //     } catch (error) {
-  //       console.error('Error updating balance and energy:', error);
-  //     }
-  //   }
-  //   openClaimer();
-  // };
-
-
 
   const formatNumber = (num) => {
     if (num < 100000) {
@@ -351,108 +344,183 @@ const Plutos = () => {
     }
   };
 
-  return (
-    <>
-      {loading ? (
-        <Spinner />
-      ) : (
+  const handleInvite=()=>{
+setShowInvitation(true);
+  }
+  const copyToClipboard = () => {
+    const reflink = `https://t.me/Rockipointbot?start=r${id}`;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard
+        .writeText(reflink)
+        .then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 10000); // Reset the copied state after 2 seconds
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+        });
+    } else {
+      // Fallback method
+      const textArea = document.createElement("textarea");
+      textArea.value = reflink;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+      } catch (err) {
+        console.error("Failed to copy", err);
+      }
+      document.body.removeChild(textArea);
+    }
+  };
+return (
+  <>
+    {loading ? (
+      <Spinner />
+    ) : (
+      <Animate>
 
-        <Animate>
-          <div className="flex flex-col justify-center w-full overflow-hidden">
-            <div className="flex space-x-[2px] justify-center items-center">
-              <div className="w-[50px] h-[50px]">
-                <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
-              </div>
-              <h1 className="text-[#fff] text-[42px] font-extrabold">
-                {formatNumber(balance + refBonus)} <br />
+<div
+            className={`${showInvitation === true ? "visible" : "invisible"
+              } absolute bottom-0 left-0 right-0 h-fit bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
+          >
+            <div className="w-full flex flex-col justify-between py-8">
+              <button
+                onClick={() => setShowInvitation(false)}
+                className="flex items-center justify-center absolute right-8 top-8 text-center rounded-[12px] font-medium text-[16px]"
+              >
+                <IoClose size={24} className="text-[#9a96a6]" />
+              </button>
 
-              </h1>
-            </div>
 
-            <div
-
-              className="w-full ml-[6px] flex space-x-1 items-center justify-center"
-            >
-              <img
-                src={level.imgUrl}
-                className="w-[25px] relative"
-                alt="bronze"
-              />
-              <h2 onClick={() => setShowLevels(true)} className="text-[#9d99a9] text-[20px] font-medium">
-                {level.name}
-              </h2>
-              <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#9d99a9] mt-[2px]" />
-            </div>
-            <div className="relative flex items-center justify-center w-full pb-24 pt-7">
-
-              <div className="bg-[#efc26999] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] top-10 -left-40 rounded-full"></div>
-              <div class={`${tapGuru ? 'block' : 'hidden'} pyro`}>
-                <div class="before"></div>
-                <div class="after"></div>
-              </div>
-              <div className="w-[350px] h-[350px] relative flex items-center justify-center">
-                <img src='/lihgt.webp'
-                  alt='err' className={`absolute w-[330px] rotate-45 ${tapGuru ? 'block' : 'hidden'}`} />
-
-                <div className="image-container">
-                  {mainTap && (
-                    <Container>
-                      <img
-                        onPointerDown={handleClick}
-                        ref={imageRef}
-                        src={require('../images/bcen.png')}
-                        alt="Wobble"
-                        className="wobble-image !w-[250px] select-none"
-                      />
-                      {clicks.map((click) => (
-                        <SlideUpText key={click.id} x={click.x} y={click.y}>
-                          +{tapValue.value}
-                        </SlideUpText>
-                      ))}
-                    </Container>
-                  )}
-                  {tapGuru && (
-                    <Container>
-                      <img
-                        onPointerDown={handleClickGuru}
-                        ref={imageRef}
-                        src={require('../images/bcen.png')}
-                        alt="Wobble"
-                        className="wobble-image !w-[250px] select-none"
-                      />
-                      {clicks.map((click) => (
-                        <SlideUpText key={click.id} x={click.x} y={click.y}>
-                          +{tapValue.value * 5}
-                        </SlideUpText>
-                      ))}
-                    </Container>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col space-y-6 fixed bottom-[120px] left-0 right-0 justify-center items-center px-5">
-              <div className="flex flex-col items-center justify-center w-full">
-                <div className="flex pb-[6px] space-x-1 items-center justify-center text-[#fff]">
-                  <img alt="flash" src={flash} className="w-[20px]" />
-                  <div className="">
-                    <span className="text-[18px] font-bold">{energy.toFixed(0)}</span>
-                    <span className="text-[14px] font-medium">/ {battery.energy}</span>
+              <div className="w-full bg-cards rounded-[12px] px-3 py-3 flex flex-col">
+                  <span className="flex items-center justify-between w-full pb-2">
+                    <h2 className="text-[18px] font-semibold">My invite link:</h2>
+                    <span
+                      onClick={copyToClipboard}
+                      className="bg-gradient-to-b from-[#094e9d] to-[#0b62c4] font-medium py-[6px] px-4 rounded-[12px] flex items-center justify-center text-[16px]"
+                    >
+                      {copied ? <span>Copied!</span> : <span>Copy</span>}
+                    </span>
+                  </span>
+                  <div className="text-[#9a96a6] text-[13px]">
+                    https://t.me/Rockipointbot?start=r{id}
                   </div>
                 </div>
-                <div className="flex w-full p-[4px] h-[20px] items-center bg-energybar rounded-[12px] border-[1px] border-borders2">
-                  <div
-                    className="bg-[#e39725] h-full rounded-full transition-width duration-100"
-                    style={{ width: `${energyPercentage}%` }}
-                  ></div>
+            </div>
+          </div>
+        
+        <div className="flex flex-col justify-center w-full overflow-hidden">
+          <div className="flex space-x-[2px] justify-center items-center">
+            <div className="w-[50px] h-[50px]">
+              <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
+            </div>
+            <h1 className="text-[#fff] text-[42px] font-extrabold">
+              {formatNumber(balance + refBonus)} <br />
+            </h1>
+          </div>
+
+          <div className="w-full ml-[6px] flex space-x-1 items-center justify-center">
+            <img
+              src={level.imgUrl}
+              className="w-[25px] relative"
+              alt="bronze"
+            />
+            <h2 onClick={() => setShowLevels(true)} className="text-[#9d99a9] text-[20px] font-medium">
+              {level.name}
+            </h2>
+            <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#9d99a9] mt-[2px]" />
+          </div>
+          <div className="relative w-full flex justify-center">
+  {/* Invite button positioned to the top right of the image */}
+  <button
+    onClick={handleInvite}
+    className="bg-green-600 text-white font-bold py-2 px-4 rounded-md w-[150px] absolute top-0 right-20px transform translate-x-[70%] translate-y-[-20px]"
+  >
+    Invite
+  </button>
+</div>
+
+          <div className="relative flex items-center justify-center w-full pb-24 pt-7">
+            <div className="bg-[#35389e] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] top-10 -left-40 rounded-full"></div>
+
+            <div class={`${tapGuru ? 'block' : 'hidden'} pyro`}>
+              <div class="before"></div>
+              <div class="after"></div>
+            </div>
+           
+            <div className="w-[350px] h-[350px] relative flex items-center justify-center">
+              <img src="/lihgt.webp" alt="err" className={`absolute w-[330px] rotate-45 ${tapGuru ? 'block' : 'hidden'}`} />
+
+              <div className="image-container">
+                {mainTap && (
+                  <Container>
+                    <img
+                      onPointerDown={handleClick}
+                      ref={imageRef}
+                      src={require('../images/bcen.png')}
+                      alt="Wobble"
+                      className="wobble-image !w-[250px] select-none"
+                    />
+                    {clicks.map((click) => (
+                      <SlideUpText key={click.id} x={click.x} y={click.y}>
+                        +{tapValue.value}
+                      </SlideUpText>
+                    ))}
+                  </Container>
+                )}
+                {tapGuru && (
+                  <Container>
+                    <img
+                      onPointerDown={handleClickGuru}
+                      ref={imageRef}
+                      src={require('../images/bcen.png')}
+                      alt="Wobble"
+                      className="wobble-image !w-[250px] select-none"
+                    />
+                    {clicks.map((click) => (
+                      <SlideUpText key={click.id} x={click.x} y={click.y}>
+                        +{tapValue.value * 5}
+                      </SlideUpText>
+                    ))}
+                  </Container>
+                )}
+              </div>
+              
+            </div>
+          </div>
+
+          {/* New Invite button added */}
+          <div className="flex flex-col space-y-6 fixed bottom-[120px] left-0 right-0 justify-center items-center px-5">
+         
+
+            <div className="flex flex-col items-center justify-center w-full">
+              <div className="flex pb-[6px] space-x-1 items-center justify-center text-[#fff]">
+                <img alt="flash" src={flash} className="w-[20px]" />
+                <div className="">
+                  <span className="text-[18px] font-bold">{energy.toFixed(0)}</span>
+                  <span className="text-[14px] font-medium">/ {battery.energy}</span>
                 </div>
               </div>
+              <div className="flex w-full p-[4px] h-[20px] items-center bg-energybar rounded-[12px] border-[1px] border-borders2">
+                <div
+                  className="bg-[#e39725] h-full rounded-full transition-width duration-100"
+                  style={{ width: `${energyPercentage}%` }}
+                ></div>
+              </div>
             </div>
-            <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
           </div>
-        </Animate>
-      )}
-    </>
-  );
+        
+          <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
+  
+        </div>
+      </Animate>
+    )}
+  </>
+);
+
 };
 
 

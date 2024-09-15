@@ -4,15 +4,52 @@ import { db } from '../firebase';
 import { useUser } from '../context/userContext';
 import { IoCheckmarkCircle } from 'react-icons/io5';
 import congratspic from "../images/celebrate.gif";
-import coinsmall from "../images/coinsmall.webp";
+import { useDispatch, useSelector } from 'react-redux';
+import { setTask } from '../features/taskSlice';
 
 const milestones = [
-  { name: 'Bronze', icon: 'https://ucarecdn.com/074dadcb-6be1-47e7-92da-28d2bd3a9448/bronze.webp', tapBalanceRequired: 1000, reward: 50000 },
-  { name: 'Silver', icon: 'https://ucarecdn.com/6725a762-528a-4967-bde1-f4da9f4833ee/sliver.webp', tapBalanceRequired: 50000, reward: 100000 },
-  { name: 'Gold', icon: 'https://ucarecdn.com/06204717-97e6-4e54-86b7-6b17a6b59788/gold.webp', tapBalanceRequired: 500000, reward: 250000 },
+  {
+    name: 'Bronze',
+    icon: 'https://ucarecdn.com/074dadcb-6be1-47e7-92da-28d2bd3a9448/bronze.webp',
+    tapBalanceRequired: 1000,
+    reward: 50000
+  },
+  {
+    name: 'Silver',
+    icon: 'https://ucarecdn.com/6725a762-528a-4967-bde1-f4da9f4833ee/sliver.webp',
+    tapBalanceRequired: 50000,
+    reward: 100000
+  },
+  {
+    name: 'Gold',
+    icon: 'https://ucarecdn.com/06204717-97e6-4e54-86b7-6b17a6b59788/gold.webp',
+    tapBalanceRequired: 500000,
+    reward: 250000
+  },
+  {
+    name: 'Platinum',
+    icon: '/platinum.webp',
+    tapBalanceRequired: 1000000,
+    reward: 500000 // Estimated based on previous tiers
+  },
+  {
+    name: 'Diamond',
+    icon: '/diamond.webp',
+    tapBalanceRequired: 2500000,
+    reward: 1000000 // Estimated based on previous tiers
+  },
+  {
+    name: 'Master',
+    icon: '/master.webp',
+    tapBalanceRequired: 5000000,
+    reward: 2000000 // Estimated based on previous tiers
+  }
 ];
 
-const MilestoneRewards = () => {
+
+const MilestoneRewards = ({setNotify}) => {
+  
+  const dispatch = useDispatch();
   const { tapBalance, balance, setBalance, id, claimedMilestones, setClaimedMilestones } = useUser();
   const [congrats, setCongrats] = useState(false)
 
@@ -52,15 +89,22 @@ const MilestoneRewards = () => {
       return (num / 10000000).toFixed(3).replace(".", ".") + " T";
     }
   };
-
+  const updateTaskNotify= (task)=>{
+    if(task == true){
+      dispatch(setTask(true));
+    }else{
+      dispatch(setTask(false));
+    }
+  }
   return (
     <div className="w-full flex flex-col space-y-4">
 
       {milestones.filter(milestone => !claimedMilestones.includes(milestone.name)).map((milestone) => {
         const progress = (tapBalance / milestone.tapBalanceRequired) * 100;
         const isClaimable = tapBalance >= milestone.tapBalanceRequired && !claimedMilestones.includes(milestone.name);
+        setNotify(isClaimable);
+        updateTaskNotify(isClaimable);
         return (
-
           <>
             <div key={milestone.name} className='bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center'>
 

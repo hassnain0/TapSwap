@@ -3,31 +3,20 @@ import { useState } from "react"
 import Cart from "../assets/lottery-cards/car.svg"
 import Moto from "../assets/lottery-cards/biclycle.svg"
 import Phone from "../assets/lottery-cards/phone.svg"
-import Dolar from "../assets/lottery-cards/dolar.svg"
 import Notebook from "../assets/lottery-cards/notebook.svg"
-import car from "../assets/lottery-buttons/car.svg"
-import bicycle from "../assets/lottery-buttons/bicycle.svg"
-import dolar from "../assets/lottery-buttons/dolar.svg"
-import notebook from "../assets/lottery-buttons/notebook.svg"
-import phone from "../assets/lottery-buttons/phone.svg"
 import { Link } from "react-router-dom"
-import ActiveButton from '../Components/activeButton'
 const veicles = [
   {
     name: "Rolls Royace",
     value: "250",
     image: Cart,
     heart: true,
-    title: <strong className="text-white text-[17px]">WIN A ROLLS-ROYCE PHANTOM!</strong>,
+    title: <strong className="text-white text-[17px]">COMING SOON!</strong>,
     description: (
       <>
-        <p className="text-white/60 text-base">Enter our ultra-exclusive lottery for a chance to own the pinnacle of luxury - a brand-new Rolls-Royce Phantom!</p>
-        <p className="text-white/60 text-base">- Prize: Rolls-Royce Phantom</p>
-        <p className="text-white/60 text-base">- Draw date: [insert date]</p>
-        <p className="text-white/60 text-base">- Tickets available until [insert time]</p>
-        <p className="text-white/60 text-base">Experience unparalleled opulence and refinement with this majestic vehicle. Don't miss your chance to ride like royalty!</p>
-        <p className="text-white/60 text-base">Get your ticket now and take a chance to make your wildest dreams come true!</p>
-        <p className="text-white/60 text-base">Good luck!</p>
+        <p className="text-white/60 text-base">Get ready to shift your luck into high gear!</p>
+        <p className="text-white/60 text-base"> Our community lottery feature is arriving soon stay tuned for the launch date and participation!</p>
+        <p className="text-white/60 text-base">#StayTuned</p>
       </>
     )
 
@@ -92,7 +81,7 @@ const veicles = [
 ]
 
 const Stats = () => {
-  const [current, setCurrent] = useState(0);
+  const [current] = useState(0);
 
   function favorite() {
     veicles.map((veic, index) => {
@@ -108,16 +97,6 @@ const Stats = () => {
   return (
     <div className="h-screen  overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
-        <header className="flex items-center justify-between w-full">
-          <strong className="text-xl text-[#066AAA]">Tickets: 0</strong>
-
-          <Link
-            to="/bag"
-            className="h-10 flex justify-center bg-[#0569AA] items-center rounded-lg text-white bg-button px-4"
-          >
-            Buy
-          </Link>
-        </header>
 
         {/* Scrollable content */}
         <main className="mt-12  flex-1 max-h-[calc(100vh-100px)]">
@@ -132,14 +111,7 @@ const Stats = () => {
               </div>
 
               <div className="absolute top-0 left-0 w-full flex items-center justify-between">
-                <div className="text-white">
-                  <p>{veicles[current].name}</p>
-                  <p>{veicles[current].value}</p>
-                </div>
 
-                <button onClick={favorite} className="text-white">
-                  {veicles[current].heart ? <HeartHandshake /> : <Heart />}
-                </button>
               </div>
             </div>
             {/* <div className="flex items-center gap-2 relative mt-6 mb-4">

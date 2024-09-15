@@ -17,13 +17,13 @@ export const UserProvider = ({ children }) => {
   // const [totalBalance, setTotalBalance] = useState(0);
   const [tapBalance, setTapBalance] = useState(0);
   const [level, setLevel] = useState({ id: 1, name: "Bronze", imgUrl: '/bronze.webp' }); // Initial level as an object with id and name
-  const [tapValue, setTapValue] = useState({level: 1, value: 1});
-  const [timeRefill, setTimeRefill] = useState({level: 1, duration: 10, step: 600});
+  const [tapValue, setTapValue] = useState({ level: 1, value: 1 });
+  const [timeRefill, setTimeRefill] = useState({ level: 1, duration: 10, step: 600 });
   const [id, setId] = useState("");
   const [loading, setLoading] = useState(true);
   const [energy, setEnergy] = useState(500);
   const [openInfoTwo, setOpenInfoTwo] = useState(false);
-  const [battery, setBattery] = useState({level: 1, energy: 500});
+  const [battery, setBattery] = useState({ level: 1, energy: 500 });
   const [initialized, setInitialized] = useState(false);
   const [refBonus, SetRefBonus] = useState(0);
   const [manualTasks, setManualTasks] = useState([]);
@@ -46,6 +46,7 @@ export const UserProvider = ({ children }) => {
   const [timeStaTank, setTimeStaTank] = useState(null);
   const [timeSpin, setTimeSpin] = useState(new Date());
   const [username, setUsername] = useState("");
+  const [userNo, setUserNo] = useState(0);
   // eslint-disable-next-line
   const [idme, setIdme] = useState("");
   const [totalCount, setTotalCount] = useState(0);
@@ -54,6 +55,7 @@ export const UserProvider = ({ children }) => {
   const [dividedUsers, setDividedUsers] = useState(0);
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [taskCompleted2, setTaskCompleted2] = useState(false);
+  const [allUsersData, setAllUsersData] = useState([]);
 
   const refillIntervalRef = useRef(null);
   const accumulatedEnergyRef = useRef(energy);
@@ -62,10 +64,10 @@ export const UserProvider = ({ children }) => {
   const refillSteps = timeRefill.step; // Number of increments
   const incrementValue = refiller / refillSteps; // Amount to increment each step
   const defaultEnergy = refiller; // Default energy value
-  
+
   const refillEnergy = () => {
     if (isRefilling) return;
-  
+
     setIsRefilling(true);
     refillIntervalRef.current = setInterval(() => {
       setEnergy((prevEnergy) => {
@@ -81,29 +83,29 @@ export const UserProvider = ({ children }) => {
           localStorage.setItem('lastRefillTime', Date.now()); // Save the current time
           console.log('Energy saved to local storage:', newEnergy); // Log the energy value saved to local storage
         }
-  
+
         return newEnergy;
       });
     }, refillDuration / refillSteps); // Increase energy at each step
   };
-  
+
   useEffect(() => {
     if (energy < refiller && !isRefilling) {
       refillEnergy();
       // console.log('REFILLER IS', refiller)
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [energy, isRefilling]);
-  
+
   useEffect(() => {
     return () => {
       clearInterval(refillIntervalRef.current);
     };
   }, []);
-  
 
-  
-  
+
+
+
 
 
   useEffect(() => {
@@ -153,6 +155,7 @@ export const UserProvider = ({ children }) => {
           setTimeSta(userData.timeSta);
           setTimeStaTank(userData.timeStaTank);
           setTimeSpin(userData.timeSpin);
+          setUserNo(userData.userNo)
           setClaimedMilestones(userData.claimedMilestones || []);
           setClaimedReferralRewards(userData.claimedReferralRewards || []);
           // setEnergy(userData.energy);
@@ -173,6 +176,7 @@ export const UserProvider = ({ children }) => {
         const userData = {
           userId: userId.toString(),
           username: finalUsername,
+          userNo,
           firstName,
           lastName,
           totalBalance: 0,
@@ -183,17 +187,16 @@ export const UserProvider = ({ children }) => {
           timeSta: null,
           timeStaTank: null,
           timeSpin: new Date(),
-          tapValue: {level: 1, value: 1},
-          timeRefill: {level: 1, duration: 10, step: 600},
+          tapValue: { level: 1, value: 1 },
+          timeRefill: { level: 1, duration: 10, step: 600 },
           level: { id: 1, name: "Bronze", imgUrl: '/bronze.webp' }, // Set the initial level with id and name
           energy: 500,
-          battery: {level: 1, energy: 500},
+          battery: { level: 1, energy: 500 },
           refereeId: referrerId || null,
           referrals: []
         };
 
         await setDoc(userRef, userData);
-        console.log('User saved in Firestore');
         setEnergy(500);
         setBattery(userData.battery);
         setRefiller(userData.battery.energy);
@@ -218,7 +221,7 @@ export const UserProvider = ({ children }) => {
             console.log('Referrer updated in Firestore');
           }
         }
-        
+
         setInitialized(true);
         setLoading(false);
         fetchData(userId.toString()); // Fetch data for the new user
@@ -332,35 +335,36 @@ export const UserProvider = ({ children }) => {
       console.log(`User level updated to ${newLevel.name}`);
     }
   };
-  
+
 
 
 
 
   useEffect(() => {
+
     sendUserData();
-     // eslint-disable-next-line
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (id) {
       const storedEnergy = localStorage.getItem('energy');
       const lastRefillTime = localStorage.getItem('lastRefillTime');
-    
+
       if (storedEnergy && lastRefillTime) {
         const energyValue = Number(storedEnergy);
         const lastTime = Number(lastRefillTime);
-    
+
         if (!isNaN(energyValue) && energyValue >= 0 && !isNaN(lastTime) && lastTime > 0) {
           const elapsedTime = Date.now() - lastTime;
           const elapsedSteps = Math.floor(elapsedTime / (refillDuration / refillSteps));
           const restoredEnergy = Math.min(energyValue + elapsedSteps * incrementValue, refiller);
-    
+
           if (!isNaN(restoredEnergy) && restoredEnergy >= 0) {
             setEnergy(restoredEnergy);
             localStorage.setItem('energy', restoredEnergy); // Update the stored energy
             localStorage.setItem('lastRefillTime', Date.now()); // Update the last refill time
-    
+
             if (restoredEnergy < refiller) {
               setIsRefilling(false);
               refillEnergy();
@@ -386,17 +390,17 @@ export const UserProvider = ({ children }) => {
         localStorage.setItem('energy', defaultEnergy);
         localStorage.setItem('lastRefillTime', Date.now());
       }
-  
+
       fetchData(id);
       console.log('MY REFIILER IS:', refiller)
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [id]);
 
   const checkAndUpdateFreeGuru = async () => {
     const userRef = doc(db, 'telegramUsers', id.toString());
     const userDoc = await getDoc(userRef);
-  
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const lastDate = userData.timeSta.toDate(); // Convert Firestore timestamp to JS Date
@@ -407,7 +411,7 @@ export const UserProvider = ({ children }) => {
       // console.log('timesta is:', lastDate)
       // console.log('current time is:', currentDate)
       // console.log('time difference is:', timeDifference)
-  
+
       if (formattedDates !== formattedCurrentDates && userData.freeGuru <= 0) {
         await updateDoc(userRef, {
           freeGuru: 3,
@@ -422,7 +426,7 @@ export const UserProvider = ({ children }) => {
   const checkAndUpdateFullTank = async () => {
     const userRef = doc(db, 'telegramUsers', id.toString());
     const userDoc = await getDoc(userRef);
-  
+
     if (userDoc.exists()) {
       const userData = userDoc.data();
       const lastDateTank = userData.timeStaTank.toDate(); // Convert Firestore timestamp to JS Date
@@ -436,7 +440,7 @@ export const UserProvider = ({ children }) => {
       console.log('current time is:', currentDate)
       console.log('formatted current time is:', formattedCurrentDate)
       // console.log('time difference is:', timeDifference)
-  
+
       if (formattedDate !== formattedCurrentDate && userData.fullTank <= 0) {
         await updateDoc(userRef, {
           fullTank: 3,
@@ -486,6 +490,7 @@ export const UserProvider = ({ children }) => {
     });
 
     fetchAllUsers(); // Fetch all users when the component mounts
+    fetchAllData();
   }, []);
 
   const fetchTotalCountFromFirestore = async () => {
@@ -493,7 +498,12 @@ export const UserProvider = ({ children }) => {
       const userRef = collection(db, "telegramUsers");
       const querySnapshot = await getDocs(userRef);
       let totalCount = 0;
+      let largestUserNo = 0;
       querySnapshot.forEach((doc) => {
+        if (doc.data().userNo > largestUserNo) {
+          largestUserNo = doc.data().userNo;
+        }
+        setUserNo(largestUserNo+1);
         totalCount += doc.data().balance;
       });
       return totalCount;
@@ -535,18 +545,47 @@ export const UserProvider = ({ children }) => {
     }
   };
 
+  const fetchAllData = async () => {
+    
+    try {
+      const userRef = collection(db, "telegramUsers");
+      const querySnapshot = await getDocs(userRef);
+      const allUsers = [];
+      const uniqueUsernames = new Set();
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const username = data.username;
+        const balance = data.balance;
+        const level=data.level;
+        // Check if the username is unique, if yes, add it to the allUsers array and set
+        // a flag indicating that it has been added
+        if (!uniqueUsernames.has(username)) {
+          allUsers.push({ username,balance,level });
+          uniqueUsernames.add(username);
+        }
+      });
+
+      setAllUsersData(allUsers);
+      setLoading(false); // Set loading to false once data is fetched
+      // Update the count of unique users
+    } catch (error) {
+      console.error("Error fetching users: ", error);
+      setLoading(false); // Set loading to false if there's an error
+    }
+  };
+
   const calculateDividedCount = (count) => {
     return count / 4;
   };
 
-  
+
   // Call this function when appropriate, such as on component mount or before handleClick
   useEffect(() => {
     if (id) {
-    checkAndUpdateFreeGuru();
-    checkAndUpdateFullTank();
+      checkAndUpdateFreeGuru();
+      checkAndUpdateFullTank();
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [id]);
 
 
@@ -555,9 +594,9 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (id) {
       updateUserLevel(id, tapBalance);
-    
+
     }
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [tapBalance, id]);
 
   useEffect(() => {
@@ -578,12 +617,14 @@ export const UserProvider = ({ children }) => {
       fullTank,
       taskCompleted,
       setTaskCompleted,
+      allUsersData,
       taskCompleted2,
       setTaskCompleted2,
-      setFullTank, 
+      setFullTank,
       timeStaTank,
       setTimeStaTank,
       timeSta,
+      userNo,
       timeSpin,
       setTimeSpin,
       setFreeGuru,
@@ -649,8 +690,8 @@ export const UserProvider = ({ children }) => {
       username,
       setUsername,
       openInfoTwo,
-      setOpenInfoTwo 
-      }}>
+      setOpenInfoTwo
+    }}>
       {children}
     </UserContext.Provider>
   );
