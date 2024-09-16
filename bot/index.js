@@ -14,15 +14,10 @@ bot.start((ctx) => {
   const urlSent = `${web_link}?start=${startPayload}`;
   const user = ctx.message.from;
   const userName = user.username ? `@${user.username}` : user.first_name;
-  ctx.replyWithMarkdown(`*Hey ${user.username} welcome to Rockipoint!
-
-Tap into the future of finance! participate in challenges, and watch your ROCK token balance soar.
-
-Rockipoint is a revolutionary decentralized finance platform where users can earn rewards by leveraging our innovative features. The majority of ROCK token distribution will occur among our active community members.
-
-Got friends, family, or colleagues? Invite them to join the fun! More friends, more ROCK tokens.
-
-Share the excitement and start building your financial future today!`, {
+  ctx.replyWithMarkdown(`*Hey ${user.username}, Welcome to Rockipoint! Tap into the future of finance! participate in challenges, and watch your ROCK token balance soar.*      
+*Rockipoint is a revolutionary decentralized finance platform where users can earn rewards by leveraging our innovative features. The majority of ROCK token distribution will occur among our active community members.
+*Got friends, family, or colleagues? Invite them to join the fun! More friends, more ROCK tokens.     
+*Share the excitement and start building your financial future today!`, {
     reply_markup: {
       inline_keyboard: [
         [{ text: "👋 Start now!", web_app: { url: urlSent } }],
