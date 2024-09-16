@@ -14,14 +14,15 @@ bot.start((ctx) => {
   const urlSent = `${web_link}?start=${startPayload}`;
   const user = ctx.message.from;
   const userName = user.username ? `@${user.username}` : user.first_name;
-  ctx.replyWithMarkdown(`*Hey, Welcome to My Bot! Contact the Developer of this bot web app @chris_lev11 for your own projects today*
-Tap on the coin and see token rise.
-      
-*THIS BOT Bot* is a Decentralized Exchange on the TON Blockchain. The biggest part of bot TOKEN distribution will occur among the players here.
-      
-Got friends, relatives, co-workers?
-Bring them all into the game.
-More buddies, more coins.`, {
+  ctx.replyWithMarkdown(`*Hey ${user.username} welcome to Rockipoint!
+
+Tap into the future of finance! participate in challenges, and watch your ROCK token balance soar.
+
+Rockipoint is a revolutionary decentralized finance platform where users can earn rewards by leveraging our innovative features. The majority of ROCK token distribution will occur among our active community members.
+
+Got friends, family, or colleagues? Invite them to join the fun! More friends, more ROCK tokens.
+
+Share the excitement and start building your financial future today!`, {
     reply_markup: {
       inline_keyboard: [
         [{ text: "👋 Start now!", web_app: { url: urlSent } }],
