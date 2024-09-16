@@ -3,7 +3,7 @@ import Cart from "../assets/lottery-cards/car.svg"
 import Moto from "../assets/lottery-cards/biclycle.svg"
 import Phone from "../assets/lottery-cards/phone.svg"
 import Notebook from "../assets/lottery-cards/notebook.svg"
-import { doc, setDoc } from "@firebase/firestore"
+import { doc, updateDoc } from "@firebase/firestore"
 import { db } from "../firebase"
 import { useUser } from "../context/userContext"
 const veicles = [
@@ -83,37 +83,48 @@ const veicles = [
 
 const Stats = () => {
   const [current] = useState(0);
-  const {isFavorited}=useUser();
-  const [isFavoritedSelect, setIsFavoritedSelect] = useState();
+  const { isFavorited, favouriteCounts, } = useUser();
+  const [isFavoritedSelect, setIsFavoritedSelect] = useState(isFavorited);
   const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
-console.log("Use User COunt",useUser())
+  const [totalcounts,setTotalCounts]=useState(favouriteCounts);
 
-  useEffect(()=>{
-    setIsFavoritedSelect(isFavorited)
-  })
-  const { favouriteCounts, setFavouriteCounts } = useUser();
+  useEffect(() => {
+    // Update local state when `isFavorited` changes
+    setIsFavoritedSelect(isFavorited);
+    setTotalCounts(favouriteCounts);
+  }, [isFavorited,favouriteCounts]); // Depend on isFavorited to trigger re-render when it changes
   
+  const favorite = async () => {
+    try {
+      const newValue = !isFavoritedSelect;
+      const newCount = newValue ? totalcounts + 1 : totalcounts - 1; // Increment or decrement count
 
-  const sendUserData = async () => {
-    if (telegramUser) {
-      const { id: userId } = telegramUser;
+    setIsFavoritedSelect(newValue);  // Update UI immediately
+    setTotalCounts(newCount);      // Update favorite count immediately
 
-      try {
-        const userRef = doc(db, 'telegramUsers',userId.toString());
-
-        setDoc(userRef, { favorite: isFavorited }, { merge: true });
-      } catch (error) {
-        console.error('Error saving user in Firestore:', error);
-      }
+      await sendUserData(newValue);    // Sync with Firestore
+    } catch (error) {
+      console.error('Failed to update favorite status:', error);
+      // Optionally revert state on error
+      setIsFavoritedSelect(isFavorited);
     }
   };
+  
+  const sendUserData = async (newValue) => {
+    try {
+      if (telegramUser) {
+        const { id: userId } = telegramUser;
+        const userRef = doc(db, 'telegramUsers', userId.toString());
+      await updateDoc(userRef, { favorite: newValue });
+      console.log('User data updated successfully');
+      }
+    } catch (error) {
+      console.error('Error saving user in Firestore:', error);
+      throw error;
+    }
+  };
+  
 
-  const favorite = async () => {
-    setIsFavoritedSelect(!isFavoritedSelect)
-    // Update the favorite count based on the new state
-    
-    await sendUserData();
-  }
 
   const HeartIcon = ({ filled }) => (
     <svg
@@ -147,12 +158,12 @@ console.log("Use User COunt",useUser())
               </div>
 
               <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-4">
-                <button onClick={favorite} className="focus:outline-none mb-2">
+                <button onClick={favorite} className="focus:outline-none mb-2 transform scale-150">
                   <HeartIcon filled={isFavoritedSelect} />
                 </button>
-                <div className="text-white mt-2">
+                <div className="text-white mt-0">
                   <span className="text-[#3CA4EB]  flex justify-center items-center rounded-md w-20 h-8">
-                    {favouriteCounts} Likes
+                    {totalcounts} Likes
                   </span>
                 </div>
               </div>
@@ -161,12 +172,7 @@ console.log("Use User COunt",useUser())
 
 
             </div>
-            {/* <div className="flex items-center gap-2 relative mt-6 mb-4">
-              <ActiveButton image={car} current={current} position={0} setCurrent={() => setCurrent(0)} />
-              <ActiveButton image={phone} current={current} position={1} setCurrent={() => setCurrent(1)} />
-              <ActiveButton image={bicycle} current={current} position={2} setCurrent={() => setCurrent(2)} />
-              <ActiveButton image={notebook} current={current} position={3} setCurrent={() => setCurrent(3)} />
-            </div> */}
+
           </div>
 
           <div className="mt-8">

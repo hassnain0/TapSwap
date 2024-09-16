@@ -8,7 +8,7 @@ import Spinner from '../Components/Spinner';
 import { useUser } from '../context/userContext';
 import Levels from '../Components/Levels';
 import flash from "../images/flash.webp";
-import { IoClose } from 'react-icons/io5';
+import { IoCheckmarkCircle, IoClose } from 'react-icons/io5';
 import ref from '../images/ref.webp';
 
 const slideUp = keyframes`
@@ -16,11 +16,16 @@ const slideUp = keyframes`
     opacity: 1;
     transform: translateY(0);
   }
+  80% {
+    opacity: 1;
+    transform: translateY(-350px);
+  }
   100% {
     opacity: 0;
     transform: translateY(-350px);
   }
 `;
+
 
 const SlideUpText = styled.div`
   position: absolute;
@@ -356,7 +361,13 @@ const Plutos = () => {
         .writeText(reflink)
         .then(() => {
           setCopied(true);
-          setTimeout(() => setCopied(false), 10000); // Reset the copied state after 2 seconds
+          setShowInvitation(false)
+          setCongrats(true);
+          setTimeout(() => setCopied(false), 10000);
+          setTimeout(() => {
+            setCongrats(false)
+          }, 4000)
+          // Reset the copied state after 2 seconds
         })
         .catch((err) => {
           console.error("Failed to copy text: ", err);
@@ -370,6 +381,8 @@ const Plutos = () => {
       try {
         document.execCommand("copy");
         setCopied(true);
+        
+        
         setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
       } catch (err) {
         console.error("Failed to copy", err);
@@ -414,20 +427,19 @@ const Plutos = () => {
                 <h3 className="font-semibold text-[32px] py-4">
                   Your Invite Link
                 </h3>
-                <p className="pb-6 text-[#9a96a6] text-[16px] text-center">
-                  {/* Turbo Engine will tap when your energy is full <br />
-                  Max bot work duration is 12 hours */}
-                </p>
+                <div className="text-[#9a96a6] text-[13px]">
+                  https://t.me/Rockipointbot?start=r{id}
+                </div>
 
                 <div className="flex flex-1 items-center space-x-2">
-                  
+
                 </div>
               </div>
 
               <div className="w-full flex justify-center pb-6 pt-4">
                 <button
-                onClick={copyToClipboard}
-                  className={`bg-[#1F2942] text-[#979797] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  onClick={copyToClipboard}
+                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] text-[black] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   Copy
                 </button>
@@ -456,12 +468,12 @@ const Plutos = () => {
               </h2>
               <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#9d99a9] mt-[2px]" />
             </div>
-            <div  className="w-full flex justify-center ">
+            <div className="w-full flex justify-center ">
               {/* Invite button positioned to the top right of the image */}
               <button
-               onClick={()=>{setShowInvitation(true)}}
-              // onMouseMove={()=>console.log("Hello")}
-                className="mt-2 bg-[#1F2942] text-white font-bold py-1 px-0 rounded-md w-[100px] transform translate-x-[130%] translate-y-[-10px]"
+                onClick={() => {setShowInvitation(true) }}
+                // onMouseMove={()=>console.log("Hello")}
+                className="mt-2 bg-[#1F2942] text-white font-bold py-1 px-0 rounded-md w-[70px] transform translate-x-[10%] "
               >
                 Invite
               </button>
@@ -483,6 +495,7 @@ const Plutos = () => {
                     <Container>
                       <img
                         onPointerDown={handleClick}
+                        onDoubleClick={handleClick}
                         ref={imageRef}
                         src={require('../images/bcen.png')}
                         alt="Wobble"
@@ -498,6 +511,7 @@ const Plutos = () => {
                   {tapGuru && (
                     <Container>
                       <img
+                        onDoubleClick={handleClick}
                         onPointerDown={handleClickGuru}
                         ref={imageRef}
                         src={require('../images/bcen.png')}
@@ -506,7 +520,7 @@ const Plutos = () => {
                       />
                       {clicks.map((click) => (
                         <SlideUpText key={click.id} x={click.x} y={click.y}>
-                          +{tapValue.value * 5}
+                          +{tapValue.value}
                         </SlideUpText>
                       ))}
                     </Container>
@@ -535,6 +549,19 @@ const Plutos = () => {
                   ></div>
                 </div>
               </div>
+            </div>
+<div className={`${congrats === true ? "visible bottom-6" : "invisible bottom-[-10px]"} z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}>
+            <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
+
+
+
+              <IoCheckmarkCircle size={24} className="" />
+
+              <span className="font-medium">
+                Good
+              </span>
+
+            </div>
             </div>
 
             <Levels showLevels={showLevels} setShowLevels={setShowLevels} />

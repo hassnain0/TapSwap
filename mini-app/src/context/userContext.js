@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
-import { doc, getDoc, setDoc, updateDoc, arrayUnion, getDocs, collection } from 'firebase/firestore';
+import { doc, getDoc, setDoc, updateDoc, arrayUnion, getDocs, collection, limit, query } from 'firebase/firestore';
 import { db } from '../firebase'; // Adjust the path as needed
 // import { disableReactDevTools } from '@fvilers/disable-react-devtools';
 
@@ -267,8 +267,6 @@ export const UserProvider = ({ children }) => {
     // Save the refBonus to the user's document
     try {
       await updateDoc(userRef, { refBonus, totalBalance });
-      console.log('Referrer bonus updated in Firestore');
-      console.log('Your balance is:', `${balance}`);
     } catch (error) {
       console.error('Error updating referrer bonus:', error);
     }
@@ -580,34 +578,37 @@ export const UserProvider = ({ children }) => {
     const userDoc = await getDoc(userRef);
     if (userDoc.exists()) {
       const userData = userDoc.data();
-      setIsFavorited(userData.favorite || false);
+
+      setIsFavorited(userData.favorite);
     }
   }
 
   const fetchAllData = async () => {
-
     try {
       const userRef = collection(db, "telegramUsers");
-      const querySnapshot = await getDocs(userRef);
+  
+      // Create a query with a limit of 300 users
+      const limitedQuery = query(userRef, limit(300));
+  
+      const querySnapshot = await getDocs(limitedQuery);
       const allUsers = [];
       const uniqueUsernames = new Set();
+  
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const username = data.username;
         const balance = data.balance;
         const level = data.level;
-
-        // Check if the username is unique, if yes, add it to the allUsers array and set
-        // a flag indicating that it has been added
+  
+        // Add the user if the username is unique
         if (!uniqueUsernames.has(username)) {
           allUsers.push({ username, balance, level });
           uniqueUsernames.add(username);
         }
       });
-
+  
       setAllUsersData(allUsers);
       setLoading(false); // Set loading to false once data is fetched
-      // Update the count of unique users
     } catch (error) {
       console.error("Error fetching users: ", error);
       setLoading(false); // Set loading to false if there's an error
