@@ -67,7 +67,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
 
 
   const handleTaskLinkClick = () => {
-    window.open("https://t.me/rockipointannouncement");
+    window.open("https://t.me/rockipoint");
 
     setTimeout(() => {
       setShowTaskButton(false);
@@ -84,7 +84,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
     }
 
     const response = await fetch(
-      `https://api.telegram.org/bot6955313997:AAGZScYG8WpYLaD5wWYLK0msbi9mB2JCZZw/getChatMember?chat_id=-1002330515779&user_id=${id}`
+      `https://api.telegram.org/bot7322919680:AAHY0Q3PjjWzHELk4SIN0x_sFXwoOATHaok/getChatMember?chat_id=-1002330515779&user_id=${id}`
     );
     const data = await response.json();
 

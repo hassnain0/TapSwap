@@ -6,7 +6,7 @@ const express = require("express");
 const app = express()
 app.use(express.json())
 const web_link = "https://funny-sopapillas-5682e4.netlify.app/";
-const community_link = "https://t.me/rockipointannouncement";
+const community_link = "https://t.me/rockipoint";
 
 
 bot.start((ctx) => {

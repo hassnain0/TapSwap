@@ -404,7 +404,8 @@ const Tasks = () => {
                     )}
                   </div>
                 </div>
-                <div
+            
+                {/* <div
                   onClick={taskWhatsapp}
                   className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
                 >
@@ -425,7 +426,6 @@ const Tasks = () => {
                     </div>
                   </div>
 
-                  {/*  */}
 
                   <div className="">
                     {taskCompleted ? (
@@ -438,11 +438,11 @@ const Tasks = () => {
                       </>
                     )}
                   </div>
-                </div>
+                </div> */}
 
 
-                {/* tw */}
-                <div
+              
+                {/* <div
                   onClick={taskTw}
                   className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
                 >
@@ -462,7 +462,6 @@ const Tasks = () => {
                   </div>
 
 
-                  {/*  */}
 
                   <div className="">
                     {taskCompleted2 ? (
@@ -476,8 +475,7 @@ const Tasks = () => {
                     )}
                   </div>
 
-                </div>
-
+                </div> */}
 
 
                 {/*  */}

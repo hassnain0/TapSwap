@@ -324,18 +324,18 @@ export const UserProvider = ({ children }) => {
   };
 
   const fetchReferrals = async () => {
-    const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
-    if (telegramUser) {
-      const { id: userId } = telegramUser;
-      const userRef = doc(db, 'telegramUsers', userId.toString());
-      const userDoc = await getDoc(userRef);
-
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        setReferrals(userData.referrals || []);
-      }
-      setLoading(false);
+    // const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
+    // if (telegramUser) {
+    const { id: userId } = telegramUser;
+    const userRef = doc(db, 'telegramUsers', userId.toString());
+    const userDoc = await getDoc(userRef);
+    console.log("User DOc", userDoc)
+    if (userDoc.exists()) {
+      const userData = userDoc.data();
+      setReferrals(userData.referrals || []);
     }
+    setLoading(false);
+    // }
   };
 
   const updateUserLevel = async (userId, newTapBalance) => {
