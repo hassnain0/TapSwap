@@ -5,7 +5,7 @@ const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://funny-sopapillas-5682e4.netlify.app/";
+const web_link = "https://calm-muffin-6bfe51.netlify.app/";
 const community_link = "https://t.me/rockipoint";
 
 
@@ -14,7 +14,7 @@ bot.start((ctx) => {
   const urlSent = `${web_link}?start=${startPayload}`;
   const user = ctx.message.from;
   const userName = user.username ? `@${user.username}` : user.first_name;
-  ctx.replyWithMarkdown(`*Hey ${userName},Welcome to Rockipoint!Tap into the future of finance! participate in challenges, and watch your ROCK token balance soar.*
+  ctx.replyWithMarkdown(`*Hey ${userName}, Welcome to Rockipoint! Tap into the future of finance! participate in challenges, and watch your ROCK token balance soar.*
 Tap on the coin and see token rise.
       
 *Rockipoint* is a revolutionary decentralized finance platform where users can earn rewards by leveraging our innovative features. The majority of ROCK token distribution will occur among our active community members.
