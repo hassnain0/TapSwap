@@ -189,6 +189,7 @@ export const UserProvider = ({ children }) => {
           tapBalance: 0,
           timeSta: null,
           timeStaTank: null,
+          favorite: false,
           timeSpin: new Date(),
           tapValue: { level: 1, value: 1 },
           timeRefill: { level: 1, duration: 10, step: 600 },
@@ -286,7 +287,6 @@ export const UserProvider = ({ children }) => {
         }
 
       });
-      console.log(favoriteCount)
       setFavouriteCounts(favoriteCount); // Set the favourite count to state
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
@@ -586,27 +586,27 @@ export const UserProvider = ({ children }) => {
   const fetchAllData = async () => {
     try {
       const userRef = collection(db, "telegramUsers");
-  
+
       // Create a query with a limit of 300 users
       const limitedQuery = query(userRef, limit(300));
-  
+
       const querySnapshot = await getDocs(limitedQuery);
       const allUsers = [];
       const uniqueUsernames = new Set();
-  
+
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         const username = data.username;
         const balance = data.balance;
         const level = data.level;
-  
+
         // Add the user if the username is unique
         if (!uniqueUsernames.has(username)) {
           allUsers.push({ username, balance, level });
           uniqueUsernames.add(username);
         }
       });
-  
+
       setAllUsersData(allUsers);
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {

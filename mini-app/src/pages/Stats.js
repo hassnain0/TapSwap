@@ -86,21 +86,21 @@ const Stats = () => {
   const { isFavorited, favouriteCounts, } = useUser();
   const [isFavoritedSelect, setIsFavoritedSelect] = useState(isFavorited);
   const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
-  const [totalcounts,setTotalCounts]=useState(favouriteCounts);
+  const [totalcounts, setTotalCounts] = useState(favouriteCounts);
 
   useEffect(() => {
     // Update local state when `isFavorited` changes
     setIsFavoritedSelect(isFavorited);
     setTotalCounts(favouriteCounts);
-  }, [isFavorited,favouriteCounts]); // Depend on isFavorited to trigger re-render when it changes
-  
+  }, [isFavorited, favouriteCounts]); // Depend on isFavorited to trigger re-render when it changes
+
   const favorite = async () => {
     try {
       const newValue = !isFavoritedSelect;
       const newCount = newValue ? totalcounts + 1 : totalcounts - 1; // Increment or decrement count
 
-    setIsFavoritedSelect(newValue);  // Update UI immediately
-    setTotalCounts(newCount);      // Update favorite count immediately
+      setIsFavoritedSelect(newValue);  // Update UI immediately
+      setTotalCounts(newCount);      // Update favorite count immediately
 
       await sendUserData(newValue);    // Sync with Firestore
     } catch (error) {
@@ -109,21 +109,21 @@ const Stats = () => {
       setIsFavoritedSelect(isFavorited);
     }
   };
-  
+
   const sendUserData = async (newValue) => {
     try {
       if (telegramUser) {
         const { id: userId } = telegramUser;
         const userRef = doc(db, 'telegramUsers', userId.toString());
-      await updateDoc(userRef, { favorite: newValue });
-      console.log('User data updated successfully');
+        await updateDoc(userRef, { favorite: newValue });
+        console.log('User data updated successfully');
       }
     } catch (error) {
       console.error('Error saving user in Firestore:', error);
       throw error;
     }
   };
-  
+
 
 
   const HeartIcon = ({ filled }) => (

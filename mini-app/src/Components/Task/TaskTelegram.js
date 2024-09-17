@@ -13,7 +13,7 @@ import { useUser } from "../../context/userContext";
 // import { EnergyContext } from "../context/EnergyContext";
 
 const TaskTelegram = ({ showModal, setShowModal }) => {
-  const {id, balance, setBalance, taskCompleted, setTaskCompleted} = useUser();
+  const { id, balance, setBalance, taskCompleted, setTaskCompleted } = useUser();
 
   const [isVerified, setIsVerified] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(false);
@@ -32,7 +32,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
       setShowModal(false);
       document.getElementById("footermain").style.zIndex = "";
     };
-  
+
     if (showModal) {
       window.Telegram.WebApp.BackButton.show();
       window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
@@ -40,13 +40,13 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
       window.Telegram.WebApp.BackButton.hide();
       window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     }
-  
+
     // Cleanup handler when component unmounts
     return () => {
       window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     };
   }, [showModal, setShowModal]);
-  
+
 
 
 
@@ -63,7 +63,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
     }
     // eslint-disable-next-line
   }, []);
-  
+
 
 
   const handleTaskLinkClick = () => {
@@ -150,7 +150,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
     }
   };
 
-  const updateUserCountInFirestore = async (id, newBalance ) => {
+  const updateUserCountInFirestore = async (id, newBalance) => {
     try {
       const userRef = collection(db, "telegramUsers");
       const querySnapshot = await getDocs(userRef);
@@ -220,7 +220,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
             <div className="flex flex-col w-full">
               <h1 className="text-[20px] font-semibold">Join Our Telegram Channel</h1>
               <p className="text-[#9a96a6] text-[16px] font-medium pt-1 pb-10">
-              We regularly share valuable  content on our channel. Join us there and get rewardes
+                We regularly share valuable  content on our channel. Join us there and get rewardes
               </p>
 
               <p className="w-full text-center text-[14px] font-semibold text-[#49ee49] pb-4">
@@ -314,11 +314,10 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
                     onClick={() => handleComplete(true)}
                     disabled={isMissionButtonDisabled}
                     className={`my-6 w-full py-5 px-3 flex items-center rounded-[12px] justify-center text-center text-[20px] font-medium 
-                                    ${
-                                      isMissionButtonDisabled
-                                        ? "text-[#6a6978] bg-btn2"
-                                        : "text-[#f4f4f4] bg-btn"
-                                    }`}
+                                    ${isMissionButtonDisabled
+                        ? "text-[#6a6978] bg-btn2"
+                        : "text-[#f4f4f4] bg-btn"
+                      }`}
                   >
                     Finish Mission
                   </button>
@@ -327,9 +326,8 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
             </div>
 
             <div
-              className={`${
-                openComplete === true ? "visible" : "invisible"
-              } absolute bottom-0 left-0 right-0 h-[76vh] bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
+              className={`${openComplete === true ? "visible" : "invisible"
+                } absolute bottom-0 left-0 right-0 h-[76vh] bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
             >
               <div className="flex flex-col justify-between w-full py-8">
                 <div className="flex flex-col items-center justify-center w-full">

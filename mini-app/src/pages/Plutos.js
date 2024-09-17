@@ -381,8 +381,8 @@ const Plutos = () => {
       try {
         document.execCommand("copy");
         setCopied(true);
-        
-        
+
+
         setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
       } catch (err) {
         console.error("Failed to copy", err);
@@ -471,7 +471,7 @@ const Plutos = () => {
             <div className="w-full flex justify-center ">
               {/* Invite button positioned to the top right of the image */}
               <button
-                onClick={() => {setShowInvitation(true) }}
+                onClick={() => { setShowInvitation(true) }}
                 // onMouseMove={()=>console.log("Hello")}
                 className="mt-2 bg-[#1F2942] text-white font-bold py-1 px-0 rounded-md w-[70px] transform translate-x-[10%] "
               >
@@ -550,18 +550,18 @@ const Plutos = () => {
                 </div>
               </div>
             </div>
-<div className={`${congrats === true ? "visible bottom-6" : "invisible bottom-[-10px]"} z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}>
-            <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
+            <div className={`${congrats === true ? "visible bottom-6" : "invisible bottom-[-10px]"} z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}>
+              <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
 
 
 
-              <IoCheckmarkCircle size={24} className="" />
+                <IoCheckmarkCircle size={24} className="" />
 
-              <span className="font-medium">
-                Good
-              </span>
+                <span className="font-medium">
+                  Good
+                </span>
 
-            </div>
+              </div>
             </div>
 
             <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
