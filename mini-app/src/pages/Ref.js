@@ -164,7 +164,7 @@ const Ref = () => {
     },
   ];
 
-  
+
   useEffect(() => {
     const formatBalance = (balance) => {
       if (balance >= 1_000_000) {
@@ -444,63 +444,57 @@ const Ref = () => {
                   </h3>
 
                   <div className="flex flex-col w-full space-y-3">
-              {loading ? (
-                <p className="w-full text-center">checking...</p>
-              ) : referrals.length === 0 ? (
-                <p className="text-center w-full now pt-8 px-5 text-[14px] leading-[24px]">
-                  You don't have referrals😭
-                </p>
-              ) : (
-                <div className="w-full h-[60vh] flex flex-col overflow-y-auto pb-[80px]">
-                  {referrals.map((user, index) => (
-                    <>
-                      <div
-                        key={index}
-                        className="bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center mt-1"
-                      >
-                        <div className="flex flex-col flex-1 space-y-1">
-                          <div className="text-[#fff] pl-1 text-[16px] font-semibold">
-                            {user.username}
-                          </div>
+                    {loading && (
+                      <div className="w-full h-[60vh] flex flex-col overflow-y-auto pb-[80px]">
+                        {referrals.map((user, index) => (
+                          <>
+                            <div
+                              key={index}
+                              className="bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center mt-1"
+                            >
+                              <div className="flex flex-col flex-1 space-y-1">
+                                <div className="text-[#fff] pl-1 text-[16px] font-semibold">
+                                  {user.username}
+                                </div>
 
-                          <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
-                            <div className="">
-                              <img
-                                src={user.level.imgUrl}
-                                alt="bronze"
-                                className="w-[18px]"
-                              />
+                                <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
+                                  <div className="">
+                                    <img
+                                      src={user.level.imgUrl}
+                                      alt="bronze"
+                                      className="w-[18px]"
+                                    />
+                                  </div>
+                                  <span className="font-medium text-[#9a96a6]">
+                                    {user.level.name}
+                                  </span>
+                                  <span className="bg-[#bdbdbd] w-[1px] h-[13px] mx-2"></span>
+
+                                  <span className="w-[20px]">
+                                    <img
+                                      src={require('../images/coinsmall.png')}
+                                      className="w-full"
+                                      alt="coin"
+                                    />
+                                  </span>
+                                  <span className="font-normal text-[#ffffff] text-[15px]">
+                                    {formatNumber(user.balance)}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="text-[#ffce68] font-semibold text-[14px]">
+                                +{formatNumber((user.balance / 100) * 10)}
+                              </div>
+                              <div className="flex w-full mt-2 p-[4px] items-center bg-energybar rounded-[10px] border-[1px] border-borders">
+                                <div className="h-[10px] rounded-[8px] bg-btn w-[.5%]"></div>
+                              </div>
                             </div>
-                            <span className="font-medium text-[#9a96a6]">
-                              {user.level.name}
-                            </span>
-                            <span className="bg-[#bdbdbd] w-[1px] h-[13px] mx-2"></span>
-
-                            <span className="w-[20px]">
-                              <img
-                                src={require('../images/coinsmall.png')}
-                                className="w-full"
-                                alt="coin"
-                              />
-                            </span>
-                            <span className="font-normal text-[#ffffff] text-[15px]">
-                              {formatNumber(user.balance)}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="text-[#ffce68] font-semibold text-[14px]">
-                          +{formatNumber((user.balance / 100) * 10)}
-                        </div>
-                        <div className="flex w-full mt-2 p-[4px] items-center bg-energybar rounded-[10px] border-[1px] border-borders">
-                          <div className="h-[10px] rounded-[8px] bg-btn w-[.5%]"></div>
-                        </div>
+                          </>
+                        ))}
                       </div>
-                    </>
-                  ))}
-                </div>
-              )}
-            </div>
+                    )}
+                  </div>
 
 
                 </div>

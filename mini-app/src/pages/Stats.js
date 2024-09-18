@@ -149,8 +149,8 @@ const Stats = () => {
       />
     </svg>
   );
-  
-  
+
+
   return (
     <div className="h-screen  overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
@@ -167,7 +167,7 @@ const Stats = () => {
                 />
               </div>
 
-              <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-10">
+              <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-1">
                 <button onClick={favorite} className="focus:outline-none mb-2 transform scale-150">
                   <HeartIcon filled={isFavoritedSelect} />
                 </button>
