@@ -110,11 +110,11 @@ body {
 .loading {
   --speed-of-animation: 1.0s;
   --gap: 3px;
-  --first-color: #35389e;
-  --second-color: #35389e;
-  --third-color: #35389e;
-  --fourth-color: #35389e;
-  --fifth-color: #35389e;
+  --first-color: #5f62e1;
+  --second-color: #5f62e1;
+  --third-color: #5f62e1;
+  --fourth-color: #5f62e1;
+  --fifth-color: #5f62e1;
   display: flex;
   justify-content: center;
   align-items: center;

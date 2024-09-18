@@ -350,12 +350,9 @@ const Plutos = () => {
     }
   };
 
-  const handleInvite = () => {
-    console.log("Pressed");
-    setShowInvitation(true);
-  }
+
   const copyToClipboard = () => {
-    const reflink = `https://t.me/Rockipointbot?start=r${id}`;
+    const reflink = `https://t.me/RockiPointAirdropbot?start=r${id}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(reflink)
@@ -428,7 +425,7 @@ const Plutos = () => {
                   Your Invite Link
                 </h3>
                 <div className="text-[#9a96a6] text-[13px]">
-                  https://t.me/Rockipointbot?start=r{id}
+                  https://t.me/RockiPointAirdropbot?start=r{id}
                 </div>
 
                 <div className="flex flex-1 items-center space-x-2">

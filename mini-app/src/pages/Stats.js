@@ -130,17 +130,27 @@ const Stats = () => {
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
-      fill={filled ? 'red' : 'none'}
+      width="30"
+      height="30"
       stroke={filled ? 'none' : 'gray'}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      width="24"
-      height="24"
     >
-      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      <defs>
+        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: "#ff4e50", stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: "#f00000", stopOpacity: 1 }} />
+        </linearGradient>
+      </defs>
+      <path
+        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+        fill={filled ? 'url(#heartGradient)' : 'none'}
+      />
     </svg>
   );
+  
+  
   return (
     <div className="h-screen  overflow-y-auto flex flex-col">
       <div className="flex-1 flex flex-col pt-8 px-6 max-w-[728px] mx-auto w-full">
@@ -157,7 +167,7 @@ const Stats = () => {
                 />
               </div>
 
-              <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-4">
+              <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-10">
                 <button onClick={favorite} className="focus:outline-none mb-2 transform scale-150">
                   <HeartIcon filled={isFavoritedSelect} />
                 </button>
