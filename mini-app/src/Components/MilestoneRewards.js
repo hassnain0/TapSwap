@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useUser } from '../context/userContext';
@@ -47,11 +47,12 @@ const milestones = [
 ];
 
 
-const MilestoneRewards = ({setNotify}) => {
-  
+const MilestoneRewards = ({ setNotify }) => {
+
   const dispatch = useDispatch();
   const { tapBalance, balance, setBalance, id, claimedMilestones, setClaimedMilestones } = useUser();
-  const [congrats, setCongrats] = useState(false)
+  const [congrats, setCongrats] = useState(false);
+  const [count, setCount] = useState(0);
 
   const handleClaim = async (milestone) => {
     if (tapBalance >= milestone.tapBalanceRequired && !claimedMilestones.includes(milestone.name)) {
@@ -76,7 +77,22 @@ const MilestoneRewards = ({setNotify}) => {
       console.error('Already Claimed:');
     }
   };
+  useEffect(() => {
+    // Calculate claimable rewards count
+    let claimableCount = 0;
+    milestones.forEach((reward) => {
+      if (tapBalance >= reward.tapBalanceRequired && !claimedMilestones.includes(reward.name)) {
+        claimableCount++;
+      }
+    });
+    setCount(claimableCount);
 
+    // Trigger notifications if necessary
+    if (claimableCount > 0) {
+      setNotify(true);
+      updateTaskNotify(true);
+    }
+  }, [tapBalance, claimedMilestones, setNotify, dispatch]);
 
   const formatNumberCliam = (num) => {
     if (num < 100000) {
@@ -89,10 +105,10 @@ const MilestoneRewards = ({setNotify}) => {
       return (num / 10000000).toFixed(3).replace(".", ".") + " T";
     }
   };
-  const updateTaskNotify= (task)=>{
-    if(task == true){
+  const updateTaskNotify = (task) => {
+    if (task == true) {
       dispatch(setTask(true));
-    }else{
+    } else {
       dispatch(setTask(false));
     }
   }
@@ -102,8 +118,7 @@ const MilestoneRewards = ({setNotify}) => {
       {milestones.filter(milestone => !claimedMilestones.includes(milestone.name)).map((milestone) => {
         const progress = (tapBalance / milestone.tapBalanceRequired) * 100;
         const isClaimable = tapBalance >= milestone.tapBalanceRequired && !claimedMilestones.includes(milestone.name);
-        setNotify(isClaimable);
-        updateTaskNotify(isClaimable);
+
         return (
           <>
             <div key={milestone.name} className='bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center'>

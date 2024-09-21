@@ -34,9 +34,11 @@ const Ref = () => {
     username,
     userNo,
     allUsersData,
+    loading
   } = useUser();
+
+  console.log("Referrals",referrals)
   // eslint-disable-next-line
-  const [loading, setLoading] = useState(false);
   const [showTaskTelegram, setShowTaskTelegram] = useState(false);
   const [showTaskTw, setShowTaskTw] = useState(false);
   // eslint-disable-next-line
@@ -444,7 +446,7 @@ const Ref = () => {
                   </h3>
 
                   <div className="flex flex-col w-full space-y-3">
-                    {loading && (
+                    {/* {loading ? ( */}
                       <div className="w-full h-[60vh] flex flex-col overflow-y-auto pb-[80px]">
                         {referrals.map((user, index) => (
                           <>
@@ -493,7 +495,7 @@ const Ref = () => {
                           </>
                         ))}
                       </div>
-                    )}
+                    {/* )} */}
                   </div>
 
 

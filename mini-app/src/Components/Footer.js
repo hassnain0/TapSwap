@@ -46,7 +46,6 @@ ${isActive
         }}
       >
         <img src={tasks} className="w-[30px]" alt="tasks" />
-        {console.log("task displayL",task)}
         {task && (<div style={redDotStyle}></div>)}
         <span className="font-medium">Tasks</span>
       </NavLink>
