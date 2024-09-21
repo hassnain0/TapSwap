@@ -493,7 +493,7 @@ const Plutos = () => {
                       />
                       {clicks.map((click) => (
                         <SlideUpText key={click.id} x={click.x} y={click.y}>
-                          +{tapValue.value}
+                          +{tapValue.value*5}
                         </SlideUpText>
                       ))}
                     </Container>
