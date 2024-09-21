@@ -327,7 +327,7 @@ export const UserProvider = ({ children }) => {
     const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
     if (telegramUser) {
     const { id: userId } = telegramUser;
-    const userRef = doc(db, 'telegramUsers',"7477672977");
+    const userRef = doc(db, 'telegramUsers',userId.toString());
     const userDoc = await getDoc(userRef);
     console.log("User DOc", userDoc)
     if (userDoc.exists()) {
