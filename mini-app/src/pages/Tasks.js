@@ -3,7 +3,7 @@ import Animate from "../Components/Animate";
 import { Outlet } from "react-router-dom";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
-
+import loadingGif from "../images/loading.gif";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { db } from "../firebase";
 import {
@@ -58,9 +58,9 @@ const Tasks = () => {
 
   const [activeIndex, setActiveIndex] = useState(1);
 
-  const [notify , setNotify] = useState(false);
-  const [notifyRef , setNotifyRef] = useState(false);
-  
+  const [notify, setNotify] = useState(false);
+  const [notifyRef, setNotifyRef] = useState(false);
+
 
   const handleMenu = (index) => {
     setActiveIndex(index);
@@ -349,7 +349,7 @@ const Tasks = () => {
                     }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Leagues
-                  {notify && ( <div style={redDotStyle}></div>)}
+                  {notify && (<div style={redDotStyle}></div>)}
                 </div>
 
                 <div
@@ -359,7 +359,7 @@ const Tasks = () => {
                     }  rounded-[6px] py-[12px] px-3 w-[33%] flex justify-center text-center items-center`}
                 >
                   Ref Tasks
-                  {notifyRef && ( <div style={redDotStyle}></div>)}
+                  {notifyRef && (<div style={redDotStyle}></div>)}
                 </div>
               </div>
             </div>
@@ -404,7 +404,8 @@ const Tasks = () => {
                     )}
                   </div>
                 </div>
-                <div
+            
+                {/* <div
                   onClick={taskWhatsapp}
                   className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
                 >
@@ -425,7 +426,6 @@ const Tasks = () => {
                     </div>
                   </div>
 
-                  {/*  */}
 
                   <div className="">
                     {taskCompleted ? (
@@ -438,9 +438,11 @@ const Tasks = () => {
                       </>
                     )}
                   </div>
-                </div>
-                {/* tw */}
-                <div
+                </div> */}
+
+
+              
+                {/* <div
                   onClick={taskTw}
                   className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
                 >
@@ -458,9 +460,8 @@ const Tasks = () => {
                       </div>
                     </div>
                   </div>
-                  
 
-                  {/*  */}
+
 
                   <div className="">
                     {taskCompleted2 ? (
@@ -474,8 +475,7 @@ const Tasks = () => {
                     )}
                   </div>
 
-                </div>
-
+                </div> */}
 
 
                 {/*  */}
@@ -487,7 +487,7 @@ const Tasks = () => {
                 className={`${activeIndex === 2 ? "flex" : "hidden"
                   } alltaskscontainer flex-col w-full space-y-2`}
               >
-                <MilestoneRewards setNotify = {setNotify}/>
+                <MilestoneRewards setNotify={setNotify} />
               </div>
 
               {/*  */}
@@ -496,7 +496,7 @@ const Tasks = () => {
                 className={`${activeIndex === 3 ? "flex" : "hidden"
                   } alltaskscontainer flex-col w-full space-y-2`}
               >
-                <ReferralRewards setNotify= {setNotifyRef}/>
+                <ReferralRewards setNotify={setNotifyRef} />
               </div>
             </div>
 
@@ -524,8 +524,8 @@ const Tasks = () => {
 
             <div
               className={`${congrats === true
-                  ? "visible bottom-6"
-                  : "invisible bottom-[-10px]"
+                ? "visible bottom-6"
+                : "invisible bottom-[-10px]"
                 } z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}
             >
               <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
@@ -536,7 +536,7 @@ const Tasks = () => {
                 </span>
               </div>
             </div>
-            {/*  */}
+
           </div>
           <Outlet />
         </Animate>

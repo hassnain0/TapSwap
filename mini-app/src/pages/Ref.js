@@ -26,8 +26,8 @@ const Ref = () => {
     balance,
     setBalance,
     level,
-    referrals,
     refBonus,
+    referrals,
     setTaskCompleted,
     setTaskCompleted2,
     user,
@@ -85,8 +85,6 @@ const Ref = () => {
         setMessage("");
       }
     });
-
-    console.log("my userid is:", id);
 
     // eslint-disable-next-line
   }, [id]);
@@ -166,6 +164,7 @@ const Ref = () => {
     },
   ];
 
+
   useEffect(() => {
     const formatBalance = (balance) => {
       if (balance >= 1_000_000) {
@@ -189,7 +188,7 @@ const Ref = () => {
         initials: user.username.substring(0, 2).toUpperCase(),
         name: user.username,
         rocks: formatBalance(user.balance),
-        imageUrl:user.level.imgUrl,
+        imageUrl: user.level.imgUrl,
       }));
     };
     setTotalUsers(formatBalance(allUsersData.length));
@@ -445,13 +444,7 @@ const Ref = () => {
                   </h3>
 
                   <div className="flex flex-col w-full space-y-3">
-                    {loading ? (
-                      <p className="w-full text-center">checking...</p>
-                    ) : referrals.length === 0 ? (
-                      <p className="text-center w-full now pt-8 px-5 text-[14px] leading-[24px]">
-                        You don't have referrals
-                      </p>
-                    ) : (
+                    {loading && (
                       <div className="w-full h-[60vh] flex flex-col overflow-y-auto pb-[80px]">
                         {referrals.map((user, index) => (
                           <>
@@ -465,10 +458,7 @@ const Ref = () => {
                                 </div>
 
                                 <div className="flex items-center space-x-1 text-[14px] text-[#e5e5e5]">
-                                  <div
-                                    onClick={levelsAction}
-                                    className="w-full flex ml-[6px] space-x-1 items-center justify-center"
-                                  >
+                                  <div className="">
                                     <img
                                       src={user.level.imgUrl}
                                       alt="bronze"
@@ -505,6 +495,8 @@ const Ref = () => {
                       </div>
                     )}
                   </div>
+
+
                 </div>
 
 
@@ -530,7 +522,7 @@ const Ref = () => {
                       </div>
                     </div>
                     <div>
-                      <p className="font-bold ">Leagues {userNo}</p>
+                      <p className="font-bold ">Leagues</p>
                     </div>
                   </div>
 

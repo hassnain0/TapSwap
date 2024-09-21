@@ -1,4 +1,3 @@
-import coinsmall from "../images/coinsmall.webp";
 import claim from "../images/claim.webp";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
@@ -14,7 +13,7 @@ import { useUser } from "../context/userContext";
 // import { EnergyContext } from "../context/EnergyContext";
 
 const TaskOne = ({ showModal, setShowModal }) => {
-  const {id, balance, setBalance, taskCompleted, setTaskCompleted} = useUser();
+  const { id, balance, setBalance, taskCompleted, setTaskCompleted } = useUser();
 
   const [isVerified, setIsVerified] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(false);
@@ -33,7 +32,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
       setShowModal(false);
       document.getElementById("footermain").style.zIndex = "";
     };
-  
+
     if (showModal) {
       window.Telegram.WebApp.BackButton.show();
       window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
@@ -41,13 +40,13 @@ const TaskOne = ({ showModal, setShowModal }) => {
       window.Telegram.WebApp.BackButton.hide();
       window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     }
-  
+
     // Cleanup handler when component unmounts
     return () => {
       window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     };
   }, [showModal, setShowModal]);
-  
+
 
 
 
@@ -64,7 +63,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
     }
     // eslint-disable-next-line
   }, []);
-  
+
 
 
   const handleTaskLinkClick = () => {
@@ -85,7 +84,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
     }
 
     const response = await fetch(
-      `https://api.telegram.org/bot6955313997:AAGPoIrxo6TUu_-dXeNHjOTo8dbrBVVTwOg/getChatMember?chat_id=-1002330515779&user_id=${id}`
+      `https://api.telegram.org/bot7322919680:AAHY0Q3PjjWzHELk4SIN0x_sFXwoOATHaok/getChatMember?chat_id=-1002317598425&user_id=${id}`
     );
     const data = await response.json();
 
@@ -151,7 +150,7 @@ const TaskOne = ({ showModal, setShowModal }) => {
     }
   };
 
-  const updateUserCountInFirestore = async (id, newBalance ) => {
+  const updateUserCountInFirestore = async (id, newBalance) => {
     try {
       const userRef = collection(db, "telegramUsers");
       const querySnapshot = await getDocs(userRef);
@@ -316,11 +315,10 @@ const TaskOne = ({ showModal, setShowModal }) => {
                     onClick={() => handleComplete(true)}
                     disabled={isMissionButtonDisabled}
                     className={`my-6 w-full py-5 px-3 flex items-center rounded-[12px] justify-center text-center text-[20px] font-medium 
-                                    ${
-                                      isMissionButtonDisabled
-                                        ? "text-[#6a6978] bg-btn2"
-                                        : "text-[#f4f4f4] bg-btn"
-                                    }`}
+                                    ${isMissionButtonDisabled
+                        ? "text-[#6a6978] bg-btn2"
+                        : "text-[#f4f4f4] bg-btn"
+                      }`}
                   >
                     Finish Mission
                   </button>
@@ -329,9 +327,8 @@ const TaskOne = ({ showModal, setShowModal }) => {
             </div>
 
             <div
-              className={`${
-                openComplete === true ? "visible" : "invisible"
-              } absolute bottom-0 left-0 right-0 h-[76vh] bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
+              className={`${openComplete === true ? "visible" : "invisible"
+                } absolute bottom-0 left-0 right-0 h-[76vh] bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
             >
               <div className="flex flex-col justify-between w-full py-8">
                 <div className="flex flex-col items-center justify-center w-full">

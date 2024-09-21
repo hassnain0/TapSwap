@@ -13,7 +13,7 @@ import { useUser } from "../../context/userContext";
 // import { EnergyContext } from "../context/EnergyContext";
 
 const TaskTw = ({ showModal, setShowModal }) => {
-  const {id, balance, setBalance, taskCompleted2, setTaskCompleted2} = useUser();
+  const { id, balance, setBalance, taskCompleted2, setTaskCompleted2 } = useUser();
 
   const [isVerified, setIsVerified] = useState(false);
   const [showCheckButton, setShowCheckButton] = useState(false);
@@ -32,7 +32,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
       setShowModal(false);
       document.getElementById("footermain").style.zIndex = "";
     };
-  
+
     if (showModal) {
       window.Telegram.WebApp.BackButton.show();
       window.Telegram.WebApp.BackButton.onClick(handleBackButtonClick);
@@ -40,13 +40,13 @@ const TaskTw = ({ showModal, setShowModal }) => {
       window.Telegram.WebApp.BackButton.hide();
       window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     }
-  
+
     // Cleanup handler when component unmounts
     return () => {
       window.Telegram.WebApp.BackButton.offClick(handleBackButtonClick);
     };
   }, [showModal, setShowModal]);
-  
+
 
 
 
@@ -63,7 +63,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
     }
     // eslint-disable-next-line
   }, []);
-  
+
 
 
   const handleTaskLinkClick = () => {
@@ -84,7 +84,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
     }
 
     const response = await fetch(
-      `https://api.telegram.org/bot6955313997:AAHOhLqPWU7PZCE6cxamzOJlmnqRijac3KQ/getChatMember?chat_id=-1002330515779&user_id=${id}`
+      `https://api.telegram.org/bot7322919680:AAHY0Q3PjjWzHELk4SIN0x_sFXwoOATHaok/getChatMember?chat_id=-1002317598425&user_id=${id}`
     );
     const data = await response.json();
 
@@ -150,7 +150,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
     }
   };
 
-  const updateUserCountInFirestore = async (id, newBalance ) => {
+  const updateUserCountInFirestore = async (id, newBalance) => {
     try {
       const userRef = collection(db, "telegramUsers");
       const querySnapshot = await getDocs(userRef);
@@ -247,7 +247,7 @@ const TaskTw = ({ showModal, setShowModal }) => {
                 <div className="flex items-center flex-1 space-x-2">
                   <div className="flex flex-col space-y-1">
                     <span className="font-semibold">
-                        Follow us on x.com
+                      Follow us on x.com
                     </span>
 
                     {message && (
@@ -315,11 +315,10 @@ const TaskTw = ({ showModal, setShowModal }) => {
                     onClick={() => handleComplete(true)}
                     disabled={isMissionButtonDisabled}
                     className={`my-6 w-full py-5 px-3 flex items-center rounded-[12px] justify-center text-center text-[20px] font-medium 
-                                    ${
-                                      isMissionButtonDisabled
-                                        ? "text-[#6a6978] bg-btn2"
-                                        : "text-[#f4f4f4] bg-btn"
-                                    }`}
+                                    ${isMissionButtonDisabled
+                        ? "text-[#6a6978] bg-btn2"
+                        : "text-[#f4f4f4] bg-btn"
+                      }`}
                   >
                     Finish Mission
                   </button>
@@ -328,9 +327,8 @@ const TaskTw = ({ showModal, setShowModal }) => {
             </div>
 
             <div
-              className={`${
-                openComplete === true ? "visible" : "invisible"
-              } absolute bottom-0 left-0 right-0 h-[76vh] bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
+              className={`${openComplete === true ? "visible" : "invisible"
+                } absolute bottom-0 left-0 right-0 h-[76vh] bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
             >
               <div className="flex flex-col justify-between w-full py-8">
                 <div className="flex flex-col items-center justify-center w-full">

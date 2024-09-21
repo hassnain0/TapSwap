@@ -77,7 +77,6 @@ const Levels = ({ showLevels, setShowLevels }) => {
               <p className='text-[#9a96a6] text-[14px] font-medium pt-1 pb-10 px-4'>
               Your total balance determines the league you enter:
               </p>
-
             </div>
 
             <div className="w-full flex justify-between items-center px-6 relative">

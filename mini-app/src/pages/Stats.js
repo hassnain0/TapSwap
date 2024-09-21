@@ -1,10 +1,11 @@
-import { Heart, HeartHandshake } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Cart from "../assets/lottery-cards/car.svg"
 import Moto from "../assets/lottery-cards/biclycle.svg"
 import Phone from "../assets/lottery-cards/phone.svg"
 import Notebook from "../assets/lottery-cards/notebook.svg"
-import { Link } from "react-router-dom"
+import { doc, updateDoc } from "@firebase/firestore"
+import { db } from "../firebase"
+import { useUser } from "../context/userContext"
 const veicles = [
   {
     name: "Rolls Royace",
@@ -82,17 +83,73 @@ const veicles = [
 
 const Stats = () => {
   const [current] = useState(0);
+  const { isFavorited, favouriteCounts, } = useUser();
+  const [isFavoritedSelect, setIsFavoritedSelect] = useState(isFavorited);
+  const telegramUser = window.Telegram.WebApp.initDataUnsafe?.user;
+  const [totalcounts, setTotalCounts] = useState(favouriteCounts);
 
-  function favorite() {
-    veicles.map((veic, index) => {
-      return index === current
-        ? {
-          ...veic,
-          heart: !veic.heart,
-        }
-        : veic;
-    });
-  }
+  useEffect(() => {
+    // Update local state when `isFavorited` changes
+    setIsFavoritedSelect(isFavorited);
+    setTotalCounts(favouriteCounts);
+  }, [isFavorited, favouriteCounts]); // Depend on isFavorited to trigger re-render when it changes
+
+  const favorite = async () => {
+    try {
+      const newValue = !isFavoritedSelect;
+      const newCount = newValue ? totalcounts + 1 : totalcounts - 1; // Increment or decrement count
+
+      setIsFavoritedSelect(newValue);  // Update UI immediately
+      setTotalCounts(newCount);      // Update favorite count immediately
+
+      await sendUserData(newValue);    // Sync with Firestore
+    } catch (error) {
+      console.error('Failed to update favorite status:', error);
+      // Optionally revert state on error
+      setIsFavoritedSelect(isFavorited);
+    }
+  };
+
+  const sendUserData = async (newValue) => {
+    try {
+      if (telegramUser) {
+        const { id: userId } = telegramUser;
+        const userRef = doc(db, 'telegramUsers', userId.toString());
+        await updateDoc(userRef, { favorite: newValue });
+        console.log('User data updated successfully');
+      }
+    } catch (error) {
+      console.error('Error saving user in Firestore:', error);
+      throw error;
+    }
+  };
+
+
+
+  const HeartIcon = ({ filled }) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width="30"
+      height="30"
+      stroke={filled ? 'none' : 'gray'}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <defs>
+        <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style={{ stopColor: "#ff4e50", stopOpacity: 1 }} />
+          <stop offset="100%" style={{ stopColor: "#f00000", stopOpacity: 1 }} />
+        </linearGradient>
+      </defs>
+      <path
+        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+        fill={filled ? 'url(#heartGradient)' : 'none'}
+      />
+    </svg>
+  );
+
 
   return (
     <div className="h-screen  overflow-y-auto flex flex-col">
@@ -110,16 +167,22 @@ const Stats = () => {
                 />
               </div>
 
-              <div className="absolute top-0 left-0 w-full flex items-center justify-between">
-
+              <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-1">
+                <button onClick={favorite} className="focus:outline-none mb-2 transform scale-150">
+                  <HeartIcon filled={isFavoritedSelect} />
+                </button>
+                <div className="text-white mt-0">
+                  <span className="text-[#3CA4EB]  flex justify-center items-center rounded-md w-20 h-8">
+                    {totalcounts} Likes
+                  </span>
+                </div>
               </div>
+
+
+
+
             </div>
-            {/* <div className="flex items-center gap-2 relative mt-6 mb-4">
-              <ActiveButton image={car} current={current} position={0} setCurrent={() => setCurrent(0)} />
-              <ActiveButton image={phone} current={current} position={1} setCurrent={() => setCurrent(1)} />
-              <ActiveButton image={bicycle} current={current} position={2} setCurrent={() => setCurrent(2)} />
-              <ActiveButton image={notebook} current={current} position={3} setCurrent={() => setCurrent(3)} />
-            </div> */}
+
           </div>
 
           <div className="mt-8">
