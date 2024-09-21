@@ -71,10 +71,6 @@ const Plutos = () => {
   const accumulatedTapBalanceRef = useRef(tapBalance);
   const refillTimeoutRef = useRef(null); // Add this line
 
-  const [isHolding, setIsHolding] = useState(false);
-  const [holdTimeout, setHoldTimeout] = useState(null);
-  const [isHoldingLongEnough, setIsHoldingLongEnough] = useState(false);
-
   const [showInvitation, setShowInvitation] = useState(false);
 
   const [isLoading, setLoading] = useState(true);
@@ -92,27 +88,7 @@ const Plutos = () => {
     }
   }
 
-  const handleHoldStart = (e) => {
-    setIsHolding(true);
 
-    // Set a timeout to detect if the user holds for 20 seconds
-    const timeout = setTimeout(() => {
-      setIsHoldingLongEnough(true); // Flag to increase points after 20 seconds
-    }, 20000); // 20 seconds
-
-    setHoldTimeout(timeout);
-  };
-
-  const handleHoldEnd = () => {
-    setIsHolding(false);
-
-    // Clear the timeout if the user releases before 20 seconds
-    clearTimeout(holdTimeout);
-    setHoldTimeout(null);
-
-    // Reset the holding state after releasing
-    setIsHoldingLongEnough(false);
-  };
 
 
   const handleClick = (e) => {
@@ -508,7 +484,7 @@ const Plutos = () => {
                   {tapGuru && (
                     <Container>
                       <img
-                        onDoubleClick={handleClick}
+                        onDoubleClick={handleClickGuru}
                         onPointerDown={handleClickGuru}
                         ref={imageRef}
                         src={require('../images/bcen.png')}
