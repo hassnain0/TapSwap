@@ -10,28 +10,29 @@ import ErrorCom from "./Components/ErrorCom";
 import Tasks from "./pages/Tasks";
 import Boost from "./pages/Boost";
 import Stats from "./pages/Stats";
+import Cards from './pages/Cards'
 import Ref from "./pages/Ref";
 import store from "./store";
 // import DeviceCheck from "./Components/DeviceCheck";
 import Plutos from "./pages/Plutos";
 // import TasksList from "./pages/TasksList";
-import {Provider } from "react-redux";
+import { Provider } from "react-redux";
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <ErrorCom />,
-    children:[
+    children: [
       {
-        path:"/",
+        path: "/",
         element: <Plutos />,
       },
       {
-        path:"/ref",
+        path: "/ref",
         element: <Ref />,
       },
       {
-        path:"/tasks",
+        path: "/tasks",
         element: <Tasks />,
       },
       // {
@@ -39,11 +40,15 @@ const router = createBrowserRouter([
       //   element: <TasksList />,
       // },
       {
-        path:"/boost",
+        path: "/boost",
         element: <Boost />,
       },
       {
-        path:"/stats",
+        path: "/cards",
+        element: <Cards />,
+      },
+      {
+        path: "/stats",
         element: <Stats />,
       },
     ]
@@ -62,6 +67,6 @@ root.render(
       <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
-// </DeviceCheck>
+  // </DeviceCheck>
 
 );

@@ -422,7 +422,7 @@ const Boost = () => {
       <Animate>
         <div className="w-full justify-center flex-col space-y-3 px-5">
           <div className="flex flex-col w-full">
-            <div className="w-full items-center justify-center pb-2 flex">
+          <div className="w-full items-center justify-center pb-2 flex">
               <h2 className="text-[#9d99a9] text-[20px] font-medium">
                 Your Total Balance
               </h2>

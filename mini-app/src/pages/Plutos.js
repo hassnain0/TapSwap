@@ -49,7 +49,7 @@ const Container = styled.div`
 const Plutos = () => {
   const imageRef = useRef(null);
   const [clicks, setClicks] = useState([]);
-  const { balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading, id } = useUser();
+  const { referrals,balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading, id } = useUser();
   // eslint-disable-next-line
   const [points, setPoints] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -70,6 +70,7 @@ const Plutos = () => {
   const accumulatedEnergyRef = useRef(energy);
   const accumulatedTapBalanceRef = useRef(tapBalance);
   const refillTimeoutRef = useRef(null); // Add this line
+  const [showMining,setShowMining]=useState(false);
 
   const [showInvitation, setShowInvitation] = useState(false);
 
@@ -419,9 +420,84 @@ const Plutos = () => {
               </div>
             </div>
           </div>
+          <div
+            className={`${showMining === true ? "visible" : "invisible"
+              } absolute bottom-0 left-0 right-0 h-fit bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
+          >
+            <div className="w-full flex flex-col justify-between py-8">
+              <button
+                onClick={() => setShowInvitation(false)}
+                className="flex items-center justify-center absolute right-8 top-8 text-center rounded-[12px] font-medium text-[16px]"
+              >
+                <IoClose size={24} className="text-[#9a96a6]" />
+              </button>
+
+
+              <div className="w-full flex justify-center flex-col items-center">
+                <div className="w-[120px] h-[120px] rounded-[25px] bg-[#252e57] flex items-center justify-center">
+                  <img alt="claim" src={ref} className="w-[100px] h-[100px]" />
+                </div>
+                <h3 className="font-semibold text-[32px] py-4">
+                  Your Invite Link
+                </h3>
+                <div className="text-[#9a96a6] text-[13px]">
+                  https://t.me/RockiPointAirdropbot?start=r{id}
+                </div>
+
+                <div className="flex flex-1 items-center space-x-2">
+
+                </div>
+              </div>
+
+              <div className="w-full flex justify-center pb-6 pt-4">
+                <button
+                  onClick={copyToClipboard}
+                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] text-[black] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
 
           <div className="flex flex-col justify-center w-full overflow-hidden">
-            <div className="flex space-x-[2px] justify-center items-center">
+            {/* New top section with coin, gems, and other counters */}
+            <div className="flex items-center justify-between m-3 p-2 bg-[#1F2942] rounded-lg ">
+  {/* Coins */}
+  <div  onClick={()=>setShowMining(true)} className="flex items-center space-x-2 cursor-pointer">
+    <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="coin" />
+    <span className="text-[#fff] text-[12px] font-bold">Profit Per Hour</span>
+  </div>
+
+  {/* Vertical Line */}
+  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+
+  {/* Gems */}
+  <div className="flex items-center space-x-2">
+    <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="gems" />
+    <span className="text-[#fff] text-[12px] font-bold">2.41K</span>
+  </div>
+
+  {/* Vertical Line */}
+  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+
+  {/* Tokens */}
+  <div className="flex items-center space-x-2">
+    <img src={ref} className="w-[25px]" alt="token" />
+    <span className="text-[#fff] text-[12px] font-bold">{referrals.length}</span>
+  </div>
+
+  {/* Vertical Line */}
+  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+
+  {/* Other Item */}
+  <div className="flex items-center space-x-2">
+    <img src={require('../images/Youtube.png')} className="w-[20px]" alt="other" />
+    <span className="text-[#fff] text-[12px] font-bold">7</span>
+  </div>
+</div>
+
+            <div className="flex space-x-[2px] justify-center items-center ">
               <div className="w-[50px] h-[50px]">
                 <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
               </div>
@@ -431,28 +507,23 @@ const Plutos = () => {
             </div>
 
             <div className="w-full ml-[6px] flex space-x-1 items-center justify-center">
-              <img
-                src={level.imgUrl}
-                className="w-[25px] relative"
-                alt="bronze"
-              />
+              <img src={level.imgUrl} className="w-[25px] relative" alt="bronze" />
               <h2 onClick={() => setShowLevels(true)} className="text-[#9d99a9] text-[20px] font-medium">
                 {level.name}
               </h2>
               <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#9d99a9] mt-[2px]" />
             </div>
+
             <div className="w-full flex justify-center ">
-              {/* Invite button positioned to the top right of the image */}
               <button
                 onClick={() => { setShowInvitation(true) }}
-                // onMouseMove={()=>console.log("Hello")}
                 className="mt-2 bg-[#1F2942] text-white font-bold py-1 px-0 rounded-md w-[70px] transform translate-x-[10%] "
               >
                 Invite
               </button>
             </div>
 
-            <div className="relative flex items-center justify-center w-full pb-24 pt-0">
+            <div className="relative flex items-center justify-center w-full pb-24 ">
               <div className="bg-[#35389e] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] top-10 -left-40 rounded-full"></div>
 
               <div class={`${tapGuru ? 'block' : 'hidden'} pyro`}>
@@ -493,25 +564,21 @@ const Plutos = () => {
                       />
                       {clicks.map((click) => (
                         <SlideUpText key={click.id} x={click.x} y={click.y}>
-                          +{tapValue.value*5}
+                          +{tapValue.value * 5}
                         </SlideUpText>
                       ))}
                     </Container>
                   )}
                 </div>
-
               </div>
             </div>
 
-            {/* New Invite button added */}
             <div className="flex flex-col space-y-6 fixed bottom-[120px] left-0 right-0 justify-center items-center px-5">
-
-
               <div className="flex flex-col items-center justify-center w-full">
                 <div className="flex pb-[6px] space-x-1 items-center justify-center text-[#fff]">
                   <img alt="flash" src={flash} className="w-[20px]" />
-                  <div className="">
-                    <span className="text-[18px] font-bold">{energy.toFixed(0)}</span>
+                  <div>
+                    <span className="text-[14px] font-bold">{energy.toFixed(0)}</span>
                     <span className="text-[14px] font-medium">/ {battery.energy}</span>
                   </div>
                 </div>
@@ -523,23 +590,19 @@ const Plutos = () => {
                 </div>
               </div>
             </div>
+
             <div className={`${congrats === true ? "visible bottom-6" : "invisible bottom-[-10px]"} z-[60] ease-in duration-300 w-full fixed left-0 right-0 px-4`}>
               <div className="w-full text-[#54d192] flex items-center space-x-2 px-4 bg-[#121620ef] h-[50px] rounded-[8px]">
-
-
-
                 <IoCheckmarkCircle size={24} className="" />
-
                 <span className="font-medium">
                   Good
                 </span>
-
               </div>
             </div>
 
             <Levels showLevels={showLevels} setShowLevels={setShowLevels} />
-
           </div>
+
         </Animate>
       )}
     </>
