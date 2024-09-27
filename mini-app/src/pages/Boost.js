@@ -16,6 +16,7 @@ import { IoCheckmarkCircle } from "react-icons/io5";
 
 
 const tapValues = [
+  
   {
     level: 1,
     value: 1,
@@ -242,7 +243,6 @@ const Boost = () => {
         setIsUpgrading(false);
         setIsUpgradeModalVisible(false);
         setCongrats(true)
-
         setTimeout(() => {
           setCongrats(false)
         }, 2000)
@@ -422,7 +422,7 @@ const Boost = () => {
       <Animate>
         <div className="w-full justify-center flex-col space-y-3 px-5">
           <div className="flex flex-col w-full">
-          <div className="w-full items-center justify-center pb-2 flex">
+            <div className="w-full items-center justify-center pb-2 flex">
               <h2 className="text-[#9d99a9] text-[20px] font-medium">
                 Your Total Balance
               </h2>
@@ -661,33 +661,7 @@ const Boost = () => {
               </button>
 
               {/*  */}
-              <button
-                onClick={() => setBot(true)}
-                className="bg-cards rounded-[10px] px-[14px] py-[8px] flex justify-between items-center"
-              >
-                <div className="flex flex-1 items-center space-x-2">
-                  <div className="">
-                    <img src={require('../images/bot.png')} alt="bot" className="w-[50px] h-[50px]" />
-                  </div>
-                  <div className="flex flex-col space-y-1 text-left">
-                    <span className="font-semibold text-[17px]">Turbo Engine</span>
-                    <div className="flex items-center space-x-1">
-                      <span className="w-[20px] h-[20px]">
-                        <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
-                      </span>
-                      <span className="font-medium flex items-center">
-                        <span className="text-[15px]">1 000 000</span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/*  */}
-
-                <div className="">
-                  <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#e0e0e0] mt-[2px]" />
-                </div>
-              </button>
+              
 
               {/*  */}
             </div>

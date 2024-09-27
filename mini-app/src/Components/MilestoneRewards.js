@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useUser } from '../context/userContext';
@@ -9,42 +9,61 @@ import { setTask } from '../features/taskSlice';
 
 const milestones = [
   {
-    name: 'Bronze',
-    icon: 'https://ucarecdn.com/074dadcb-6be1-47e7-92da-28d2bd3a9448/bronze.webp',
+    name: 'Iron',
+    icon: require('../images/iron.png'),
     tapBalanceRequired: 1000,
+    reward: 5000 // Estimated based on progression
+  },
+  {
+    name: 'Bronze',
+    icon: require('../images/bronze.png'),
+    tapBalanceRequired: 50000,
     reward: 50000
   },
   {
     name: 'Silver',
-    icon: 'https://ucarecdn.com/6725a762-528a-4967-bde1-f4da9f4833ee/sliver.webp',
-    tapBalanceRequired: 50000,
+    icon: require('../images/silver.png'),
+    tapBalanceRequired: 500000,
     reward: 100000
   },
   {
     name: 'Gold',
-    icon: 'https://ucarecdn.com/06204717-97e6-4e54-86b7-6b17a6b59788/gold.webp',
-    tapBalanceRequired: 500000,
+    icon: require('../images/gold.png'),
+    tapBalanceRequired: 1000000,
     reward: 250000
   },
   {
     name: 'Platinum',
-    icon: '/platinum.webp',
-    tapBalanceRequired: 1000000,
-    reward: 500000 // Estimated based on previous tiers
+    icon: require('../images/platinum.png'),
+    tapBalanceRequired: 2500000,
+    reward: 500000
   },
   {
     name: 'Diamond',
-    icon: '/diamond.webp',
-    tapBalanceRequired: 2500000,
-    reward: 1000000 // Estimated based on previous tiers
+    icon: require('../images/diamond.png'),
+    tapBalanceRequired: 5000000,
+    reward: 1000000
   },
   {
     name: 'Master',
-    icon: '/master.webp',
-    tapBalanceRequired: 5000000,
-    reward: 2000000 // Estimated based on previous tiers
+    icon: require('../images/master.png'),
+    tapBalanceRequired: 10000000,
+    reward: 2000000
+  },
+  {
+    name: 'Grandmaster',
+    icon: require('../images/grandmaster.png'),
+    tapBalanceRequired: 25000000,
+    reward: 5000000
+  },
+  {
+    name: 'Challenger',
+    icon: require('../images/challenger.png'),
+    tapBalanceRequired: 50000000,
+    reward: 10000000
   }
 ];
+
 
 
 const MilestoneRewards = ({ setNotify }) => {
@@ -123,10 +142,10 @@ const MilestoneRewards = ({ setNotify }) => {
           <>
             <div key={milestone.name} className='bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center'>
 
-              <div className='flex flex-1 items-center space-x-2'>
+              <div className='flex flex-1 items-center space-x-1'>
 
                 <div className=''>
-                  <img src={milestone.icon} alt="bronze" className='w-[55px]' />
+                  <img src={milestone.icon} alt="bronze" className='w-[30px] h-[30px] ' />
                 </div>
                 <div className='flex flex-col space-y-1'>
                   <span className='font-semibold'>
@@ -164,12 +183,6 @@ const MilestoneRewards = ({ setNotify }) => {
 
                 <div className={`h-[8px] rounded-[8px] ${progress >= 100 ? 'bg-btn' : 'bg-btn'}`} style={{ width: `${progress > 100 ? 100 : progress}%` }}>
                 </div>
-
-
-
-
-
-
               </div>
 
             </div>

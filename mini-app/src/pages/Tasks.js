@@ -322,7 +322,7 @@ const Tasks = () => {
               >
                 <img
                   src={level.imgUrl}
-                  className="w-[25px] relative"
+                  className="w-[35px]  relative"
                   alt="bronze"
                 />
                 <h2 className="text-[#9d99a9] text-[20px] font-medium">
@@ -367,7 +367,7 @@ const Tasks = () => {
             <div className="!mt-[204px] w-full h-[60vh] flex flex-col overflow-y-auto pb-[160px]">
               <div
                 className={`${activeIndex === 1 ? "flex" : "hidden"
-                  } alltaskscontainer flex-col w-full space-y-2`}
+                  } alltaskscontainer flex-col w-full space-y-2 `}
               >
                 <div
                   onClick={taskTelegram}
@@ -404,7 +404,7 @@ const Tasks = () => {
                     )}
                   </div>
                 </div>
-            
+
                 {/* <div
                   onClick={taskWhatsapp}
                   className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
@@ -441,7 +441,7 @@ const Tasks = () => {
                 </div> */}
 
 
-              
+
                 {/* <div
                   onClick={taskTw}
                   className="bg-cards rounded-[10px] p-[14px] flex justify-between items-center"
@@ -485,7 +485,7 @@ const Tasks = () => {
 
               <div
                 className={`${activeIndex === 2 ? "flex" : "hidden"
-                  } alltaskscontainer flex-col w-full space-y-2`}
+                  } alltaskscontainer flex-col w-full space-y-2 `}
               >
                 <MilestoneRewards setNotify={setNotify} />
               </div>
@@ -494,7 +494,7 @@ const Tasks = () => {
 
               <div
                 className={`${activeIndex === 3 ? "flex" : "hidden"
-                  } alltaskscontainer flex-col w-full space-y-2`}
+                  } alltaskscontainer flex-col w-full space-y-2 `}
               >
                 <ReferralRewards setNotify={setNotifyRef} />
               </div>

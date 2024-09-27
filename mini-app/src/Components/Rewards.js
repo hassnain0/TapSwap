@@ -110,9 +110,9 @@ const ReferralRewards = ({ setNotify }) => {
 
             return (
               <div key={reward.title} className='bg-cards rounded-[10px] p-[14px] flex flex-wrap justify-between items-center'>
-                <div className='flex flex-1 items-center space-x-2'>
+                <div className='flex flex-1 items-center space-x-1'>
                   <div>
-                    <img src={ref} alt="bronze" className='w-[55px]' />
+                    <img src={ref} alt="bronze" className='w-[30px] h-[30px] ' />
                   </div>
                   <div className='flex flex-col space-y-1'>
                     <span className='font-semibold'>{reward.title}</span>

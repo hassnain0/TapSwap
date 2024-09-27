@@ -16,8 +16,10 @@ export const UserProvider = ({ children }) => {
   const [balance, setBalance] = useState(0);
   // const [totalBalance, setTotalBalance] = useState(0);
   const [tapBalance, setTapBalance] = useState(0);
-  const [level, setLevel] = useState({ id: 1, name: "Bronze", imgUrl: '/bronze.webp' }); // Initial level as an object with id and name
+  const [level, setLevel] = useState({ id: 1, name: "Iron", imgUrl: require('../images/iron.png') }); // Initial level as an object with id and name
   const [tapValue, setTapValue] = useState({ level: 1, value: 1 });
+  const [cardsValue, setCardsValue] = useState({ level: 0, value: 0 });
+
   const [timeRefill, setTimeRefill] = useState({ level: 1, duration: 10, step: 600 });
   const [id, setId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -55,6 +57,7 @@ export const UserProvider = ({ children }) => {
   const [dividedUsers, setDividedUsers] = useState(0);
   const [taskCompleted, setTaskCompleted] = useState(false);
   const [taskCompleted2, setTaskCompleted2] = useState(false);
+  const [profitPerHour, setProfitPerHour] = useState(0);
   const [allUsersData, setAllUsersData] = useState([]);
 
   const refillIntervalRef = useRef(null);
@@ -148,11 +151,13 @@ export const UserProvider = ({ children }) => {
         const userRef = doc(db, 'telegramUsers', userId.toString());
         const userDoc = await getDoc(userRef);
         if (userDoc.exists()) {
-          console.log('User already exists in Firestore');
+          
           const userData = userDoc.data();
           setBalance(userData.balance);
+          setProfitPerHour(userData.profitPerHour);
           setTapBalance(userData.tapBalance);
           setTapValue(userData.tapValue);
+          setCardsValue(userData.cardValue);
           setFreeGuru(userData.freeGuru);
           setFullTank(userData.fullTank);
           setTimeSta(userData.timeSta);
@@ -184,6 +189,8 @@ export const UserProvider = ({ children }) => {
           lastName,
           totalBalance: 0,
           balance: 0,
+          profitPerHour: 0,
+          setProfitPerHour,
           freeGuru: 3,
           fullTank: 3,
           tapBalance: 0,
@@ -192,8 +199,9 @@ export const UserProvider = ({ children }) => {
           favorite: false,
           timeSpin: new Date(),
           tapValue: { level: 1, value: 1 },
+          cardsValue: { level: 0, value: 0 },
           timeRefill: { level: 1, duration: 10, step: 600 },
-          level: { id: 1, name: "Bronze", imgUrl: '/bronze.webp' }, // Set the initial level with id and name
+          level: { id: 1, name: "iron", imgUrl: require('../images/iron.png') }, // Set the initial level with id and name
           energy: 500,
           battery: { level: 1, energy: 500 },
           refereeId: referrerId || null,
@@ -219,7 +227,7 @@ export const UserProvider = ({ children }) => {
                 userId: userId.toString(),
                 username: finalUsername,
                 balance: 0,
-                level: { id: 1, name: "Bronze", imgUrl: '/bronze.webp' }, // Include level with id and name
+                level: { id: 1, name: "iron", imgUrl: require('../images/iron.png') }, // Include level with id and name
               })
             });
             console.log('Referrer updated in Firestore');
@@ -329,7 +337,7 @@ export const UserProvider = ({ children }) => {
       const { id: userId } = telegramUser;
       const userRef = doc(db, 'telegramUsers', userId.toString());
       const userDoc = await getDoc(userRef);
-      console.log("User DOc", userDoc.data())
+
       if (userDoc.exists()) {
         const userData = userDoc.data();
         setReferrals(userData.referrals || []);
@@ -339,19 +347,26 @@ export const UserProvider = ({ children }) => {
   };
 
   const updateUserLevel = async (userId, newTapBalance) => {
-    let newLevel = { id: 1, name: "Bronze", imgUrl: "/bronze.webp" };
+    let newLevel = { id: 1, name: "Iron", imgUrl: require('../images/iron.png') };
 
     if (newTapBalance >= 1000 && newTapBalance < 50000) {
-      newLevel = { id: 2, name: "Silver", imgUrl: "/sliver.webp" };
+      newLevel = { id: 2, name: "Bronze", imgUrl: require('../images/bronze.png') };
     } else if (newTapBalance >= 50000 && newTapBalance < 500000) {
-      newLevel = { id: 3, name: "Gold", imgUrl: "/gold.webp" };
+      newLevel = { id: 3, name: "Silver", imgUrl: require('../images/silver.png') };
     } else if (newTapBalance >= 500000 && newTapBalance < 1000000) {
-      newLevel = { id: 4, name: "Platinum", imgUrl: "/platinum.webp" };
+      newLevel = { id: 4, name: "Gold", imgUrl: require('../images/gold.png') };
     } else if (newTapBalance >= 1000000 && newTapBalance < 2500000) {
-      newLevel = { id: 5, name: "Diamond", imgUrl: "/diamond.webp" };
-    } else if (newTapBalance >= 2500000) {
-      newLevel = { id: 6, name: "Master", imgUrl: "/master.webp" };
+      newLevel = { id: 5, name: "Platinum", imgUrl: require('../images/platinum.png') };
+    } else if (newTapBalance >= 2500000 && newTapBalance < 5000000) {
+      newLevel = { id: 6, name: "Diamond", imgUrl: require('../images/diamond.png') };
+    } else if (newTapBalance >= 5000000 && newTapBalance < 10000000) {
+      newLevel = { id: 7, name: "Master", imgUrl: require('../images/master.png') };
+    } else if (newTapBalance >= 10000000 && newTapBalance < 25000000) {
+      newLevel = { id: 8, name: "Grandmaster", imgUrl: require('../images/grandmaster.png') };
+    } else if (newTapBalance >= 25000000) {
+      newLevel = { id: 9, name: "Challenger", imgUrl: require('../images/challenger.png') };
     }
+
 
     if (newLevel.id !== level.id) {
       setLevel(newLevel);
@@ -431,10 +446,6 @@ export const UserProvider = ({ children }) => {
       const formattedDates = lastDate.toISOString().split('T')[0]; // Get the date part in YYYY-MM-DD format
       const currentDate = new Date(); // Get the current date
       const formattedCurrentDates = currentDate.toISOString().split('T')[0]; // Get the date part in YYYY-MM-DD format
-      // const timeDifference = (currentTime - lastTimeSta) / 1000; // Time difference in seconds
-      // console.log('timesta is:', lastDate)
-      // console.log('current time is:', currentDate)
-      // console.log('time difference is:', timeDifference)
 
       if (formattedDates !== formattedCurrentDates && userData.freeGuru <= 0) {
         await updateDoc(userRef, {
@@ -686,8 +697,11 @@ export const UserProvider = ({ children }) => {
       refillEnergy,
       tapValue,
       setTapValue,
+      cardsValue,
+      setCardsValue,
       tapBalance,
       setTapBalance,
+      profitPerHour,
       level,
       energy,
       setEnergy,

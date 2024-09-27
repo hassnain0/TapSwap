@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { useUser } from '../context/userContext';
+
 const userLevels = [
-  { name: 'Bronze', icon: '/bronze.webp', tapBalanceRequired: 1000 },
-  { name: 'Silver', icon: '/sliver.webp', tapBalanceRequired: 50000 },
-  { name: 'Gold', icon: '/gold.webp', tapBalanceRequired: 500000 },
-  { name: 'Platinum', icon: '/platinum.webp', tapBalanceRequired: 1000000 },
-  { name: 'Diamond', icon: '/diamond.webp', tapBalanceRequired: 2500000 },
-  { name: 'Master', icon: '/master.webp', tapBalanceRequired: 5000000 },
+  { name: 'Iron', icon: require('../images/iron.png'), tapBalanceRequired: 1000 },
+  { name: 'Bronze', icon: require('../images/bronze.png'), tapBalanceRequired: 50000 },
+  { name: 'Silver', icon: require('../images/silver.png'), tapBalanceRequired: 500000 },
+  { name: 'Gold', icon: require('../images/gold.png'), tapBalanceRequired: 1000000 },
+  { name: 'Platinum', icon: require('../images/platinum.png'), tapBalanceRequired: 2500000 },
+  { name: 'Diamond', icon: require('../images/diamond.png'), tapBalanceRequired: 5000000 },
+  { name: 'Master', icon: require('../images/master.png'), tapBalanceRequired: 10000000 },
+  { name: 'Grandmaster', icon: require('../images/grandmaster.png'), tapBalanceRequired: 25000000 },
+  { name: 'Challenger', icon: require('../images/challenger.png'), tapBalanceRequired: 50000000 }
 ];
+
 const Levels = ({ showLevels, setShowLevels }) => {
   const { tapBalance } = useUser();
   const initialLevelIndex = userLevels.findIndex(level => tapBalance < level.tapBalanceRequired);
@@ -75,7 +80,7 @@ const Levels = ({ showLevels, setShowLevels }) => {
                 {currentLevel.name}
               </h1>
               <p className='text-[#9a96a6] text-[14px] font-medium pt-1 pb-10 px-4'>
-              Your total balance determines the league you enter:
+                Your total balance determines the league you enter:
               </p>
             </div>
 
@@ -94,7 +99,7 @@ const Levels = ({ showLevels, setShowLevels }) => {
 
 
 
-                <img src={currentLevel.icon} alt={currentLevel.name} className="w-[200px] h-auto" />
+                <img src={currentLevel.icon} alt={currentLevel.name} className="w-[400px] h-auto" />
 
 
                 {/*  */}

@@ -10,6 +10,7 @@ import Levels from '../Components/Levels';
 import flash from "../images/flash.webp";
 import { IoCheckmarkCircle, IoClose } from 'react-icons/io5';
 import ref from '../images/ref.webp';
+import { NavLink, useNavigation } from 'react-router-dom';
 
 const slideUp = keyframes`
   0% {
@@ -49,7 +50,7 @@ const Container = styled.div`
 const Plutos = () => {
   const imageRef = useRef(null);
   const [clicks, setClicks] = useState([]);
-  const { referrals,balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading, id } = useUser();
+  const { referrals, balance, tapBalance, energy, battery, tapGuru, mainTap, setIsRefilling, refillIntervalRef, refillEnergy, setEnergy, tapValue, setTapBalance, setBalance, refBonus, level, loading, id, profitPerHour } = useUser();
   // eslint-disable-next-line
   const [points, setPoints] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -70,10 +71,10 @@ const Plutos = () => {
   const accumulatedEnergyRef = useRef(energy);
   const accumulatedTapBalanceRef = useRef(tapBalance);
   const refillTimeoutRef = useRef(null); // Add this line
-  const [showMining,setShowMining]=useState(false);
+  const [showMining, setShowMining] = useState(false);
 
   const [showInvitation, setShowInvitation] = useState(false);
-
+  const navigation = useNavigation();
   const [isLoading, setLoading] = useState(true);
   function triggerHapticFeedback() {
     const isAndroid = /Android/i.test(navigator.userAgent);
@@ -327,9 +328,14 @@ const Plutos = () => {
     }
   };
 
+  const StartMining = () => {
+    setShowMining(false);
+    navigation('./cards')
+  };
+
 
   const copyToClipboard = () => {
-    const reflink = `https://t.me/RockiPointAirdropbot?start=r${id}`;
+    const reflink = `https://t.me/Kryptoblockchain?start=r${id}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(reflink)
@@ -402,7 +408,7 @@ const Plutos = () => {
                   Your Invite Link
                 </h3>
                 <div className="text-[#9a96a6] text-[13px]">
-                  https://t.me/RockiPointAirdropbot?start=r{id}
+                  https://t.me/Kryptoblockchain?start=r{id}
                 </div>
 
                 <div className="flex flex-1 items-center space-x-2">
@@ -426,7 +432,7 @@ const Plutos = () => {
           >
             <div className="w-full flex flex-col justify-between py-8">
               <button
-                onClick={() => setShowInvitation(false)}
+                onClick={() => setShowMining(false)}
                 className="flex items-center justify-center absolute right-8 top-8 text-center rounded-[12px] font-medium text-[16px]"
               >
                 <IoClose size={24} className="text-[#9a96a6]" />
@@ -435,13 +441,13 @@ const Plutos = () => {
 
               <div className="w-full flex justify-center flex-col items-center">
                 <div className="w-[120px] h-[120px] rounded-[25px] bg-[#252e57] flex items-center justify-center">
-                  <img alt="claim" src={ref} className="w-[100px] h-[100px]" />
+                  <img alt="claim" src={require('../images/card.png')} className="w-[100px] h-[100px]" />
                 </div>
                 <h3 className="font-semibold text-[32px] py-4">
-                  Your Invite Link
+                  Boost Your Profit Per Hour
                 </h3>
-                <div className="text-[#9a96a6] text-[13px]">
-                  https://t.me/RockiPointAirdropbot?start=r{id}
+                <div className=" text-[18px]">
+                  Tap the menu diamond to buy upgrades for your income
                 </div>
 
                 <div className="flex flex-1 items-center space-x-2">
@@ -451,10 +457,11 @@ const Plutos = () => {
 
               <div className="w-full flex justify-center pb-6 pt-4">
                 <button
-                  onClick={copyToClipboard}
-                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] text-[black] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  onClick={StartMining}
+                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
-                  Copy
+                  <img src={require('../images/coinsmall.png')} className='w-6 h-8' />
+                  Start Mining
                 </button>
               </div>
             </div>
@@ -462,44 +469,48 @@ const Plutos = () => {
 
           <div className="flex flex-col justify-center w-full overflow-hidden">
             {/* New top section with coin, gems, and other counters */}
-            <div className="flex items-center justify-between m-3 p-2 bg-[#1F2942] rounded-lg ">
-  {/* Coins */}
-  <div  onClick={()=>setShowMining(true)} className="flex items-center space-x-2 cursor-pointer">
-    <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="coin" />
-    <span className="text-[#fff] text-[12px] font-bold">Profit Per Hour</span>
-  </div>
+            <div className="flex items-center justify-between m-[1] p-2 bg-[#1F2942] rounded-lg ">
+              {/* Coins */}
+              <div onClick={() => setShowMining(true)} className="flex items-center space-x-2 cursor-pointer">
+                <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="coin" />
+                <div className='flex flex-1 flex-col'>
+                  <span className="text-[#fff] text-[10px] font-bold">Profit Per Hour</span>
+                  <span className="text-[#fff] text-[12px] font-bold">+{profitPerHour}</span>
 
-  {/* Vertical Line */}
-  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+                </div>
+              </div>
 
-  {/* Gems */}
-  <div className="flex items-center space-x-2">
-    <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="gems" />
-    <span className="text-[#fff] text-[12px] font-bold">2.41K</span>
-  </div>
+              {/* Vertical Line */}
+              <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
 
-  {/* Vertical Line */}
-  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+              {/* Gems */}
+              <div className="flex items-center space-x-2">
+                <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="gems" />
+                <span className="text-[#fff] text-[12px] font-bold">Pending</span>
+              </div>
 
-  {/* Tokens */}
-  <div className="flex items-center space-x-2">
-    <img src={ref} className="w-[25px]" alt="token" />
-    <span className="text-[#fff] text-[12px] font-bold">{referrals.length}</span>
-  </div>
+              {/* Vertical Line */}
+              <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
 
-  {/* Vertical Line */}
-  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+              {/* Tokens */}
+              <div className="flex items-center space-x-2">
+                <img src={ref} className="w-[25px]" alt="token" />
+                <span className="text-[#fff] text-[12px] font-bold">{referrals.length}</span>
+              </div>
 
-  {/* Other Item */}
-  <div className="flex items-center space-x-2">
-    <img src={require('../images/Youtube.png')} className="w-[20px]" alt="other" />
-    <span className="text-[#fff] text-[12px] font-bold">7</span>
-  </div>
-</div>
+              {/* Vertical Line */}
+              <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+
+              {/* Other Item */}
+              <div className="flex items-center space-x-2">
+                <img src={require('../images/Youtube.png')} className="w-[20px]" alt="other" />
+                <span className="text-[#fff] text-[12px] font-bold">7</span>
+              </div>
+            </div>
 
             <div className="flex space-x-[2px] justify-center items-center ">
               <div className="w-[50px] h-[50px]">
-                <img src={require('../images/coinsmall.png')} className="w-full" alt="coin" />
+                <img src={require('../images/coinsmall.png')} className="w-[40px] mt-1" alt="coin" />
               </div>
               <h1 className="text-[#fff] text-[42px] font-extrabold">
                 {formatNumber(balance + refBonus)} <br />
@@ -507,7 +518,7 @@ const Plutos = () => {
             </div>
 
             <div className="w-full ml-[6px] flex space-x-1 items-center justify-center">
-              <img src={level.imgUrl} className="w-[25px] relative" alt="bronze" />
+              <img src={level.imgUrl} className="w-[30px]  relative" alt="bronze" />
               <h2 onClick={() => setShowLevels(true)} className="text-[#9d99a9] text-[20px] font-medium">
                 {level.name}
               </h2>
@@ -584,7 +595,8 @@ const Plutos = () => {
                 </div>
                 <div className="flex w-full p-[4px] h-[20px] items-center bg-energybar rounded-[12px] border-[1px] border-borders2">
                   <div
-                    className="bg-[#e39725] h-full rounded-full transition-width duration-100"
+                    className="bg-[#D329E9] h-full rounded-full transition-width duration-100"
+
                     style={{ width: `${energyPercentage}%` }}
                   ></div>
                 </div>
