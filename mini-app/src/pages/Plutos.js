@@ -469,14 +469,12 @@ const Plutos = () => {
 
           <div className="flex flex-col justify-center w-full overflow-hidden">
             {/* New top section with coin, gems, and other counters */}
-            <div className="flex items-center justify-between m-[1] p-2 bg-[#1F2942] rounded-lg ">
+            <div className="flex items-center justify-between m-[1] -mt-1  p-2 bg-[#1F2942] rounded-lg ">
               {/* Coins */}
-              <div onClick={() => setShowMining(true)} className="flex items-center space-x-2 cursor-pointer">
-                <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="coin" />
+              <div  className="flex items-center space-x-2 cursor-pointer">
+                <img src={require('../images/pending.png')} className="w-[20px]" alt="coin" />
                 <div className='flex flex-1 flex-col'>
-                  <span className="text-[#fff] text-[10px] font-bold">Profit Per Hour</span>
-                  <span className="text-[#fff] text-[12px] font-bold">+{profitPerHour}</span>
-
+                  <span className="text-[#fff] text-[10px] font-bold">0</span>
                 </div>
               </div>
 
@@ -485,8 +483,10 @@ const Plutos = () => {
 
               {/* Gems */}
               <div className="flex items-center space-x-2">
-                <img src={require('../images/coinsmall.png')} className="w-[20px]" alt="gems" />
-                <span className="text-[#fff] text-[12px] font-bold">Pending</span>
+              <img src={require('../images/pending.png')} className="w-[20px]" alt="coin" />
+                <div className='flex flex-1 flex-col'>
+                  <span className="text-[#fff] text-[10px] font-bold">0</span>
+                </div>
               </div>
 
               {/* Vertical Line */}
@@ -504,7 +504,7 @@ const Plutos = () => {
               {/* Other Item */}
               <div className="flex items-center space-x-2">
                 <img src={require('../images/Youtube.png')} className="w-[20px]" alt="other" />
-                <span className="text-[#fff] text-[12px] font-bold">7</span>
+                <span className="text-[#fff] text-[12px] font-bold">0</span>
               </div>
             </div>
 

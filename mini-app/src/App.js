@@ -49,7 +49,7 @@ const Home = () => {
         <div className="flex justify-center w-full">
           <div className="flex flex-col w-full pt-8 space-y-3">
 
-  <UserProvider>
+            <UserProvider>
               <AnimatePresence mode="wait">
                 <Outlet />
               </AnimatePresence>
