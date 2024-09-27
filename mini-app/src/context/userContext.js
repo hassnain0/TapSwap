@@ -350,21 +350,21 @@ export const UserProvider = ({ children }) => {
     let newLevel = { id: 1, name: "Iron", imgUrl: require('../images/iron.png') };
 
     if (newTapBalance >= 1000 && newTapBalance < 50000) {
-      newLevel = { id: 2, name: "Bronze", imgUrl: require('../images/bronze.png') };
+      newLevel = { id: 2, name: "Bronze", imgUrl: `require('../images/bronze.png')` };
     } else if (newTapBalance >= 50000 && newTapBalance < 500000) {
-      newLevel = { id: 3, name: "Silver", imgUrl: require('../images/silver.png') };
+      newLevel = { id: 3, name: "Silver", imgUrl: `require('../images/silver.png')` };
     } else if (newTapBalance >= 500000 && newTapBalance < 1000000) {
-      newLevel = { id: 4, name: "Gold", imgUrl: require('../images/gold.png') };
+      newLevel = { id: 4, name: "Gold", imgUrl: `require('../images/gold.png')` };
     } else if (newTapBalance >= 1000000 && newTapBalance < 2500000) {
-      newLevel = { id: 5, name: "Platinum", imgUrl: require('../images/platinum.png') };
+      newLevel = { id: 5, name: "Platinum", imgUrl:`require('../images/platinum.png')` };
     } else if (newTapBalance >= 2500000 && newTapBalance < 5000000) {
-      newLevel = { id: 6, name: "Diamond", imgUrl: require('../images/diamond.png') };
+      newLevel = { id: 6, name: "Diamond", imgUrl: `require('../images/diamond.png')` };
     } else if (newTapBalance >= 5000000 && newTapBalance < 10000000) {
-      newLevel = { id: 7, name: "Master", imgUrl: require('../images/master.png') };
+      newLevel = { id: 7, name: "Master", imgUrl: `require('../images/master.png')` };
     } else if (newTapBalance >= 10000000 && newTapBalance < 25000000) {
-      newLevel = { id: 8, name: "Grandmaster", imgUrl: require('../images/grandmaster.png') };
+      newLevel = { id: 8, name: "Grandmaster", imgUrl:`require('../images/grandmaster.png')` };
     } else if (newTapBalance >= 25000000) {
-      newLevel = { id: 9, name: "Challenger", imgUrl: require('../images/challenger.png') };
+      newLevel = { id: 9, name: "Challenger", imgUrl: `require('../images/challenger.png')` };
     }
 
 
@@ -617,7 +617,8 @@ export const UserProvider = ({ children }) => {
         }
       });
 
-      setAllUsersData(allUsers);
+      console.log("All users Data",allUsers)
+      setAllUsersData(allUsers||[]);
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
       console.error("Error fetching users: ", error);

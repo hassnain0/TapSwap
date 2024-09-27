@@ -3,7 +3,7 @@ import React from 'react'
 const Spinner = () => {
   return (
     <div className="spinner">
-    <img src={require('../images/paragon.png')} alt="centered" className="static-image" />
+    <img src={require('../images/SplashDiamond.png')} alt="centered" className="static-image" />
     <div className="spin1 animate-spin">
       <div className="spin2"></div>
       <div className="spin3"></div>

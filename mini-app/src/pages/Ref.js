@@ -177,22 +177,29 @@ const Ref = () => {
     };
 
     const getLeaderboardData = (users) => {
+      // Filter out undefined or null users
+      const validUsers = users.filter(user => user && typeof user.username === 'string');
+    
       // Sort users by balance in descending order
-      const sortedUsers = users.sort((a, b) => b.balance - a.balance);
-
+      const sortedUsers = validUsers.sort((a, b) => b.balance - a.balance);
+    
       // Take only the first 300 users
       const topUsers = sortedUsers.slice(0, 300);
-      // Map over the top users to format their data
-      return topUsers.map((user) => ({
-        initials: user.username.substring(0, 2).toUpperCase(),
-        name: user.username,
-        rocks: formatBalance(user.balance),
-        imageUrl: user.level.imgUrl,
-      }));
+    
+      return topUsers.map((user) => {
+        const username = user.username || ''; // Default to empty string if username is undefined
+        return {
+          initials: username.substring(0, 2).toUpperCase(),
+          name: username,
+          rocks: formatBalance(user.balance),
+          imageUrl: user.level?.imgUrl || '', // Use optional chaining for level.imgUrl
+        };
+      });
     };
     setTotalUsers(formatBalance(allUsersData.length));
     setLeaderboardData(getLeaderboardData(allUsersData));
 
+    console.log(allUsersData)
   }, [allUsersData]);
 
 
