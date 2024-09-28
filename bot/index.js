@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { Telegraf, Markup } = require("telegraf");
-const TOKEN = process.env.BOT_TOKEN;
+const TOKEN ="8112834265:AAGQ1GXXlJAbZwwewkSaJORabrZXBy0gmXk";
 const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
