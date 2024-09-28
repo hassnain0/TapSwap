@@ -1,13 +1,12 @@
 require('dotenv').config();
 const { Telegraf, Markup } = require("telegraf");
-const TOKEN = "8112834265:AAGQ1GXXlJAbZwwewkSaJORabrZXBy0gmXk";
+const TOKEN = "8112834265:AAFsAbAYHWyLGsG2LvvCivuxTUe8p6Ytibs";
 const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://gleeful-mandazi-bfed63.netlify.app/";
+const web_link = "https://thriving-boba-ee98d9.netlify.app/";
 const community_link = "https://t.me/Kryptoblockchain";
-
 
 
 bot.start((ctx) => {

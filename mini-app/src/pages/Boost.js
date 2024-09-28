@@ -764,7 +764,7 @@ const Boost = () => {
                 <button
                   onClick={handleEnergyUpgrade}
                   disabled={!hasSufficientBalanceEn}
-                  className={`${!hasSufficientBalanceEn ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  className={`${!hasSufficientBalanceEn ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b from-[#3a5fd4] to-[#5078e0]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   {isUpgrading ? 'Boosting...' : hasSufficientBalanceEn ? 'Get it!' : 'Insufficient Balance'}
                 </button>
@@ -815,7 +815,7 @@ const Boost = () => {
                 <button
                   onClick={handlerRechargeUpgrade}
                   disabled={!hasSufficientBalanceEnc}
-                  className={`${!hasSufficientBalanceEnc ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  className={`${!hasSufficientBalanceEnc ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b from-[#3a5fd4] to-[#5078e0]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   {isUpgrading ? 'Boosting...' : hasSufficientBalanceEnc ? 'Get it!' : 'Insufficient Balance'}
                 </button>
