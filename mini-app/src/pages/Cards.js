@@ -8,7 +8,85 @@ import Timer from "../Components/Timer";
 
 
 const TIMER_DURATION = 1200; // 20 minutes in seconds
+const CardData = [
+    {
+        index: 1,
+        title: 'Binance',
+        image: require("../images/binance.png"),
+        subtitle: 'Reward',
+        price: 16100,
+        amount: 200000,
+        blur: false,
+        timer: false,
 
+    },
+    
+    {
+        index: 3,
+        title: 'Dogs',
+        image: require("../images/dog.png"),
+        subtitle: 'Reward',
+        price: 900,
+        amount: 100000,
+        blur: false,
+        timer: false,
+    }, {
+        index: 4,
+        title: 'Krypto',
+        image: require("../images/paragon.png"),
+        subtitle: 'Reward',
+        price: 25000,
+        amount: 1900000,
+        blur: false,
+        timer: false,
+    }, {
+        index: 6,
+        title: 'Ethereum',
+        image: require("../images/Ethreum.png"),
+        subtitle: 'Reward',
+        price: 12000,
+        amount: 200000, blur: false,
+        timer: false,
+
+    }, {
+        index: 7,
+        title: 'Litecoin',
+        image: require("../images/litecoin.png"),
+        subtitle: 'Reward',
+        price: 2510,
+        amount: 4000000,
+        blur: false,
+        timer: false,
+    }, {
+        index: 8,
+        title: 'BitCoin Cash',
+        image: require("../images/bitcoincash.png"),
+        subtitle: 'Reward',
+        price: 20000,
+        amount: 1200000,
+        blur: false,
+        timer: false,
+    }, {
+        index: 9,
+        title: 'Thether',
+        image: require("../images/tether.png"),
+        subtitle: 'Reward',
+        price: 16100,
+        amount: 9000000,
+        blur: false,
+        timer: false,
+    },
+    {
+        index: 10,
+        title: 'Notcoin',
+        image: require("../images/notcoin.png"),
+        subtitle: 'Reward',
+        price: 6000,
+        amount: 100000,
+        blur: false,
+        timer: false,
+    },
+]
 
 const cardValues = [
     {
@@ -126,7 +204,7 @@ const Cards = () => {
     const [tank, setTank] = useState(false);
     const [bot, setBot] = useState(false);
     const [showCards, setshowCards] = useState(false)
-    const [cardData, setCardData] = useState([]);
+    const [cardData, setCardData] = useState(CardData);
     const [blurItem, setBlurItem] = useState([]);
     const [blurredCardId, setBlurredCardId] = useState([]);
     const [image, setImage] = useState();
@@ -134,37 +212,10 @@ const Cards = () => {
 
     const [selectedCards, setSelectedCards] = useState([]);
     const [timers, setTimers] = useState({});
-    const [item, setItem] = useState(null);
 
-    const [startTimerClock, setStartTimerClock] = useState(false);
+    const [startTimerClock,setStartTimerClock]=useState(false);
     const infoRef = useRef(null);
     const infoRefTwo = useRef(null);
-
-    useEffect(() => {
-        fetchCardData();
-    })
-
-    const fetchCardData = async () => {
-        try {
-            // Reference to the specific document in the 'cards' collection
-            const docRef = doc(db, "cards", "CardData");
-
-            // Fetch the document data
-            const docSnap = await getDoc(docRef);
-
-            if (docSnap.exists()) {
-                // If the document exists, log the data
-                const data = docSnap.data().CardData;
-                setCardData(data)
-
-            } else {
-                // If the document does not exist
-                console.log("No such document!");
-            }
-        } catch (e) {
-            console.error("Error fetching document: ", e);
-        }
-    };
 
     const handleClickOutside = (event) => {
         if (infoRef.current && !infoRef.current.contains(event.target)) {
@@ -174,6 +225,7 @@ const Cards = () => {
             setOpenInfoTwo(false);
         }
     };
+
     useEffect(() => {
         if (openInfo || openInfoTwo) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -208,8 +260,16 @@ const Cards = () => {
 
 
     const handleUpgrade = async () => {
+        setStartTimerClock(true);
+        setshowCards(false)
+        const updatedData = cardData.map((card) => {
+            if (card.index === index) {
+                return { ...card, blur: !card.blur, timer: !card.timer };
+            }
+            return card;
+        });
+        setCardData(updatedData);
 
-        setshowCards(false);
         const nextLevel = cardsValue.level;
         const upgradeCost = upgradeCosts[nextLevel];
         if (nextLevel < cardValues.length && (balance + refBonus) >= upgradeCost && id) {
@@ -223,8 +283,8 @@ const Cards = () => {
                 });
                 setCardsValue(newTapValue);
                 setBalance((prevBalance) => prevBalance - upgradeCost);
-                setCongrats(true);
 
+                console.log('Tap value upgraded successfully');
             } catch (error) {
                 console.error('Error updating tap value:', error);
             }
@@ -246,15 +306,19 @@ const Cards = () => {
 
     //Display Cards
     const DisplayCards = (item, index) => {
-        setItem(item);
-        setIndex(index);
+        if (item.timer === true) {
+            return false;
+        }
         setshowCards(true);
         setImage(item.image)
+        setIndex(index)
+        toggleCardSelection(index);
+
     }
 
     useEffect(() => {
         fetchData();
-    },);
+    }, [selectedCards]);
 
     const fetchData = async () => {
         try {
@@ -275,6 +339,47 @@ const Cards = () => {
 
         }
     }
+
+    useEffect(() => {
+        const intervals = {};
+
+        // Set up timers for selected cards
+        selectedCards.forEach((index) => {
+            if (timers[index] > 0) {
+                intervals[index] = setInterval(() => {
+                    setTimers((prev) => {
+                        const newTimer = prev[index] - 1;
+                        if (newTimer <= 0) {
+                            clearInterval(intervals[index]);
+
+                            return { ...prev, [index]: 0 }; // Ensure timer doesn't go below 0
+                        }
+                        return { ...prev, [index]: newTimer };
+                    });
+                }, 1000); // Decrement timer every second
+            }
+        });
+
+        return () => {
+            // Cleanup intervals on unmount
+            Object.values(intervals).forEach(clearInterval);
+        };
+    }, [selectedCards, timers]);
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    };
+
+    const toggleCardSelection = (index) => {
+        setSelectedCards((prev) => {
+            if (prev.includes(index)) {
+                return prev.filter((id) => id !== index); // Deselect the card
+            }
+            return [...prev, index]; // Select the card
+        });
+    };
+
 
     // const handlerRechargeUpgrade = async () => {
     //     setIsUpgradingEnc(true);
@@ -365,7 +470,7 @@ const Cards = () => {
 
                     <div className="w-full flex justify-center pb-6 pt-4">
                         <button
-                            // onClick={handleUpgrade}
+                            onClick={handleUpgrade}
                             disabled={!hasSufficientBalance}
                             className={`${!hasSufficientBalance ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b from-[#3a5fd4] to-[#5078e0]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                         >
@@ -420,12 +525,15 @@ const Cards = () => {
                                         <span className={`text-gray-400 text-[10px] font-medium ${item.blur ? 'blur-lg' : ''}`}>{item.subtitle}</span>
                                         <div className="flex items-center justify-center relative">
                                             {/* Conditionally render the timer or price based on item.blur */}
+                                            {item.blur && item.timer ? (
+                                                <Timer item={item} startTimerClock={startTimerClock} userId={id}/>
 
-                                            <div className="flex items-center justify-center">
-                                                <img src={require('../images/coinsmall.png')} alt="Price icon" className="w-[16px] h-[16px] mr-2" />
-                                                <span className="text-[14px] font-medium">{formatNumber(item.price)}</span>
-                                            </div>
-
+                                            ) : (
+                                                <div className="flex items-center justify-center">
+                                                    <img src={require('../images/coinsmall.png')} alt="Price icon" className="w-[16px] h-[16px] mr-2" />
+                                                    <span className="text-[14px] font-medium">{formatNumber(item.price)}</span>
+                                                </div>
+                                            )}
                                         </div>
 
                                     </div>

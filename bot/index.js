@@ -5,7 +5,7 @@ const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://zesty-haupia-e2015e.netlify.app/";
+const web_link = "https://gleeful-mandazi-bfed63.netlify.app/";
 const community_link = "https://t.me/Kryptoblockchain";
 
 

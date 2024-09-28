@@ -713,7 +713,7 @@ const Boost = () => {
                 <button
                   onClick={handleUpgrade}
                   disabled={!hasSufficientBalance}
-                  className={`${!hasSufficientBalance ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  className={`${!hasSufficientBalance ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b from-[#3a5fd4] to-[#5078e0]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   {isUpgrading ? 'Boosting...' : hasSufficientBalance ? 'Get it!' : 'Insufficient Balance'}
                 </button>
@@ -866,7 +866,7 @@ const Boost = () => {
                 <button
                   onClick={handleTapGuru}
 
-                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  className={`bg-gradient-to-b from-[#3a5fd4] to-[#5078e0] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   Get it!
                 </button>
@@ -916,7 +916,7 @@ const Boost = () => {
                 <button
                   onClick={handleFullTank}
 
-                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  className={`bg-gradient-to-b from-[#3a5fd4] to-[#5078e0] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   Get it!
                 </button>

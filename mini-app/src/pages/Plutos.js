@@ -388,8 +388,7 @@ const Plutos = () => {
         <Animate>
 
           <div
-            className={`${showInvitation === true ? "visible" : "invisible"
-              } absolute bottom-0 left-0 right-0 h-fit bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
+            className={`${showInvitation === true ? "visible" : "invisible"} absolute bottom-0 left-0 right-0 h-fit bg-[#1e2340f7] z-[100] rounded-tl-[20px] rounded-tr-[20px] flex justify-center px-4 py-5`}
           >
             <div className="w-full flex flex-col justify-between py-8">
               <button
@@ -419,7 +418,7 @@ const Plutos = () => {
               <div className="w-full flex justify-center pb-6 pt-4">
                 <button
                   onClick={copyToClipboard}
-                  className={`bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] text-[black] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                  className={`bg-gradient-to-b from-[#3a5fd4] to-[#5078e0] text-[white] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                 >
                   Copy
                 </button>
@@ -469,62 +468,63 @@ const Plutos = () => {
 
           <div className="flex flex-col justify-center w-full overflow-hidden">
             {/* New top section with coin, gems, and other counters */}
-            <div className="border-[1px] border-borders  flex items-center justify-between m-[3]  mr-2 ml-2 p-2 bg-[#1F2942] rounded-lg">
-              {/* Coins */}
-              <div className="flex items-center space-x-2 cursor-pointer">
-                <img src={require('../images/card.png')} className="w-[20px]" alt="coin" />
-                <div className='flex flex-1 flex-col'>
-                  <span className="text-[#fff] text-[10px] font-bold">0</span>
-                </div>
-              </div>
+            <div className="border-[1px] border-borders flex items-center justify-between mx-[25px] p-2 bg-[#1F2942] rounded-lg">
+  {/* Coins */}
+  <div className="flex items-center space-x-1 cursor-pointer">
+    <img src={require('../images/card.png')} className="w-[25px]" alt="coin" />
+    <div className='flex flex-1 flex-col'>
+      <span className="text-[#fff] text-[15px] font-bold">0</span>
+    </div>
+  </div>
 
-              {/* Vertical Line */}
-              <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+  {/* Vertical Line */}
+  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
 
-              {/* Gems */}
-              <div className="flex items-center space-x-2">
-                <img src={lot} className="w-[20px]" alt="coin" />
-                <div className='flex flex-1 flex-col'>
-                  <span className="text-[#fff] text-[10px] font-bold">0</span>
-                </div>
-              </div>
+  {/* Gems */}
+  <div className="flex items-center space-x-1">
+    <img src={lot} className="w-[20px]" alt="coin" />
+    <div className='flex flex-1 flex-col'>
+      <span className="text-[#fff] text-[15px] font-bold">0</span>
+    </div>
+  </div>
 
-              {/* Vertical Line */}
-              <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+  {/* Vertical Line */}
+  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
 
-              {/* Tokens */}
-              <div className="flex items-center space-x-2">
-                <img src={ref} className="w-[25px]" alt="token" />
-                <span className="text-[#fff] text-[12px] font-bold">{referrals.length}</span>
-              </div>
+  {/* Tokens */}
+  <div className="flex items-center space-x-1">
+    <img src={ref} className="w-[25px]" alt="token" />
+    <span className="text-[#fff] text-[15px] font-bold">{referrals.length}</span>
+  </div>
 
-              {/* Vertical Line */}
-              <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
+  {/* Vertical Line */}
+  <div className="h-[20px] w-[1px] bg-[#FFFFFF33]" />
 
-              {/* Other Item */}
-              <div className="flex items-center space-x-2">
-                <img src={require('../images/Youtube.png')} className="w-[20px]" alt="other" />
-                <span className="text-[#fff] text-[12px] font-bold">0</span>
-              </div>
-            </div>
+  {/* Other Item */}
+  <div className="flex items-center space-x-1">
+    <img src={require('../images/Youtube.png')} className="w-[20px]" alt="other" />
+    <span className="text-[#fff] text-[15px] font-bold">0</span>
+  </div>
+</div>
+
 
             {/* Bottom Section */}
             <div className="flex items-center justify-between m-1 p-1 mt-3 rounded-lg w-full">
               {/* Levels Section */}
-              <div onClick={() => setShowLevels(true)} className="cursor-pointer flex border-[1px] border-borders items-center justify-center w-auto max-w-[200px] bg-[#1F2942] rounded-lg p-1">
+              <div onClick={() => setShowLevels(true)} className="cursor-pointer flex border-[1px] border-borders items-center justify-center w-auto max-w-[200px] bg-[#1F2942] rounded-lg ml-4 p-1">
                 <img src={level.imgUrl} className="w-[30px] mr-2" alt="bronze" />
-                <h2  className="curson-pointer text-[20px] font-medium text-white">
+                <h2  className="curson-pointer text-[17px] font-medium text-white">
                   {level.name}
                 </h2>
                 <MdOutlineKeyboardArrowRight className="w-[30px] h-[30px] text-[#9d99a9] mt-[2px]" />
               </div>
 
               {/* Invite Button */}
-              <div className="flex cursor-pointer border-[1px] border-borders P-1 bg-[#1F2942] rounded-lg justify-center w-[110px] mr-2">
-                <img src={ref} className="w-[30px] ml-2" alt="bronze" />
+              <div className="flex cursor-pointer border-[1px] border-borders P-1 bg-[#1F2942] rounded-lg justify-center w-[110px] mr-6">
+                <img src={ref} className="w-[25px] ml-2" />
                 <button
                   onClick={() => { setShowInvitation(true) }}
-                  className="flex items-center justify-center   text-white font-bold py-1 text-[20px] rounded-md w-full"
+                  className="flex items-center justify-center   text-white font-bold py-1 text-[17px] rounded-md w-full"
                 >
                   Invite
                   <MdOutlineKeyboardArrowRight className="w-[30px] h-[30px] mr-1 text-[#9d99a9]" />
@@ -557,7 +557,7 @@ const Plutos = () => {
               <div className="w-[350px] h-[350px] relative flex items-center justify-center">
                 <img src="/lihgt.webp" alt="err" className={`absolute w-[330px] rotate-45 ${tapGuru ? 'block' : 'hidden'}`} />
 
-                <div className="image-container">
+                <div className="image-container pb-9">
                   {mainTap && (
                     <Container>
                       <img
@@ -566,7 +566,7 @@ const Plutos = () => {
                         ref={imageRef}
                         src={require('../images/bcen.png')}
                         alt="Wobble"
-                        className="wobble-image !w-[250px] select-none"
+                        className="wobble-image !w-[270px] select-none"
                       />
                       {clicks.map((click) => (
                         <SlideUpText key={click.id} x={click.x} y={click.y}>
@@ -583,7 +583,7 @@ const Plutos = () => {
                         ref={imageRef}
                         src={require('../images/bcen.png')}
                         alt="Wobble"
-                        className="wobble-image !w-[250px] select-none"
+                        className="wobble-image !w-[270px] select-none"
                       />
                       {clicks.map((click) => (
                         <SlideUpText key={click.id} x={click.x} y={click.y}>
