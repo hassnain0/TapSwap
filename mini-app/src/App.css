@@ -204,7 +204,7 @@ body{
 
 .spin8 {
   border: 10px solid transparent;
-  border-top-color: #373568;
+  border-top-color: orange;
   width: 140px;
   height: 140px;
   border-radius: 50%;
@@ -215,7 +215,7 @@ body{
 
 .spin9 {
   border: 10px solid transparent;
-  border-top-color: #373568;
+  border-top-color: #371468;
   width: 140px;
   height: 140px;
   border-radius: 50%;

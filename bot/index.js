@@ -1,12 +1,12 @@
 require('dotenv').config();
 const { Telegraf, Markup } = require("telegraf");
-const TOKEN ="8112834265:AAGQ1GXXlJAbZwwewkSaJORabrZXBy0gmXk";
+const TOKEN = "8112834265:AAGQ1GXXlJAbZwwewkSaJORabrZXBy0gmXk";
 const bot = new Telegraf(TOKEN);
 const express = require("express");
 const app = express()
 app.use(express.json())
-const web_link = "https://animated-malabi-8ebc2c.netlify.app/";
-const community_link = "https://t.me/Kryptominingbot";
+const web_link = "https://zesty-haupia-e2015e.netlify.app/";
+const community_link = "https://t.me/Kryptoblockchain";
 
 
 

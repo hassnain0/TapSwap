@@ -167,7 +167,7 @@ const Stats = () => {
                 />
               </div>
 
-              <div className="absolute top-[-30%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-5">
+              <div className="absolute top-[-40%] right-0 sm:right-6 md:right-0 lg:right-10 flex flex-col items-center justify-center pr-2">
                 <button onClick={favorite} className="focus:outline-none mb-2 transform scale-150">
                   <HeartIcon filled={isFavoritedSelect} />
                 </button>

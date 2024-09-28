@@ -3,15 +3,15 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 import { useUser } from '../context/userContext';
 
 const userLevels = [
-  { name: 'Iron', icon: `require('../images/iron.png')`, tapBalanceRequired: 1000 },
-  { name: 'Bronze', icon: `require('../images/bronze.png')`, tapBalanceRequired: 50000 },
-  { name: 'Silver', icon: `require('../images/silver.png')`, tapBalanceRequired: 500000 },
-  { name: 'Gold', icon: `require('../images/gold.png')`, tapBalanceRequired: 1000000 },
-  { name: 'Platinum', icon: `require('../images/platinum.png')`, tapBalanceRequired: 2500000 },
-  { name: 'Diamond', icon: `require('../images/diamond.png')`, tapBalanceRequired: 5000000 },
-  { name: 'Master', icon: `require('../images/master.png')`, tapBalanceRequired: 10000000 },
-  { name: 'Grandmaster', icon: `require('../images/grandmaster.png')`, tapBalanceRequired: 25000000 },
-  { name: 'Challenger', icon: `require('../images/challenger.png')`, tapBalanceRequired: 50000000 }
+  { name: 'Iron', icon: require('../images/iron.png'), tapBalanceRequired: 1000 },
+  { name: 'Bronze', icon: require('../images/bronze.png'), tapBalanceRequired: 50000 },
+  { name: 'Silver', icon: require('../images/silver.png'), tapBalanceRequired: 500000 },
+  { name: 'Gold', icon: require('../images/gold.png'), tapBalanceRequired: 1000000 },
+  { name: 'Platinum', icon: require('../images/platinum.png'), tapBalanceRequired: 2500000 },
+  { name: 'Diamond', icon: require('../images/diamond.png'), tapBalanceRequired: 5000000 },
+  { name: 'Master', icon: require('../images/master.png'), tapBalanceRequired: 10000000 },
+  { name: 'Grandmaster', icon: require('../images/grandmaster.png'), tapBalanceRequired: 25000000 },
+  { name: 'Challenger', icon: require('../images/challenger.png'), tapBalanceRequired: 50000000 }
 ];
 
 const Levels = ({ showLevels, setShowLevels }) => {

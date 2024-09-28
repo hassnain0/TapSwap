@@ -11,7 +11,7 @@ import flash from "../images/flash.webp";
 import { IoCheckmarkCircle, IoClose } from 'react-icons/io5';
 import ref from '../images/ref.webp';
 import { NavLink, useNavigation } from 'react-router-dom';
-
+import lot from '../images/lot.svg'
 const slideUp = keyframes`
   0% {
     opacity: 1;
@@ -335,7 +335,7 @@ const Plutos = () => {
 
 
   const copyToClipboard = () => {
-    const reflink = `https://t.me/Kryptoblockchain?start=r${id}`;
+    const reflink = `https://t.me/Kryptominingbot?start=r${id}`;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
         .writeText(reflink)
@@ -408,7 +408,7 @@ const Plutos = () => {
                   Your Invite Link
                 </h3>
                 <div className="text-[#9a96a6] text-[13px]">
-                  https://t.me/Kryptoblockchain?start=r{id}
+                  https://t.me/Kryptominingbot?start=r{id}
                 </div>
 
                 <div className="flex flex-1 items-center space-x-2">
@@ -469,10 +469,10 @@ const Plutos = () => {
 
           <div className="flex flex-col justify-center w-full overflow-hidden">
             {/* New top section with coin, gems, and other counters */}
-            <div className="flex items-center justify-between m-[1] -mt-1  p-2 bg-[#1F2942] rounded-lg ">
+            <div className="border-[1px] border-borders  flex items-center justify-between m-[3]  mr-2 ml-2 p-2 bg-[#1F2942] rounded-lg">
               {/* Coins */}
-              <div  className="flex items-center space-x-2 cursor-pointer">
-                <img src={require('../images/pending.png')} className="w-[20px]" alt="coin" />
+              <div className="flex items-center space-x-2 cursor-pointer">
+                <img src={require('../images/card.png')} className="w-[20px]" alt="coin" />
                 <div className='flex flex-1 flex-col'>
                   <span className="text-[#fff] text-[10px] font-bold">0</span>
                 </div>
@@ -483,7 +483,7 @@ const Plutos = () => {
 
               {/* Gems */}
               <div className="flex items-center space-x-2">
-              <img src={require('../images/pending.png')} className="w-[20px]" alt="coin" />
+                <img src={lot} className="w-[20px]" alt="coin" />
                 <div className='flex flex-1 flex-col'>
                   <span className="text-[#fff] text-[10px] font-bold">0</span>
                 </div>
@@ -508,7 +508,35 @@ const Plutos = () => {
               </div>
             </div>
 
-            <div className="flex space-x-[2px] justify-center items-center ">
+            {/* Bottom Section */}
+            <div className="flex items-center justify-between m-1 p-1 mt-3 rounded-lg w-full">
+              {/* Levels Section */}
+              <div onClick={() => setShowLevels(true)} className="cursor-pointer flex border-[1px] border-borders items-center justify-center w-auto max-w-[200px] bg-[#1F2942] rounded-lg p-1">
+                <img src={level.imgUrl} className="w-[30px] mr-2" alt="bronze" />
+                <h2  className="curson-pointer text-[20px] font-medium text-white">
+                  {level.name}
+                </h2>
+                <MdOutlineKeyboardArrowRight className="w-[30px] h-[30px] text-[#9d99a9] mt-[2px]" />
+              </div>
+
+              {/* Invite Button */}
+              <div className="flex cursor-pointer border-[1px] border-borders P-1 bg-[#1F2942] rounded-lg justify-center w-[110px] mr-2">
+                <img src={ref} className="w-[30px] ml-2" alt="bronze" />
+                <button
+                  onClick={() => { setShowInvitation(true) }}
+                  className="flex items-center justify-center   text-white font-bold py-1 text-[20px] rounded-md w-full"
+                >
+                  Invite
+                  <MdOutlineKeyboardArrowRight className="w-[30px] h-[30px] mr-1 text-[#9d99a9]" />
+                </button>
+              </div>
+
+            </div>
+
+
+
+            {/* Balance shown */}
+            <div className="flex space-x-[2px] justify-center  items-center ">
               <div className="w-[50px] h-[50px]">
                 <img src={require('../images/coinsmall.png')} className="w-[40px] mt-1" alt="coin" />
               </div>
@@ -517,22 +545,6 @@ const Plutos = () => {
               </h1>
             </div>
 
-            <div className="w-full ml-[6px] flex space-x-1 items-center justify-center">
-              <img src={level.imgUrl} className="w-[30px]  relative" alt="bronze" />
-              <h2 onClick={() => setShowLevels(true)} className="text-[#9d99a9] text-[20px] font-medium">
-                {level.name}
-              </h2>
-              <MdOutlineKeyboardArrowRight className="w-[20px] h-[20px] text-[#9d99a9] mt-[2px]" />
-            </div>
-
-            <div className="w-full flex justify-center ">
-              <button
-                onClick={() => { setShowInvitation(true) }}
-                className="mt-2 bg-[#1F2942] text-white font-bold py-1 px-0 rounded-md w-[70px] transform translate-x-[10%] "
-              >
-                Invite
-              </button>
-            </div>
 
             <div className="relative flex items-center justify-center w-full pb-24 ">
               <div className="bg-[#35389e] blur-[50px] absolute rotate-[35deg] w-[400px] h-[160px] top-10 -left-40 rounded-full"></div>
