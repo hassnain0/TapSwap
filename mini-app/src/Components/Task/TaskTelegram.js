@@ -84,7 +84,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
     }
 
     const response = await fetch(
-      `https://api.telegram.org/bot7390623352:AAG8oIBbLiL577I9W13X0jIeoO2P6I_mKqs/getChatMember?chat_id=-1002436643404&user_id=${id}`
+      `https://api.telegram.org/bot8112834265:AAGQ1GXXlJAbZwwewkSaJORabrZXBy0gmXk/getChatMember?chat_id=-1002436643404&user_id=${id}`
     );
     const data = await response.json();
 
