@@ -189,8 +189,6 @@ export const UserProvider = ({ children }) => {
           lastName,
           totalBalance: 0,
           balance: 0,
-          profitPerHour: 0,
-          setProfitPerHour,
           freeGuru: 3,
           fullTank: 3,
           tapBalance: 0,
@@ -199,7 +197,6 @@ export const UserProvider = ({ children }) => {
           favorite: false,
           timeSpin: new Date(),
           tapValue: { level: 1, value: 1 },
-          cardsValue: { level: 0, value: 0 },
           timeRefill: { level: 1, duration: 10, step: 600 },
           level: { id: 1, name: "iron", imgUrl: require('../images/iron.png') }, // Set the initial level with id and name
           energy: 500,

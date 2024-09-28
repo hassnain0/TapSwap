@@ -3,16 +3,18 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey:"AIzaSyCRH4HOEDo9M2emvyLXIDrmkJQ_39Qekuo",
-    authDomain: "tapswap-e9c29.firebaseapp.com",
-    projectId:" tapswap-e9c29",
-    storageBucket: "tapswap-e9c29.appspot.com",
-    messagingSenderId: "802210819831",
-    appId: "1:802210819831:web:e3ba2057cdf55d36cbedf2",
-    measurementId:"G-W9MH7ZQK1N",
-
+    apiKey:"AIzaSyCVhK4SDn9II6rvTwrDR6ey84M5EGuogDk",
+    authDomain:"updatedtapswap.firebaseapp.com",
+    projectId:  "updatedtapswap",
+    storageBucket:"updatedtapswap.appspot.com",
+    messagingSenderId: "411506741973",
+    appId: "1:411506741973:web:2a81216525a16feeb9c85c",
+    measurementId: "G-CZJCM17NM1"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+console.log("Firebase initialized:", app);
+console.log("Firestore initialized:", db);
+
 export { db };

@@ -226,6 +226,30 @@ const Cards = () => {
         }
     };
 
+    useEffect(()=>{
+        const fetchCardData = async () => {
+            try {
+              // Reference to the specific document in the 'cards' collection
+              const docRef = doc(db, "cards", "CardsData");
+              
+              // Fetch the document data
+              const docSnap = await getDoc(docRef);
+          
+              console.log("Doc ",docSnap)
+              if (docSnap.exists()) {
+                // If the document exists, log the data
+                console.log("Data:", docSnap.data());
+              } else {
+                // If the document does not exist
+                console.log("No such document!");
+              }
+            } catch (e) {
+              console.error("Error fetching document: ", e);
+            }
+          };
+          fetchCardData();
+    })
+
     useEffect(() => {
         if (openInfo || openInfoTwo) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -260,36 +284,35 @@ const Cards = () => {
 
 
     const handleUpgrade = async () => {
-        setStartTimerClock(true);
         setshowCards(false)
-        const updatedData = cardData.map((card) => {
-            if (card.index === index) {
-                return { ...card, blur: !card.blur, timer: !card.timer };
-            }
-            return card;
-        });
-        setCardData(updatedData);
+        // const updatedData = cardData.map((card) => {
+        //     if (card.index === index) {
+        //         return { ...card, blur: !card.blur, timer: !card.timer };
+        //     }
+        //     return card;
+        // });
+        // setCardData(updatedData);
 
-        const nextLevel = cardsValue.level;
-        const upgradeCost = upgradeCosts[nextLevel];
-        if (nextLevel < cardValues.length && (balance + refBonus) >= upgradeCost && id) {
-            const newTapValue = cardValues[nextLevel];
-            const userRef = doc(db, 'telegramUsers', id.toString());
-            try {
-                await updateDoc(userRef, {
-                    cardsValue: newTapValue,
-                    balance: balance - upgradeCost,
+        // const nextLevel = cardsValue.level;
+        // const upgradeCost = upgradeCosts[nextLevel];
+        // if (nextLevel < cardValues.length && (balance + refBonus) >= upgradeCost && id) {
+        //     const newTapValue = cardValues[nextLevel];
+        //     const userRef = doc(db, 'telegramUsers', id.toString());
+        //     try {
+        //         await updateDoc(userRef, {
+        //             cardsValue: newTapValue,
+        //             balance: balance - upgradeCost,
 
-                });
-                setCardsValue(newTapValue);
-                setBalance((prevBalance) => prevBalance - upgradeCost);
+        //         });
+        //         setCardsValue(newTapValue);
+        //         setBalance((prevBalance) => prevBalance - upgradeCost);
 
-                console.log('Tap value upgraded successfully');
-            } catch (error) {
-                console.error('Error updating tap value:', error);
-            }
+        //         console.log('Tap value upgraded successfully');
+        //     } catch (error) {
+        //         console.error('Error updating tap value:', error);
+        //     }
 
-        }
+        // }
 
     };
 
@@ -470,7 +493,7 @@ const Cards = () => {
 
                     <div className="w-full flex justify-center pb-6 pt-4">
                         <button
-                            onClick={handleUpgrade}
+                            // onClick={handleUpgrade}
                             disabled={!hasSufficientBalance}
                             className={`${!hasSufficientBalance ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b from-[#3a5fd4] to-[#5078e0]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                         >
