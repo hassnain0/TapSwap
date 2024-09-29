@@ -3,18 +3,16 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey:"AIzaSyCVhK4SDn9II6rvTwrDR6ey84M5EGuogDk",
-    authDomain:"updatedtapswap.firebaseapp.com",
-    projectId:  "updatedtapswap",
-    storageBucket:"updatedtapswap.appspot.com",
-    messagingSenderId: "411506741973",
-    appId: "1:411506741973:web:2a81216525a16feeb9c85c",
-    measurementId: "G-CZJCM17NM1"
+  apiKey: "AIzaSyDcecVlO7suZtUNriMyeVeRJOIIujtN-PM",
+  authDomain: "krypto-airdrop.firebaseapp.com",
+  projectId: "krypto-airdrop",
+  storageBucket: "krypto-airdrop.appspot.com",
+  messagingSenderId: "449309363525",
+  appId: "1:449309363523:web:483fbe3625f02ccfd1022c",
+  measurementId: "G-06MPVBBC8M"
 };
-
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-console.log("Firebase initialized:", app);
-console.log("Firestore initialized:", db);
+
 
 export { db };
