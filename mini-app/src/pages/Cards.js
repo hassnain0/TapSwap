@@ -59,7 +59,7 @@ const CardData = [
         timer: false,
     }, {
         index: 8,
-        title: 'BitCoin Cash',
+        title: 'BitCoin ',
         image: require("../images/bitcoincash.png"),
         subtitle: 'Reward',
         price: 20000,
@@ -495,7 +495,7 @@ const Cards = () => {
             </div>
             <div className="bg-borders w-full px-5 h-[1px] !mt-3 !mb-5 " ></div>
 
-            <div className="max-h-[450px] overflow-y-scroll">
+            <div className="max-h-[500px] overflow-y-scroll">
                 {chunkedData.map((row, rowIndex) => (
                     <div
                         key={rowIndex}

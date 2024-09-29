@@ -12,7 +12,7 @@ const milestones = [
     name: 'Iron',
     icon: require('../images/iron.png'),
     tapBalanceRequired: 1000,
-    reward: 5000 // Estimated based on progression
+    reward: 5000 
   },
   {
     name: 'Bronze',
@@ -121,7 +121,7 @@ const MilestoneRewards = ({ setNotify }) => {
     } else if (num < 10000000) {
       return new Intl.NumberFormat().format(num).replace(/,/g, " ");
     } else {
-      return (num / 10000000).toFixed(3).replace(".", ".") + " T";
+      return new Intl.NumberFormat().format(num).replace(/,/g, " ");
     }
   };
   const updateTaskNotify = (task) => {

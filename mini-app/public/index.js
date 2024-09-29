@@ -1,6 +1,5 @@
 import plutos from '../images/plutotap.svg'
 import bronze from '../images/bronze.png';
-
 import Silver from '../images/sliver.png'
 import gold from '../images/gold.png'
 import diamond from '../images/diamond.png'
