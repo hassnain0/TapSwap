@@ -356,7 +356,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
                 <div className="flex justify-center w-full pb-12">
                   <button
                     onClick={finishMission}
-                    className="bg-gradient-to-b gradient from-[#ffba4c] to-[#aa6900] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]"
+                    className="bg-gradient-to-b from-[#3a5fd4] to-[#5078e0] w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]"
                   >
                     Claim
                   </button>

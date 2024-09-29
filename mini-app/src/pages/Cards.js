@@ -226,30 +226,7 @@ const Cards = () => {
         }
     };
 
-    useEffect(()=>{
-        const fetchCardData = async () => {
-            try {
-              // Reference to the specific document in the 'cards' collection
-              const docRef = doc(db, "cards", "CardsData");
-              
-              // Fetch the document data
-              const docSnap = await getDoc(docRef);
-          
-              console.log("Doc ",docSnap)
-              if (docSnap.exists()) {
-                // If the document exists, log the data
-                console.log("Data:", docSnap.data());
-              } else {
-                // If the document does not exist
-                console.log("No such document!");
-              }
-            } catch (e) {
-              console.error("Error fetching document: ", e);
-            }
-          };
-          fetchCardData();
-    })
-
+   
     useEffect(() => {
         if (openInfo || openInfoTwo) {
             document.addEventListener('mousedown', handleClickOutside);

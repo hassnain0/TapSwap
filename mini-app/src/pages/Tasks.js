@@ -323,7 +323,7 @@ const Tasks = () => {
                 <img
                   src={level.imgUrl}
                   className="w-[35px]  relative"
-                  alt="bronze"
+                  alt="Iron"
                 />
                 <h2 className="text-[#9d99a9] text-[20px] font-medium">
                   {level.name}

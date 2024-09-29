@@ -10,9 +10,10 @@ const userLevels = [
   { name: 'Platinum', icon: require('../images/platinum.png'), tapBalanceRequired: 2500000 },
   { name: 'Diamond', icon: require('../images/diamond.png'), tapBalanceRequired: 5000000 },
   { name: 'Master', icon: require('../images/master.png'), tapBalanceRequired: 10000000 },
-  { name: 'Grandmaster', icon: require('../images/grandmaster.png'), tapBalanceRequired: 700000000 }, // Updated to 700 million
-  { name: 'Challenger', icon: require('../images/challenger.png'), tapBalanceRequired: 900000000 } // Updated to 900 million
+  { name: 'Grand Master', icon: require('../images/grandmaster.png'), tapBalanceRequired: 20000000 }, // Grand Master level
+  { name: 'Challenger', icon: require('../images/challenger.png'), tapBalanceRequired: 50000000 } // Challenger level
 ];
+
 
 
 const Levels = ({ showLevels, setShowLevels }) => {
@@ -40,7 +41,7 @@ const Levels = ({ showLevels, setShowLevels }) => {
     if (num < 1000) {
       return new Intl.NumberFormat().format(num).replace(/,/g, " ");
     } else if (num < 1000000) { // Less than 1 million
-      return (num / 1000).toFixed(1) + " K"; // Show in thousands
+      return (num / 1000).toFixed(1) + "K"; // Show in thousands with "K"
     } else if (num < 1000000000) { // Less than 1 billion
       return (num / 1000000).toFixed(1) + " Million"; // Show in millions
     } else if (num < 1000000000000) { // Less than 1 trillion
@@ -49,6 +50,7 @@ const Levels = ({ showLevels, setShowLevels }) => {
       return (num / 1000000000000).toFixed(1) + " Trillion"; // Show in trillions
     }
   };
+  
   useEffect(() => {
 
     // Attach a click event listener to handle the back navigation

@@ -135,7 +135,7 @@ export const UserProvider = ({ children }) => {
 
 
   const sendUserData = async () => {
-    alert(telegramUser?.userId);
+   
     const queryParams = new URLSearchParams(window.location.search);
     let referrerId = queryParams.get("start");
     if (referrerId) {

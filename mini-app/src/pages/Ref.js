@@ -187,12 +187,12 @@ const Ref = () => {
       const topUsers = sortedUsers.slice(0, 300);
     
       return topUsers.map((user) => {
-        const username = user.username || ''; // Default to empty string if username is undefined
+         // Default to empty string if username is undefined
         return {
           initials: username.substring(0, 2).toUpperCase(),
           name: username,
           rocks: formatBalance(user.balance),
-          imageUrl: user.level?.imgUrl || '', // Use optional chaining for level.imgUrl
+          imageUrl: user.level?.imgUrl, // Use optional chaining for level.imgUrl
         };
       });
     };
@@ -468,7 +468,7 @@ const Ref = () => {
                                   <img
                                     src={user.level.imgUrl}
                                     alt="bronze"
-                                    className="w-[100px] h-[50px] "
+                                    className="w-[35px] "
                                   />
                                 </div>
                                 <span className="font-medium text-[#9a96a6]">
@@ -558,7 +558,7 @@ const Ref = () => {
                           {/* Trophy icon */}
                           <img
                             src={item.imageUrl}
-                            style={{ width: '40px', height: '35px' }}
+                            className="w-[35px]"
                             alt="vector"
                           />
                         </div>

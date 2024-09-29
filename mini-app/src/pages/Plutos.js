@@ -509,11 +509,11 @@ const Plutos = () => {
 
 
             {/* Bottom Section */}
-            <div className="flex items-center justify-between m-1 p-1 mt-3 rounded-lg w-full">
+            <div className="flex items-center justify-between m-1 p-1 mt-2 rounded-lg w-full">
               {/* Levels Section */}
               <div onClick={() => setShowLevels(true)} className="cursor-pointer flex border-[1px] border-borders items-center justify-center w-auto max-w-[200px] bg-[#1F2942] rounded-lg ml-4 p-1">
                 <img src={level.imgUrl} className="w-[30px] mr-2" alt="bronze" />
-                <h2  className="curson-pointer text-[17px] font-medium text-white">
+                <h2  className="curson-pointer text-[17px] font-normal text-white">
                   {level.name}
                 </h2>
                 <MdOutlineKeyboardArrowRight className="w-[30px] h-[30px] text-[#9d99a9] mt-[2px]" />
@@ -524,7 +524,7 @@ const Plutos = () => {
                 <img src={ref} className="w-[25px] ml-2" />
                 <button
                   onClick={() => { setShowInvitation(true) }}
-                  className="flex items-center justify-center   text-white font-bold py-1 text-[17px] rounded-md w-full"
+                  className="flex items-center justify-center   text-white font-normal py-1 text-[17px] rounded-md w-full"
                 >
                   Invite
                   <MdOutlineKeyboardArrowRight className="w-[30px] h-[30px] mr-1 text-[#9d99a9]" />
@@ -554,10 +554,10 @@ const Plutos = () => {
                 <div class="after"></div>
               </div>
 
-              <div className="w-[350px] h-[350px] relative flex items-center justify-center">
-                <img src="/lihgt.webp" alt="err" className={`absolute w-[330px] rotate-45 ${tapGuru ? 'block' : 'hidden'}`} />
+              <div className=" w-[350px] h-[350px] relative flex items-center justify-center">
+                <img src="/lihgt.webp" alt="err" className={`mb-12  ml-3 absolute w-[330px] rotate-45 `} />
 
-                <div className="image-container pb-9">
+                <div className="image-container pb-7">
                   {mainTap && (
                     <Container>
                       <img
