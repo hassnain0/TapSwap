@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useUser } from "../context/userContext";
 import { IoCheckmarkCircle, IoClose } from "react-icons/io5";
 import Timer from "../Components/Timer";
@@ -200,7 +200,6 @@ const Cards = () => {
     const [tank, setTank] = useState(false);
     const [bot, setBot] = useState(false);
     const [showCards, setshowCards] = useState(false)
-    const [cardData, setCardData] = useState(CardData);
     const [blurItem, setBlurItem] = useState([]);
     const [blurredCardId, setBlurredCardId] = useState([]);
     const [image, setImage] = useState();
@@ -223,17 +222,17 @@ const Cards = () => {
     };
 
 
-    useEffect(() => {
-        if (openInfo || openInfoTwo) {
-            document.addEventListener('mousedown', handleClickOutside);
-        } else {
-            document.removeEventListener('mousedown', handleClickOutside);
-        }
+    // useEffect(() => {
+    //     if (openInfo || openInfoTwo) {
+    //         document.addEventListener('mousedown', handleClickOutside);
+    //     } else {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     }
 
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [openInfo, openInfoTwo]);
+    //     return () => {
+    //         document.removeEventListener('mousedown', handleClickOutside);
+    //     };
+    // }, [openInfo, openInfoTwo]);
 
     const formatNumber = (num) => {
         if (num < 1000) {
@@ -396,7 +395,7 @@ const Cards = () => {
         return chunkedArray;
     };
 
-    const chunkedData = chunkArray(cardData, 2); // Chunk the data into groups of two
+    const chunkedData = chunkArray(CardData, 2); // Chunk the data into groups of two
 
     return (
         <div className="w-full">
