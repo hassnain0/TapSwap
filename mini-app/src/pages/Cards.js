@@ -1,151 +1,11 @@
 import React, { useState, useRef } from "react";
 import { useUser } from "../context/userContext";
 import { IoCheckmarkCircle, IoClose } from "react-icons/io5";
-import Timer from "../Components/Timer";
 
 
-const CardData = [
-    {
-        index: 1,
-        title: 'Binance',
-        image: require("../images/binance.png"),
-        subtitle: 'Reward',
-        price: 16100,
-        amount: 200000,
-        blur: false,
-        timer: false,
 
-    },
 
-    {
-        index: 3,
-        title: 'Dogs',
-        image: require("../images/dog.png"),
-        subtitle: 'Reward',
-        price: 900,
-        amount: 100000,
-        blur: false,
-        timer: false,
-    }, {
-        index: 4,
-        title: 'Krypto',
-        image: require("../images/paragon.png"),
-        subtitle: 'Reward',
-        price: 25000,
-        amount: 1900000,
-        blur: false,
-        timer: false,
-    }, {
-        index: 6,
-        title: 'Ethereum',
-        image: require("../images/Ethreum.png"),
-        subtitle: 'Reward',
-        price: 12000,
-        amount: 200000, blur: false,
-        timer: false,
 
-    }, {
-        index: 7,
-        title: 'Litecoin',
-        image: require("../images/litecoin.png"),
-        subtitle: 'Reward',
-        price: 2510,
-        amount: 4000000,
-        blur: false,
-        timer: false,
-    }, {
-        index: 8,
-        title: 'BitCoin ',
-        image: require("../images/bitcoincash.png"),
-        subtitle: 'Reward',
-        price: 20000,
-        amount: 1200000,
-        blur: false,
-        timer: false,
-    }, {
-        index: 9,
-        title: 'Thether',
-        image: require("../images/tether.png"),
-        subtitle: 'Reward',
-        price: 16100,
-        amount: 9000000,
-        blur: false,
-        timer: false,
-    },
-    {
-        index: 10,
-        title: 'Notcoin',
-        image: require("../images/notcoin.png"),
-        subtitle: 'Reward',
-        price: 6000,
-        amount: 100000,
-        blur: false,
-        timer: false,
-    },
-]
-
-const cardValues = [
-    {
-        level: 0,
-        value: 0,
-    },
-    {
-        level: 1,
-        value: 1,
-    },
-    {
-        level: 2,
-        value: 2,
-    },
-    {
-        level: 3,
-        value: 3,
-    },
-    {
-        level: 4,
-        value: 4,
-    },
-    {
-        level: 5,
-        value: 5,
-    },
-    {
-        level: 6,
-        value: 6,
-    },
-    {
-        level: 7,
-        value: 7,
-    },
-    {
-        level: 8,
-        value: 8,
-    },
-    {
-        level: 9,
-        value: 9,
-    },
-    {
-        level: 10,
-        value: 10,
-    },
-    {
-        level: 11,
-        value: 11,
-    },
-    {
-        level: 12,
-        value: 12,
-    },
-    {
-        level: 13,
-        value: 13,
-    },
-    {
-        level: 14,
-        value: 14,
-    },
-];
 
 
 const chargingValues = [
@@ -385,7 +245,68 @@ const Cards = () => {
     //     }
 
     // };
-
+    const CardData = [
+        {
+            title: 'Binance',
+            image: require("../images/binance.png"),
+            subtitle: 'Reward',
+            price: 16100,
+            amount: 200000,
+    
+        },
+    
+        {
+    
+            title: 'Dogs',
+            image: require("../images/dog.png"),
+            subtitle: 'Reward',
+            price: 900,
+            amount: 100000,
+    
+        }, {
+    
+            title: 'Krypto',
+            image: require("../images/paragon.png"),
+            subtitle: 'Reward',
+            price: 25000,
+            amount: 1900000,
+        }, {
+    
+            title: 'Ethereum',
+            image: require("../images/Ethreum.png"),
+            subtitle: 'Reward',
+            price: 12000,
+            amount: 200000,
+        }, {
+    
+            title: 'Litecoin',
+            image: require("../images/litecoin.png"),
+            subtitle: 'Reward',
+            price: 2510,
+            amount: 4000000,
+        }, {
+    
+            title: 'BitCoin ',
+            image: require("../images/bitcoincash.png"),
+            subtitle: 'Reward',
+            price: 20000,
+            amount: 1200000,
+        }, {
+    
+            title: 'Thether',
+            image: require("../images/tether.png"),
+            subtitle: 'Reward',
+            price: 16100,
+            amount: 9000000,
+        },
+        {
+            title: 'Notcoin',
+            image: require("../images/notcoin.png"),
+            subtitle: 'Reward',
+            price: 6000,
+            amount: 100000,
+        },
+    ]
 
     const chunkArray = (array, size) => {
         const chunkedArray = [];
@@ -446,7 +367,7 @@ const Cards = () => {
                         <button
                             // onClick={handleUpgrade}
                             // disabled={!hasSufficientBalance}
-                            className={`w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                            className={`w-full py-5 px-3 flex items-center justify-center bg-gradient-to-b from-[#3a5fd4] to-[#5078e0] text-center rounded-[12px] font-semibold text-[22px]`}
                         >
                             {/* {isUpgrading ? 'Boosting...' : hasSufficientBalance ? 'Get it!' : 'Insufficient Balance'} */}
                             Comming Soon
@@ -480,8 +401,7 @@ const Cards = () => {
                             <button
                                 onClick={() => DisplayCards(item, item.index)}
                                 key={index}
-                                className={` w-[48%] border-[1px] border-borders rounded-[8px] p-[16px] flex flex-col items-start
-                                   ${item.blur ? 'bg-activebg' : 'bg-cards'} 
+                                className={` w-[48%] border-[1px] border-borders rounded-[8px] p-[16px] flex flex-col items-start bg-cards
                         `}
                             >
 
@@ -495,19 +415,16 @@ const Cards = () => {
 
                                     </div>
                                     <div className="flex flex-1 flex-col">
-                                        <span className={`text-white font-semibold ${item.blur ? 'blur-lg' : ''}`}>{item.title}</span>
-                                        <span className={`text-gray-400 text-[10px] font-medium ${item.blur ? 'blur-lg' : ''}`}>{item.subtitle}</span>
+                                        <span className={`text-white font-semibold `}>{item.title}</span>
+                                        <span className={`text-gray-400 text-[10px] font-medium`}>{item.subtitle}</span>
                                         <div className="flex items-center justify-center relative">
                                             {/* Conditionally render the timer or price based on item.blur */}
-                                            {item.blur && item.timer ? (
-                                                <Timer item={item} startTimerClock={startTimerClock} userId={id} />
 
-                                            ) : (
-                                                <div className="flex items-center justify-center">
-                                                    <img src={require('../images/coinsmall.png')} alt="Price icon" className="w-[16px] h-[16px] mr-2" />
-                                                    <span className="text-[14px] font-medium">{formatNumber(item.price)}</span>
-                                                </div>
-                                            )}
+                                            <div className="flex items-center justify-center">
+                                                <img src={require('../images/coinsmall.png')} alt="Price icon" className="w-[16px] h-[16px] mr-2" />
+                                                <span className="text-[14px] font-medium">{formatNumber(item.price)}</span>
+                                            </div>
+
                                         </div>
 
                                     </div>
@@ -520,12 +437,12 @@ const Cards = () => {
                                 <div className="flex justify-between w-full items-center relative">
                                     {/* Level Section */}
 
-                                    <span className={`text-gray-400 text-[14px] ${item.blur ? 'blur-lg' : ''}`}> {cardValues[cardsValue.level]?.value} lvl</span>
+                                    <span className={`text-gray-400 text-[14px] `}> 0 lvl</span>
 
                                     {/* Timer Display in the Center */}
 
                                     {/* Coins Section */}
-                                    <div className={`flex items-center ${item.blur ? 'blur-lg' : ''}`}>
+                                    <div className={`flex items-center `}>
                                         <img
                                             src={require('../images/coinsmall.png')}
                                             className="w-5 h-5 mr-1"
