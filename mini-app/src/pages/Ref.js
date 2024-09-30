@@ -477,7 +477,7 @@ const Ref = () => {
                           </div>
                           <div>
                             <p className="text-white font-semibold">{item.name}</p>
-                            <p className="text-white text-sm">{item.rocks} Rocks</p>
+                            <p className="text-white text-sm">{item.rocks} Coins</p>
                           </div>
                         </div>
                         <div>
