@@ -1,13 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-
-import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore';
 import { useUser } from "../context/userContext";
 import { IoCheckmarkCircle, IoClose } from "react-icons/io5";
-import { db } from "../firebase";
 import Timer from "../Components/Timer";
 
 
-const TIMER_DURATION = 1200; // 20 minutes in seconds
 const CardData = [
     {
         index: 1,
@@ -20,7 +16,7 @@ const CardData = [
         timer: false,
 
     },
-    
+
     {
         index: 3,
         title: 'Dogs',
@@ -213,7 +209,7 @@ const Cards = () => {
     const [selectedCards, setSelectedCards] = useState([]);
     const [timers, setTimers] = useState({});
 
-    const [startTimerClock,setStartTimerClock]=useState(false);
+    const [startTimerClock, setStartTimerClock] = useState(false);
     const infoRef = useRef(null);
     const infoRefTwo = useRef(null);
 
@@ -226,7 +222,7 @@ const Cards = () => {
         }
     };
 
-   
+
     useEffect(() => {
         if (openInfo || openInfoTwo) {
             document.addEventListener('mousedown', handleClickOutside);
@@ -293,92 +289,71 @@ const Cards = () => {
 
     };
 
-    const nextUpgradeCost = upgradeCosts[tapValue.level];
-    // const hasSufficientBalance = (balance + refBonus) >= nextUpgradeCost;
-    const hasSufficientBalance = true;
-    const nextEnergyUpgradeCost = energyUpgradeCosts[battery.level];
-    const hasSufficientBalanceEn = (balance + refBonus) >= nextEnergyUpgradeCost;
+    // const nextUpgradeCost = upgradeCosts[tapValue.level];
+    // // const hasSufficientBalance = (balance + refBonus) >= nextUpgradeCost;
+    // const hasSufficientBalance = true;
+    // const nextEnergyUpgradeCost = energyUpgradeCosts[battery.level];
+    // const hasSufficientBalanceEn = (balance + refBonus) >= nextEnergyUpgradeCost;
 
-    const nextChargingUpgradeCost = chargingUpgradeCosts[timeRefill.level];
-    const hasSufficientBalanceEnc = (balance + refBonus) >= nextChargingUpgradeCost;
+    // const nextChargingUpgradeCost = chargingUpgradeCosts[timeRefill.level];
+    // const hasSufficientBalanceEnc = (balance + refBonus) >= nextChargingUpgradeCost;
 
-    const [isDisabled, setIsDisabled] = useState(false);
+    // const [isDisabled, setIsDisabled] = useState(false);
 
     //Display Cards
     const DisplayCards = (item, index) => {
-        if (item.timer === true) {
-            return false;
-        }
+        // if (item.timer === true) {
+        //     return false;
+        // }
         setshowCards(true);
         setImage(item.image)
         setIndex(index)
-        toggleCardSelection(index);
+        // toggleCardSelection(index);
 
     }
 
-    useEffect(() => {
-        fetchData();
-    }, [selectedCards]);
 
-    const fetchData = async () => {
-        try {
 
-            const userRef = collection(db, "telegramUsers", id.toString());
-            const querySnapshot = await getDocs(userRef);
 
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                // Check if card is in selected cards and update timers
-                if (selectedCards.includes(data.index)) {
-                    setTimers((prev) => ({ ...prev, [data.index]: data.timer }));
-                }
-            });
+    // useEffect(() => {
+    //     const intervals = {};
 
-        } catch (error) {
-            console.error("Error fetching timer: ", error);
+    //     // Set up timers for selected cards
+    //     selectedCards.forEach((index) => {
+    //         if (timers[index] > 0) {
+    //             intervals[index] = setInterval(() => {
+    //                 setTimers((prev) => {
+    //                     const newTimer = prev[index] - 1;
+    //                     if (newTimer <= 0) {
+    //                         clearInterval(intervals[index]);
 
-        }
-    }
+    //                         return { ...prev, [index]: 0 }; // Ensure timer doesn't go below 0
+    //                     }
+    //                     return { ...prev, [index]: newTimer };
+    //                 });
+    //             }, 1000); // Decrement timer every second
+    //         }
+    //     });
 
-    useEffect(() => {
-        const intervals = {};
+    //     return () => {
+    //         // Cleanup intervals on unmount
+    //         Object.values(intervals).forEach(clearInterval);
+    //     };
+    // }, [selectedCards, timers]);
+    // const formatTime = (seconds) => {
+    //     const minutes = Math.floor(seconds / 60);
+    //     const remainingSeconds = seconds % 60;
+    //     return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    // };
 
-        // Set up timers for selected cards
-        selectedCards.forEach((index) => {
-            if (timers[index] > 0) {
-                intervals[index] = setInterval(() => {
-                    setTimers((prev) => {
-                        const newTimer = prev[index] - 1;
-                        if (newTimer <= 0) {
-                            clearInterval(intervals[index]);
-
-                            return { ...prev, [index]: 0 }; // Ensure timer doesn't go below 0
-                        }
-                        return { ...prev, [index]: newTimer };
-                    });
-                }, 1000); // Decrement timer every second
-            }
-        });
-
-        return () => {
-            // Cleanup intervals on unmount
-            Object.values(intervals).forEach(clearInterval);
-        };
-    }, [selectedCards, timers]);
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    };
-
-    const toggleCardSelection = (index) => {
-        setSelectedCards((prev) => {
-            if (prev.includes(index)) {
-                return prev.filter((id) => id !== index); // Deselect the card
-            }
-            return [...prev, index]; // Select the card
-        });
-    };
+    // const toggleCardSelection = (index) => {
+    //     setSelectedCards((prev) => {
+    //         if (prev.includes(index)) {
+    //             return prev.filter((id) => id !== index); // Deselect the card
+    //         }
+    //         return [...prev, index]; // Select the card
+    //     });
+    // };
 
 
     // const handlerRechargeUpgrade = async () => {
@@ -471,8 +446,8 @@ const Cards = () => {
                     <div className="w-full flex justify-center pb-6 pt-4">
                         <button
                             // onClick={handleUpgrade}
-                            disabled={!hasSufficientBalance}
-                            className={`${!hasSufficientBalance ? 'bg-btn2 text-[#979797]' : 'bg-gradient-to-b from-[#3a5fd4] to-[#5078e0]'} w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
+                            // disabled={!hasSufficientBalance}
+                            className={`w-full py-5 px-3 flex items-center justify-center text-center rounded-[12px] font-semibold text-[22px]`}
                         >
                             {/* {isUpgrading ? 'Boosting...' : hasSufficientBalance ? 'Get it!' : 'Insufficient Balance'} */}
                             Comming Soon
@@ -495,7 +470,7 @@ const Cards = () => {
             </div>
             <div className="bg-borders w-full px-5 h-[1px] !mt-3 !mb-5 " ></div>
 
-            <div className="max-h-[500px] overflow-y-scroll">
+            <div className="max-h-[400px] overflow-y-scroll">
                 {chunkedData.map((row, rowIndex) => (
                     <div
                         key={rowIndex}
@@ -526,7 +501,7 @@ const Cards = () => {
                                         <div className="flex items-center justify-center relative">
                                             {/* Conditionally render the timer or price based on item.blur */}
                                             {item.blur && item.timer ? (
-                                                <Timer item={item} startTimerClock={startTimerClock} userId={id}/>
+                                                <Timer item={item} startTimerClock={startTimerClock} userId={id} />
 
                                             ) : (
                                                 <div className="flex items-center justify-center">

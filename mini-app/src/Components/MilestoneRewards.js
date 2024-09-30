@@ -10,55 +10,55 @@ import { setTask } from '../features/taskSlice';
 const milestones = [
   {
     name: 'Iron',
-    icon: require('../images/iron.png'),
+    icon:'/iron.webp',
     tapBalanceRequired: 1000,
     reward: 5000 
   },
   {
     name: 'Bronze',
-    icon: require('../images/bronze.png'),
+    icon:'/bronze.webp',
     tapBalanceRequired: 50000,
     reward: 50000
   },
   {
     name: 'Silver',
-    icon: require('../images/silver.png'),
+    icon: '/silver.webp',
     tapBalanceRequired: 500000,
     reward: 100000
   },
   {
     name: 'Gold',
-    icon: require('../images/gold.png'),
+    icon: '/gold.webp',
     tapBalanceRequired: 1000000,
     reward: 250000
   },
   {
     name: 'Platinum',
-    icon: require('../images/platinum.png'),
+    icon: '/platinum.webp',
     tapBalanceRequired: 2500000,
     reward: 500000
   },
   {
     name: 'Diamond',
-    icon: require('../images/diamond.png'),
+    icon: '/diamond.webp',
     tapBalanceRequired: 5000000,
     reward: 1000000
   },
   {
     name: 'Master',
-    icon: require('../images/master.png'),
+    icon: '/master.webp',
     tapBalanceRequired: 10000000,
     reward: 2000000
   },
   {
     name: 'Grandmaster',
-    icon: require('../images/grandmaster.png'),
+    icon: '/grandmaster.webp',
     tapBalanceRequired: 25000000,
     reward: 5000000
   },
   {
     name: 'Challenger',
-    icon: require('../images/challenger.png'),
+    icon: '/challenger.webp',
     tapBalanceRequired: 50000000,
     reward: 10000000
   }

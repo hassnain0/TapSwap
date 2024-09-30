@@ -405,7 +405,8 @@ const Ref = () => {
                   className={`${activeIndex === 1 ? "bg-cards" : ""
                     }  rounded-[6px] py-[12px] px-3 w-[50%] flex justify-center text-center items-center`}
                 >
-                  Referrals
+                  LeaderBoard
+                  
                 </div>
 
                 <div
@@ -413,7 +414,7 @@ const Ref = () => {
                   className={`${activeIndex === 2 ? "bg-cards" : ""
                     }  rounded-[6px] py-[12px] px-3 w-[50%] flex justify-center text-center items-center`}
                 >
-                  LeaderBoard
+                  Referrals
                 </div>
 
               </div>
@@ -436,8 +437,65 @@ const Ref = () => {
                   </div>
                 </div>
               )} */}
+               <div
+                className={`${activeIndex === 1 ? "flex" : "hidden"
+                  } alltaskscontainer flex-col w-full space-y-2`}
+              >
+                <div
+                  className={`${activeIndex === 1 ? "flex" : "hidden"
+                    } alltaskscontainer flex-col w-full space-y-2`}
+                >
+                  <div className="w-full flex justify-between items-center   rounded-lg">
+                    <div className="flex items-center space-x-4">
+                      {/* Random Avatar */}
+
+                      <div className="flex flex-col w-full ">
+                        <p className="text-white font-bold ">{totalUsers} Holders</p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="font-bold ">Leagues</p>
+                    </div>
+                  </div>
+
+
+
+                  {/* Leaderboard items */}
+                  <div className="space-y-2">
+                    {leaderboardData.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between items-center p-3 bg-[#1F2942] rounded-lg"
+                      >
+                        <div className="flex items-center space-x-4">
+                          {/* Random Color Avatar */}
+                          <div
+                            className="w-8 h-8 rounded-full flex items-center justify-center text-white"
+                            style={{ backgroundColor: getRandomColor() }}
+                          >
+                            {item.initials}
+                          </div>
+                          <div>
+                            <p className="text-white font-semibold">{item.name}</p>
+                            <p className="text-white text-sm">{item.rocks} Rocks</p>
+                          </div>
+                        </div>
+                        <div>
+                          {/* Trophy icon */}
+                          <img
+                            src={item.imageUrl}
+                            style={{ width: '35px', height: '35px' }}
+                            alt="vector"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+              </div>
               <div
-                className={`${activeIndex === 1 ? "flex" : "hidden"} alltaskscontainer flex-col w-full space-y-2`}
+                className={`${activeIndex === 2 ? "flex" : "hidden"} alltaskscontainer flex-col w-full space-y-2`}
               >
 
                 <div className="flex flex-col w-full ">
@@ -507,63 +565,7 @@ const Ref = () => {
 
               {/*  */}
 
-              <div
-                className={`${activeIndex === 2 ? "flex" : "hidden"
-                  } alltaskscontainer flex-col w-full space-y-2`}
-              >
-                <div
-                  className={`${activeIndex === 2 ? "flex" : "hidden"
-                    } alltaskscontainer flex-col w-full space-y-2`}
-                >
-                  <div className="w-full flex justify-between items-center   rounded-lg">
-                    <div className="flex items-center space-x-4">
-                      {/* Random Avatar */}
-
-                      <div className="flex flex-col w-full ">
-                        <p className="text-white font-bold ">{totalUsers} Holders</p>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="font-bold ">Leagues</p>
-                    </div>
-                  </div>
-
-
-
-                  {/* Leaderboard items */}
-                  <div className="space-y-2">
-                    {leaderboardData.map((item, index) => (
-                      <div
-                        key={index}
-                        className="flex justify-between items-center p-3 bg-[#1F2942] rounded-lg"
-                      >
-                        <div className="flex items-center space-x-4">
-                          {/* Random Color Avatar */}
-                          <div
-                            className="w-8 h-8 rounded-full flex items-center justify-center text-white"
-                            style={{ backgroundColor: getRandomColor() }}
-                          >
-                            {item.initials}
-                          </div>
-                          <div>
-                            <p className="text-white font-semibold">{item.name}</p>
-                            <p className="text-white text-sm">{item.rocks} Rocks</p>
-                          </div>
-                        </div>
-                        <div>
-                          {/* Trophy icon */}
-                          <img
-                            src={item.imageUrl}
-                            style={{ width: '35px', height: '35px' }}
-                            alt="vector"
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
+             
 
               {/*  */}
 

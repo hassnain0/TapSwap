@@ -122,103 +122,127 @@ body {
   z-index: 50; /* Ensure it stays above the spinner */
 }
 
-.spin1 {
+
+.spin1{
+
   width: 140px;
+  border: 10px solid #383568;
   height: 140px;
-  border: 10px solid #0da6c2;
+  position: relative;
   border-radius: 1000px;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: spin 1.8s linear infinite;
-  position: relative;
 }
 
-.spin2 {
-  border: 10px solid transparent;
-  border-left-color: #1538b1;
+.spin2{
+
+  border: 10px solid #383568;
+  position: absolute;
   width: 140px;
   height: 140px;
+  border-color: transparent;
   border-radius: 50%;
-  position: absolute;
-  z-index: 1;
+  border-left-color: #8580cf;
+
 }
 
-.spin3 {
-  border: 10px solid transparent;
-  border-right-color: #d329e9;
+.spin3{
+
+  border: 10px solid #383568;
+  position: absolute;
   width: 140px;
   height: 140px;
+  border-color: transparent;
   border-radius: 50%;
-  rotate: 90deg;
-  position: absolute;
+  border-right-color: orange;
+  rotate: 70deg;
   z-index: 2;
+
 }
 
-.spin4 {
-  border: 10px solid transparent;
-  border-right-color: #d329e9;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  rotate: 140deg;
+.spin4{
+
+  border: 10px solid #383568;
   position: absolute;
-  z-index: 2;
-}
-
-.spin5 {
-  border: 10px solid transparent;
-  border-top-color: #ae23ba;
   width: 140px;
   height: 140px;
+  border-color: transparent;
   border-radius: 50%;
+  border-right-color: orange;
+  rotate: 70deg;
+  z-index: 2;
+
+}
+
+.spin5{
+
+  border: 10px solid #383568;
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-color: transparent;
+  border-radius: 50%;
+  border-top-color: #383568;
   rotate: 218deg;
-  position: absolute;
-  z-index: 3;
+  z-index: 20;
+
 }
 
-.spin6 {
-  border: 10px solid transparent;
-  border-top-color: #1538b1;
+.spin6{
+
+  border: 10px solid #383568;
+  position: absolute;
   width: 140px;
   height: 140px;
+  border-color: transparent;
   border-radius: 50%;
+  border-top-color: #8580cf;
   rotate: 275deg;
-  position: absolute;
-  z-index: 3;
+  z-index: 20;
+
 }
 
-.spin7 {
-  border: 10px solid transparent;
+.spin7{
+
+  border: 10px solid #383568;
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-color: transparent;
+  border-radius: 50%;
   border-top-color: #bcb4a7;
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
   rotate: 32deg;
-  position: absolute;
-  z-index: 4;
+  z-index: 30;
 }
 
-.spin8 {
-  border: 10px solid transparent;
-  border-top-color: orange;
+.spin8{
+
+  border: 10px solid #383568;
+  position: absolute;
   width: 140px;
   height: 140px;
+  border-color: transparent;
   border-radius: 50%;
+  border-top-color: #373568;
   rotate: -28deg;
-  position: absolute;
-  z-index: 4;
+  z-index: 30;
+
 }
 
-.spin9 {
-  border: 10px solid transparent;
-  border-top-color: #61DE70;
+.spin9{
+
+  border: 10px solid #383568;
+  position: absolute;
   width: 140px;
   height: 140px;
+  border-color: transparent;
   border-radius: 50%;
+  border-top-color: #373568;
   rotate: 41deg;
-  position: absolute;
-  z-index: 5;
+  z-index: 25;
+
 }
 
 @keyframes spin {

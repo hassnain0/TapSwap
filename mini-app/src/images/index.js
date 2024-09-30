@@ -1,14 +1,13 @@
 import plutos from '../images/plutotap.svg'
-import bronze from '../images/bronze.png';
-
-import Silver from '../images/sliver.png'
-import gold from '../images/gold.png'
-import diamond from '../images/diamond.png'
-import platinum from '../images/platinum.png';
-import master from '../images/master.png';
-import grandmaster from '../images/grandmaster.png'
-import iron from '../images/iron.png';
-import challenger from '../images/challenger.png';
+import bronze from './bronze.webp';
+import Silver from '/silver.webp'
+import gold from '/gold.webp'
+import diamond from '/diamond.webp'
+import platinum from '/platinum.webp';
+import master from '/master.webp';
+import grandmaster from '/grandmaster.webp'
+import iron from '/iron.webp';
+import challenger from '/challenger.webp';
 import tapcoin from '../images/tapme1.webp'
 import lihgt from '../images/lihgt.webp'
 
