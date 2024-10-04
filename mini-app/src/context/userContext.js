@@ -59,6 +59,7 @@ export const UserProvider = ({ children }) => {
   const [taskCompleted2, setTaskCompleted2] = useState(false);
   const [profitPerHour, setProfitPerHour] = useState(0);
   const [allUsersData, setAllUsersData] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   const refillIntervalRef = useRef(null);
   const accumulatedEnergyRef = useRef(energy);
@@ -526,6 +527,7 @@ export const UserProvider = ({ children }) => {
 
     fetchAllUsers(); // Fetch all users when the component mounts
     fetchAllData();
+    fetchUsers();
     getFavouriteCounts();
   }, []);
 
@@ -616,7 +618,8 @@ export const UserProvider = ({ children }) => {
         }
       });
 
-      console.log("All users Data", allUsers)
+
+
       setAllUsersData(allUsers || []);
       setLoading(false); // Set loading to false once data is fetched
     } catch (error) {
@@ -624,6 +627,20 @@ export const UserProvider = ({ children }) => {
       setLoading(false); // Set loading to false if there's an error
     }
   };
+
+  const fetchUsers = async () => {
+    try {
+      // Reference to the specific document in the totalUsers collection
+      const userRef = collection(db, "totalUsers");
+      const querySnapshot2 = await getDocs(userRef);
+      querySnapshot2.forEach((doc) => {
+        const data=doc.data().number;
+        setTotalUsers(data)
+      });
+    } catch (error) {
+      console.error("Error fetching document:", error);
+    }
+  }
 
   const calculateDividedCount = (count) => {
     return count / 4;
@@ -744,7 +761,8 @@ export const UserProvider = ({ children }) => {
       setUsername,
       openInfoTwo,
       favouriteCounts,
-      setOpenInfoTwo
+      setOpenInfoTwo,
+      totalUsers,
     }}>
       {children}
     </UserContext.Provider>

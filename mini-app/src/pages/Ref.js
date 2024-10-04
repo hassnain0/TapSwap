@@ -34,6 +34,7 @@ const Ref = () => {
     username,
     userNo,
     allUsersData,
+    totalUsers,
     loading
   } = useUser();
 
@@ -59,7 +60,6 @@ const Ref = () => {
 
   const [activeIndex, setActiveIndex] = useState(1);
 
-  const [totalUsers, setTotalUsers] = useState(0);
   const handleMenu = (index) => {
     setActiveIndex(index);
   };
@@ -193,7 +193,7 @@ const Ref = () => {
         imageUrl: user.level.imgUrl,
       }));
     };
-    setTotalUsers(formatBalance(allUsersData.length));
+   
     setLeaderboardData(getLeaderboardData(allUsersData));
 
   }, [allUsersData]);
