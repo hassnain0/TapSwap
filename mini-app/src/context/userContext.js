@@ -16,7 +16,7 @@ export const UserProvider = ({ children }) => {
   const [balance, setBalance] = useState(0);
   // const [totalBalance, setTotalBalance] = useState(0);
   const [tapBalance, setTapBalance] = useState(0);
-  const [level, setLevel] = useState({ id: 1, name: "Iron", imgUrl:'/iron.webp' }); // Initial level as an object with id and name
+  const [level, setLevel] = useState({ id: 1, name: "Iron", imgUrl: '/iron.webp' }); // Initial level as an object with id and name
   const [tapValue, setTapValue] = useState({ level: 1, value: 1 });
   const [cardsValue, setCardsValue] = useState({ level: 0, value: 0 });
 
@@ -135,14 +135,14 @@ export const UserProvider = ({ children }) => {
 
 
   const sendUserData = async () => {
-   
+
     const queryParams = new URLSearchParams(window.location.search);
     let referrerId = queryParams.get("start");
     if (referrerId) {
       referrerId = referrerId.replace(/\D/g, "");
     }
 
-    
+
     if (telegramUser) {
       const { id: userId, username, first_name: firstName, last_name: lastName } = telegramUser;
 
@@ -345,22 +345,22 @@ export const UserProvider = ({ children }) => {
   };
 
   const updateUserLevel = async (userId, newTapBalance) => {
-    let newLevel = { id: 1, name: "Iron", imgUrl: '/iron.webp'};
+    let newLevel = { id: 1, name: "Iron", imgUrl: '/iron.webp' };
 
     if (newTapBalance >= 1000 && newTapBalance < 50000) {
-      newLevel = { id: 2, name: "Bronze", imgUrl:  '/bronze.webp' };
+      newLevel = { id: 2, name: "Bronze", imgUrl: '/bronze.webp' };
     } else if (newTapBalance >= 50000 && newTapBalance < 500000) {
-      newLevel = { id: 3, name: "Silver", imgUrl:  '/silver.webp' };
+      newLevel = { id: 3, name: "Silver", imgUrl: '/silver.webp' };
     } else if (newTapBalance >= 500000 && newTapBalance < 1000000) {
-      newLevel = { id: 4, name: "Gold", imgUrl:  '/gold.webp' };
+      newLevel = { id: 4, name: "Gold", imgUrl: '/gold.webp' };
     } else if (newTapBalance >= 1000000 && newTapBalance < 2500000) {
-      newLevel = { id: 5, name: "Platinum", imgUrl:  '/platinum.webp' };
+      newLevel = { id: 5, name: "Platinum", imgUrl: '/platinum.webp' };
     } else if (newTapBalance >= 2500000 && newTapBalance < 5000000) {
-      newLevel = { id: 6, name: "Diamond", imgUrl:  '/dimaond.webp' };
+      newLevel = { id: 6, name: "Diamond", imgUrl: '/dimaond.webp' };
     } else if (newTapBalance >= 5000000 && newTapBalance < 10000000) {
-      newLevel = { id: 7, name: "Master", imgUrl:  '/master.webp' };
+      newLevel = { id: 7, name: "Master", imgUrl: '/master.webp' };
     } else if (newTapBalance >= 10000000 && newTapBalance < 25000000) {
-      newLevel = { id: 8, name: "Grandmaster", imgUrl:  '/grandmaster.webp' };
+      newLevel = { id: 8, name: "Grandmaster", imgUrl: '/grandmaster.webp' };
     } else if (newTapBalance >= 25000000) {
       newLevel = { id: 9, name: "Challenger", imgUrl: '/challenger.webp' };
     }
@@ -379,6 +379,7 @@ export const UserProvider = ({ children }) => {
 
 
   useEffect(() => {
+
     sendUserData();
     // eslint-disable-next-line
   }, []);

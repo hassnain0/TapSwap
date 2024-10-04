@@ -3,14 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCVhK4SDn9II6rvTwrDR6ey84M5EGuogDk",
-  authDomain: "updatedtapswap.firebaseapp.com",
-  projectId: "updatedtapswap",
-  storageBucket: "updatedtapswap.appspot.com",
-  messagingSenderId: "411506741973",
-  appId: "1:411506741973:web:2a81216525a16feeb9c85c",
-  measurementId: "G-CZJCM17NM1"
-};
+    apiKey: "AIzaSyDXaV09pWVqtc8zG0955G1xDQ_5nHfSdgA",
+    authDomain: "tapapp-8dfcb.firebaseapp.com",
+    projectId: "tapapp-8dfcb",
+    storageBucket: "tapapp-8dfcb.appspot.com",
+    messagingSenderId: "1081304071358",
+    appId: "1:1081304071358:web:4e3fc4924a953a74a932ef",
+    measurementId: "G-44WKZ2ERM8"
+  };
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
