@@ -5,7 +5,7 @@ import { doc, getDoc } from "@firebase/firestore";
 
 const Stats = () => {
   const [timeLeft, setTimeLeft] = useState({
-    days:0,
+    days: 0,
     hours: 0,
     minutes: 0,
     seconds: 0,
@@ -90,15 +90,16 @@ const Stats = () => {
       <div className="text-center w-full max-w-xl  sm:p-6 rounded-lg mt-10">
         {/* Coin Icon */}
 
-          <div className="relative rounded-full flex justify-center items-center overflow-hidden">
-            <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 flex justify-center items-center mb-4">
-              <img
-                src={require("../images/airdrop.png")}
-                alt="Bull"
-                className="w-full h-full"
-              />
-            </div>
+        <div className="relative rounded-full flex justify-center items-center overflow-hidden">
+          <div className="relative w-30 h-30 sm:w-30 sm:h-28 md:w-36 md:h-36 flex justify-center items-center mb-4">
+            <img
+              src={require("../images/airdrop.png")}
+              alt="Bull"
+              className="w-full h-full"
+            />
           </div>
+
+        </div>
 
 
         {/* Airdrop Heading */}
@@ -123,7 +124,7 @@ const Stats = () => {
         </div>
 
         {/* Task Requirements */}
-    
+
 
         {/* Countdown Timer with reduced opacity */}
         <div className="rounded-lg p-2  relative overflow-hidden text-sm sm:text-base">
