@@ -91,13 +91,14 @@ const Stats = () => {
         {/* Coin Icon */}
 
         <div className="relative rounded-full flex justify-center items-center overflow-hidden">
-          <div className="relative w-30 h-30 sm:w-30 sm:h-28 md:w-36 md:h-36 flex justify-center items-center mb-4">
+          <div className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 flex justify-center items-center mb-4">
             <img
               src={require("../images/airdrop.png")}
               alt="Bull"
               className="w-full h-full"
             />
           </div>
+
 
         </div>
 
