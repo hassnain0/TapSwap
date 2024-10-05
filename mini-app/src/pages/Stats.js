@@ -86,10 +86,10 @@ const Stats = () => {
   };
 
   return (
-    <div className="flex justify-center items-start min-h-screen text-white px-4 sm:px-6 lg:px-8">
-      <div className="text-center w-full max-w-xl p-4 sm:p-6 rounded-lg mt-10">
+    <div className="flex justify-center items-start  text-white px-4 sm:px-6 lg:px-8">
+      <div className="text-center w-full max-w-xl  sm:p-6 rounded-lg mt-10">
         {/* Coin Icon */}
-        <div className="flex justify-center mb-4">
+
           <div className="relative rounded-full flex justify-center items-center overflow-hidden">
             <div className="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 flex justify-center items-center mb-4">
               <img
@@ -99,7 +99,7 @@ const Stats = () => {
               />
             </div>
           </div>
-        </div>
+
 
         {/* Airdrop Heading */}
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">
