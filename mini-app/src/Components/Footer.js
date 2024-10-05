@@ -64,7 +64,7 @@ ${isActive
     `;
         }}
       >
-        <img src={require('../images/hammer.png')} className="w-[40px] -mb-[1px]" alt="tap" />
+        <img src={require('../images/hammer.png')} className="w-[30px] " alt="tap" />
         <span className="font-medium">Earn</span>
       </NavLink>
 
@@ -114,7 +114,7 @@ ${isActive
         }}
       >
         <img src={require('../images/coinsmall.png')} className="w-[30px]" alt="stats" />
-        <span className="font-medium">Air Drop</span>
+        <span className="font-medium">Aird</span>
       </NavLink>
     </div>
   );
