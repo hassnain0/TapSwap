@@ -90,12 +90,12 @@ const Stats = () => {
       <div className="text-center w-full max-w-xl  sm:p-6 rounded-lg mt-10">
         {/* Coin Icon */}
 
-        <div className="relative rounded-full flex justify-center items-center overflow-hidden">
-          <div className="relative w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 flex justify-center items-center mb-4">
+        <div className=" rounded-full flex justify-center items-center overflow-hidden">
+          <div className="   flex justify-center items-center mb-4">
             <img
               src={require("../images/airdrop.png")}
               alt="Bull"
-              className="w-full h-full"
+              className=" w-[170px] h-[170px]"
             />
           </div>
 

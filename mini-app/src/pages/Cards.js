@@ -354,9 +354,10 @@ const Cards = () => {
                         <h3 className="font-semibold text-[32px] py-4">
                             X2 Income
                         </h3>
-                        <div className=" text-[18px]">
-                            Tap the menu diamond to buy upgrades for your income
-                        </div>
+                        <div className="flex justify-center items-center text-center text-[18px] h-full">
+  Tap the menu diamond to buy upgrades for your income
+</div>
+
 
                         <div className="flex flex-1 items-center space-x-2">
 
