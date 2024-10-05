@@ -123,14 +123,7 @@ const Stats = () => {
         </div>
 
         {/* Task Requirements */}
-        <div className="bg-cards rounded-lg p-4 mb-6 text-sm sm:text-base">
-          <h2 className="text-xl font-semibold mb-4">
-            To do this you need
-          </h2>
-          <ul className="list-disc list-inside text-left">
-            <li>Complete all tasks</li>
-          </ul>
-        </div>
+    
 
         {/* Countdown Timer with reduced opacity */}
         <div className="rounded-lg p-2  relative overflow-hidden text-sm sm:text-base">
