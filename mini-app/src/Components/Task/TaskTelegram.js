@@ -67,7 +67,7 @@ const TaskTelegram = ({ showModal, setShowModal }) => {
 
 
   const handleTaskLinkClick = () => {
-    window.open("https://t.me/Kryptoblockchain");
+    window.open("https://t.me/tomoinc");
 
     setTimeout(() => {
       setShowTaskButton(false);
